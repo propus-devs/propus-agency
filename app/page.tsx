@@ -1,13 +1,11 @@
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 import Hero from "@/components/sections/Hero"
-import LogoBar from "@/components/sections/LogoBar"
 import Movement from "@/components/sections/Movement"
 import ServiceWhatsapp from "@/components/sections/ServiceWhatsapp"
 import ServiceWeb from "@/components/sections/ServiceWeb"
 import ServiceDocs from "@/components/sections/ServiceDocs"
 import HowItWorks from "@/components/sections/HowItWorks"
-import Pricing from "@/components/sections/Pricing"
 import CaseStudies from "@/components/sections/CaseStudies"
 import FAQ from "@/components/sections/FAQ"
 import CTABanner from "@/components/sections/CTABanner"
@@ -28,8 +26,6 @@ export default function Home() {
         <ServiceWeb />
         <ServiceDocs />
         <HowItWorks />
-        <LogoBar />
-        <Pricing />
         <CaseStudies />
         <FAQ />
         <CTABanner />

@@ -21,7 +21,6 @@ import { MenuIcon, ChevronDown, CalendarDaysIcon } from "lucide-react"
 const navLinks = [
   { href: "/#servicios", label: "Servicios" },
   { href: "/#proceso", label: "Proceso" },
-  { href: "/#precios", label: "Precios" },
   { href: "/#resultados", label: "Resultados" },
   { href: "/#faq", label: "FAQ" },
 ]

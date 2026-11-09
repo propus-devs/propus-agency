@@ -20,6 +20,13 @@ interface SplineSceneProps {
   maxTilt?: number
   /** Suavizado del seguimiento (0-1): más bajo = más inercia */
   damping?: number
+  /**
+   * Zona desde la que se puede agarrar y girar el logo: un círculo centrado en
+   * el canvas. 1 = el círculo toca los bordes del canvas; 0.85 = el logo y un
+   * pelín alrededor. Fuera de la zona no se gira nada y el texto se selecciona
+   * con normalidad.
+   */
+  grabRadius?: number
 }
 
 const EPSILON = 0.0005
@@ -36,6 +43,15 @@ function isInteractive(target: EventTarget | null) {
   )
 }
 
+// Bloques de texto: sobre ellos manda la selección, nunca se agarra el logo.
+// Importa en móvil, donde el logo va detrás del texto del hero.
+function isTextBlock(target: EventTarget | null) {
+  return (
+    target instanceof Element &&
+    target.closest("h1, h2, h3, h4, h5, h6, p, li, blockquote") !== null
+  )
+}
+
 export function SplineScene({
   scene,
   className,
@@ -43,6 +59,7 @@ export function SplineScene({
   sensitivity = 0.005,
   maxTilt = Math.PI / 6,
   damping = 0.08,
+  grabRadius = 0.85,
 }: SplineSceneProps) {
   const objectRef = useRef<SPEObject | null>(null)
   const baseRotation = useRef({ x: 0, y: 0 })
@@ -160,8 +177,22 @@ export function SplineScene({
       document.body.style.removeProperty("user-select")
     }
 
+    // El canvas no recibe eventos (pointer-events: none, para no tapar enlaces
+    // ni texto), así que la zona agarrable se calcula a mano con su rectángulo.
+    const inGrabZone = (x: number, y: number) => {
+      const el = wrapperRef.current
+      if (!el) return false
+      const rect = el.getBoundingClientRect()
+      const radius = (Math.min(rect.width, rect.height) / 2) * grabRadius
+      return (
+        Math.hypot(x - (rect.left + rect.width / 2), y - (rect.top + rect.height / 2)) <=
+        radius
+      )
+    }
+
     const onDown = (e: PointerEvent) => {
-      if (e.button !== 0 || isInteractive(e.target)) return
+      if (e.button !== 0 || isInteractive(e.target) || isTextBlock(e.target)) return
+      if (!inGrabZone(e.clientX, e.clientY)) return
 
       dragging.current = true
       dragOrigin.current = { x: e.clientX, y: e.clientY }
@@ -203,7 +234,7 @@ export function SplineScene({
       if (frame.current !== null) cancelAnimationFrame(frame.current)
       frame.current = null
     }
-  }, [damping, maxTilt, sensitivity])
+  }, [damping, grabRadius, maxTilt, sensitivity])
 
   // Al cambiar de escena/objeto se invalida la referencia cacheada.
   useEffect(() => {

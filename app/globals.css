@@ -71,6 +71,15 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* Gota que baja por la línea de "Desliza" del hero. Usar con motion-safe:. */
+@theme {
+  --animate-cue: cue 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  @keyframes cue {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(300%); }
+  }
+}
+
 :root {
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -197,6 +206,122 @@
   0%   { background-position: 0 0; }
   50%  { background-position: 400% 0; }
   100% { background-position: 0 0; }
+}
+
+/* ── Hero escena ─────────────────────────────────────────────────────────
+   Coreografía del hero ligada al scroll (components/sections/Hero.tsx).
+   Estas reglas van sin capa a propósito: ganan a las
+   utilidades de Tailwind, así que aquí solo se toca la colocación y el
+   movimiento; tipografía y color van en el componente.
+
+   Por defecto (navegador sin animation-timeline o prefers-reduced-motion):
+   logo, H1 y frase apilados en estático. */
+.escena-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  padding: 6rem 1rem 5rem;
+}
+.escena-logo {
+  /* Por debajo de 32rem de lado el canvas recorta la figura. */
+  width: 32rem;
+  aspect-ratio: 1;
+  flex-shrink: 0;
+}
+.escena-intro { margin-top: -4rem; padding-inline: 1rem; text-align: center; }
+.escena-cue { display: none; }
+.escena-frase { margin-top: 5rem; }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* La sección mide 2,6 pantallas; el escenario se queda fijo mientras
+       tanto y el progreso del scroll por ella mueve la escena. */
+    .escena {
+      height: 260svh;
+      view-timeline: --escena block;
+    }
+    .escena-stage {
+      position: sticky;
+      top: 0;
+      display: block;
+      height: 100svh;
+      padding: 0;
+    }
+    .escena-logo {
+      position: absolute;
+      left: 50%;
+      top: 46%;
+      width: max(32rem, min(44rem, 72svh));
+      translate: -50% -50%;
+      animation: escena-logo linear both;
+      animation-timeline: --escena;
+      animation-range: contain 0% contain 55%;
+    }
+    .escena-intro {
+      position: absolute;
+      inset-inline: 0;
+      bottom: max(2rem, 5svh);
+      margin: 0;
+      animation: escena-salir linear both;
+      animation-timeline: --escena;
+      animation-range: contain 0% contain 14%;
+    }
+    .escena-cue { display: flex; }
+    /* Franja fija entre el logo ya encogido (centro en el 20 % de la
+       pantalla) y el borde inferior; el contenido se centra dentro y, si
+       aun así no cupiera, se alinea arriba en vez de cortarse por los dos
+       lados (safe). */
+    .escena-frase {
+      position: absolute;
+      inset-inline: 0;
+      top: 36svh;
+      bottom: max(1rem, 3svh);
+      justify-content: safe center;
+      margin: 0;
+      padding-inline: 1rem;
+    }
+    .escena-paso-1,
+    .escena-paso-2,
+    .escena-paso-3,
+    .escena-paso-4,
+    .escena-paso-5 {
+      animation: escena-entrar linear both;
+      animation-timeline: --escena;
+    }
+    /* Móvil: centrada en una franja tan alta, la frase dejaba un hueco
+       grande bajo el logo. Aquí se apoya abajo y el logo termina más grande
+       ocupando la mitad superior. */
+    @media (max-width: 639px) {
+      .escena-logo { animation-name: escena-logo-movil; }
+      .escena-frase {
+        top: 30svh;
+        bottom: max(1.25rem, 3svh);
+        justify-content: safe end;
+      }
+    }
+    .escena-paso-1 { animation-range: contain 24% contain 40%; }
+    .escena-paso-2 { animation-range: contain 31% contain 47%; }
+    .escena-paso-3 { animation-range: contain 41% contain 56%; }
+    .escena-paso-4 { animation-range: contain 50% contain 66%; }
+    .escena-paso-5 { animation-range: contain 60% contain 76%; }
+  }
+}
+
+@keyframes escena-logo {
+  /* De 46 % a 20 % de la pantalla, al 38 % del tamaño. */
+  to { transform: translateY(-26svh) scale(0.38); }
+}
+@keyframes escena-logo-movil {
+  /* De 46 % a 30 % de la pantalla, al 68 % del tamaño. */
+  to { transform: translateY(-16svh) scale(0.68); }
+}
+@keyframes escena-salir {
+  to { opacity: 0; transform: translateY(-1.5rem); }
+}
+@keyframes escena-entrar {
+  from { opacity: 0; transform: translateY(2rem); filter: blur(10px); }
+  to { opacity: 1; transform: none; filter: none; }
 }
 /* Glows aurora del fondo — deriva lenta y suave, sin interacción */
 @keyframes aurora-1 {

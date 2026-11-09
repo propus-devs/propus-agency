@@ -338,6 +338,10 @@
 .mv-toast { opacity: 0; }
 .mv-toast:first-child { opacity: 1; }
 .mv-cube { transform: rotateX(-18deg) rotateY(-30deg); }
+/* Mini hero (WebScene): el plano y el cursor solo existen durante la animación;
+   sin ella queda el hero ya construido. */
+.mv-w-wire,
+.mv-w-cursor { opacity: 0; }
 
 @media (prefers-reduced-motion: no-preference) {
   .mv-live[data-live="false"],
@@ -374,6 +378,24 @@
 
   .mv-coin { animation: mv-spin 7s linear infinite; }
   .mv-cube { animation: mv-cube 10s linear infinite; }
+
+  /* Mini hero: un único ciclo de 12 s compartido por todas las piezas (sin
+     desfases), cada una con su tramo del ciclo en su propio keyframe. */
+  .mv-w-stage, .mv-w-wire, .mv-w-nav, .mv-w-h1, .mv-w-sub, .mv-w-cta,
+  .mv-w-media, .mv-w-cursor {
+    animation-duration: 12s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+  }
+  .mv-w-stage { animation-name: mv-w-stage; }
+  .mv-w-wire { animation-name: mv-w-wire; }
+  .mv-w-nav { animation-name: mv-w-nav; }
+  .mv-w-h1 { animation-name: mv-w-h1; }
+  .mv-w-sub { animation-name: mv-w-sub; }
+  .mv-w-cta { animation-name: mv-w-cta; }
+  .mv-w-media { animation-name: mv-w-media; }
+  .mv-w-cursor { animation-name: mv-w-cursor; }
 }
 
 @keyframes mv-sway {
@@ -429,6 +451,54 @@
 @keyframes mv-cube {
   from { transform: rotateX(-18deg) rotateY(0deg); }
   to { transform: rotateX(-18deg) rotateY(360deg); }
+}
+/* Mini hero. Línea de tiempo (% de 12 s): plano 2-48 · nav 12-18 · titular
+   20-31 · subtítulo 31-36 · botón 36-45 (con clic a ~42) · logo 44-52 · cursor
+   8-58 · todo visible hasta 90 y fundido a negro 90-97 para reiniciar. */
+@keyframes mv-w-stage {
+  0% { opacity: 0; }
+  3%, 90% { opacity: 1; }
+  97%, 100% { opacity: 0; }
+}
+@keyframes mv-w-wire {
+  0%, 2% { opacity: 0; }
+  6%, 40% { opacity: 1; }
+  48%, 100% { opacity: 0; }
+}
+@keyframes mv-w-nav {
+  0%, 12% { opacity: 0; transform: translateY(-6px); }
+  18%, 100% { opacity: 1; transform: none; }
+}
+@keyframes mv-w-h1 {
+  0%, 20% { opacity: 0; clip-path: inset(-4px 100% -4px 0); }
+  21% { opacity: 1; }
+  31%, 100% { opacity: 1; clip-path: inset(-4px); }
+}
+@keyframes mv-w-sub {
+  0%, 31% { opacity: 0; transform: scaleX(0.3); }
+  36%, 100% { opacity: 1; transform: none; }
+}
+@keyframes mv-w-cta {
+  0%, 36% { opacity: 0; transform: scale(0.6); }
+  40% { opacity: 1; transform: scale(1.08); }
+  42% { opacity: 1; transform: scale(0.9); }
+  45%, 100% { opacity: 1; transform: none; }
+}
+@keyframes mv-w-media {
+  0%, 44% { opacity: 0; transform: scale(0.4) rotate(-20deg); }
+  52%, 100% { opacity: 1; transform: none; }
+}
+@keyframes mv-w-cursor {
+  0%, 6% { opacity: 0; left: 6%; top: 62%; transform: scale(1); }
+  9% { opacity: 1; left: 8%; top: 60%; }
+  15% { left: 20%; top: 11%; }
+  23% { left: 12%; top: 33%; }
+  31% { left: 46%; top: 44%; }
+  38% { left: 14%; top: 70%; transform: scale(1); }
+  42% { left: 15%; top: 71%; transform: scale(0.8); }
+  44% { left: 15%; top: 71%; transform: scale(1); }
+  52% { opacity: 1; left: 70%; top: 52%; }
+  58%, 100% { opacity: 0; left: 74%; top: 56%; }
 }
 /* Glows aurora del fondo — deriva lenta y suave, sin interacción */
 @keyframes aurora-1 {

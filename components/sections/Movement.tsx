@@ -3,13 +3,15 @@ import { TrendingUpIcon, ArrowRightIcon } from "lucide-react"
 import { TiltCtaButton } from "@/components/ui/tilt-cta-button"
 import { ChatScene } from "@/components/sections/movement/ChatScene"
 import { CalendarScene } from "@/components/sections/movement/CalendarScene"
+import { WebScene } from "@/components/sections/movement/WebScene"
 import { DocsScene } from "@/components/sections/movement/DocsScene"
 
 /**
- * El texto va en el centro y las tres escenas animadas lo rodean en
- * escritorio ancho (xl): chat de AutoClinic arriba a la izquierda, reservas a
- * la derecha y documentos abajo a la izquierda. Por debajo de xl se apilan
- * tras el texto. Orden de lectura = prioridad: AutoClinic primero.
+ * El texto va en el centro y las cuatro escenas animadas lo rodean en
+ * escritorio ancho (xl): chat de AutoClinic arriba a la izquierda, RuralProp
+ * (reservas) arriba a la derecha, FacturIA abajo a la izquierda y diseño web a
+ * medida abajo a la derecha. Por debajo de xl se apilan tras el texto (2 por
+ * fila en md). Orden de lectura = prioridad: AutoClinic primero.
  */
 export default function Movement() {
   return (
@@ -49,7 +51,8 @@ export default function Movement() {
               className="bg-brand-emerald hover:bg-brand-teal text-background font-semibold px-8 gap-2"
               asChild
             >
-              <Link href="/#servicios">
+              {/* Lleva al primer servicio (AutoClinic); los demás siguen debajo */}
+              <Link href="/#agente-whatsapp">
                 Descubrir mis opciones
                 <ArrowRightIcon className="size-4" />
               </Link>
@@ -60,8 +63,9 @@ export default function Movement() {
 
         {/* Escenas en vivo (decorativas) */}
         <ChatScene className="mx-auto w-full max-w-sm xl:col-start-1 xl:row-start-1 xl:max-w-none" />
-        <CalendarScene className="mx-auto w-full max-w-sm xl:col-start-3 xl:row-span-2 xl:row-start-1 xl:max-w-none" />
-        <DocsScene className="mx-auto w-full max-w-sm md:col-span-2 xl:col-span-1 xl:col-start-1 xl:row-start-2 xl:max-w-none" />
+        <CalendarScene className="mx-auto w-full max-w-sm xl:col-start-3 xl:row-start-1 xl:max-w-none" />
+        <WebScene className="mx-auto w-full max-w-sm xl:col-start-3 xl:row-start-2 xl:max-w-none" />
+        <DocsScene className="mx-auto w-full max-w-sm xl:col-start-1 xl:row-start-2 xl:max-w-none" />
       </div>
     </section>
   )

@@ -65,8 +65,10 @@ export function CalendarScene({ className }: { className?: string }) {
         <div className="flex items-center gap-3">
           <Cubo />
           <div className="leading-tight">
-            <p className="text-sm font-semibold text-foreground">Reservas online</p>
-            <p className="text-xs text-muted-foreground">Se agendan solas</p>
+            <p className="text-sm font-semibold text-foreground">RuralProp</p>
+            <p className="text-xs text-muted-foreground">
+              Tus reservas directas, centralizadas y seguras
+            </p>
           </div>
         </div>
 

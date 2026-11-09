@@ -323,6 +323,113 @@
   from { opacity: 0; transform: translateY(2rem); filter: blur(10px); }
   to { opacity: 1; transform: none; filter: none; }
 }
+
+/* ── Movement: escenas en vivo ───────────────────────────────────────────
+   Ilustraciones animadas que acompañan al texto de Movement.tsx (calendario,
+   documentos y su cubo/moneda 3D). El chat va en JS (ChatScene.tsx).
+
+   Estado base = versión ESTÁTICA y ya "terminada" (reservas confirmadas,
+   documentos dentro de sus carpetas). Las animaciones se añaden solo con
+   motion permitido, y Live.tsx marca data-live="false" fuera de pantalla para
+   pausarlas. Variables: --i (orden), --tx/--ty/--rot (destino del documento). */
+.mv-pending,
+.mv-pending-t,
+.mv-doc { opacity: 0; }
+.mv-toast { opacity: 0; }
+.mv-toast:first-child { opacity: 1; }
+.mv-cube { transform: rotateX(-18deg) rotateY(-30deg); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .mv-live[data-live="false"],
+  .mv-live[data-live="false"] * { animation-play-state: paused !important; }
+
+  .mv-card { animation: mv-sway 9s ease-in-out infinite; will-change: transform; }
+
+  /* Calendario: ciclo de 12 s por reserva, desfasadas 3 s entre sí. */
+  .mv-chip, .mv-pending, .mv-ok, .mv-toast, .mv-pending-t, .mv-ok-t {
+    animation-duration: 12s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+    animation-delay: calc(var(--i) * 3s);
+  }
+  .mv-chip { animation-name: mv-chip; }
+  .mv-pending, .mv-pending-t { animation-name: mv-pending; }
+  .mv-ok { animation-name: mv-ok; }
+  .mv-ok-t { animation-name: mv-fade-in; }
+  .mv-toast { animation-name: mv-toast; }
+
+  /* Documentos: ciclo de 6 s, uno cada 2 s. Cada carpeta abre su solapa y
+     marca "hecho" cuando le llega su documento. */
+  .mv-doc, .mv-lid, .mv-check {
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+    animation-delay: calc(var(--i) * 2s);
+  }
+  .mv-doc { animation-name: mv-doc; }
+  .mv-lid { animation-name: mv-lid; }
+  .mv-check { animation-name: mv-check; }
+
+  .mv-coin { animation: mv-spin 7s linear infinite; }
+  .mv-cube { animation: mv-cube 10s linear infinite; }
+}
+
+@keyframes mv-sway {
+  0%, 100% { transform: perspective(900px) rotateY(-5deg) rotateX(2deg); }
+  50% { transform: perspective(900px) rotateY(5deg) rotateX(-2deg); }
+}
+@keyframes mv-chip {
+  0% { opacity: 0; transform: translateY(-10px) scale(0.7); }
+  4% { opacity: 1; transform: none; }
+  86% { opacity: 1; transform: none; }
+  94%, 100% { opacity: 0; transform: scale(0.9); }
+}
+@keyframes mv-pending {
+  0%, 2% { opacity: 0; }
+  4%, 9% { opacity: 1; }
+  12%, 100% { opacity: 0; }
+}
+@keyframes mv-ok {
+  0%, 11% { opacity: 0; transform: scale(0.6); }
+  14% { opacity: 1; transform: scale(1.15); }
+  17%, 100% { opacity: 1; transform: none; }
+}
+@keyframes mv-fade-in {
+  0%, 11% { opacity: 0; }
+  14%, 100% { opacity: 1; }
+}
+@keyframes mv-toast {
+  0% { opacity: 0; transform: translateY(8px); }
+  3%, 21% { opacity: 1; transform: none; }
+  25%, 100% { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes mv-doc {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.3); }
+  8% { opacity: 1; transform: translate(0, 0) scale(0.85) rotate(-4deg); }
+  38% { opacity: 1; transform: translate(var(--tx), calc(var(--ty) * 0.45)) scale(1) rotate(var(--rot)); }
+  54% { opacity: 1; transform: translate(var(--tx), var(--ty)) scale(0.6) rotate(0deg); }
+  60%, 100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.4); }
+}
+@keyframes mv-lid {
+  0%, 30% { transform: rotateX(0deg); }
+  42%, 52% { transform: rotateX(-48deg); }
+  62%, 100% { transform: rotateX(0deg); }
+}
+@keyframes mv-check {
+  0%, 54% { opacity: 0; transform: scale(0.4); }
+  60% { opacity: 1; transform: scale(1.2); }
+  66%, 86% { opacity: 1; transform: scale(1); }
+  94%, 100% { opacity: 0; transform: scale(1); }
+}
+@keyframes mv-spin {
+  to { transform: rotateY(360deg); }
+}
+@keyframes mv-cube {
+  from { transform: rotateX(-18deg) rotateY(0deg); }
+  to { transform: rotateX(-18deg) rotateY(360deg); }
+}
 /* Glows aurora del fondo — deriva lenta y suave, sin interacción */
 @keyframes aurora-1 {
   0%, 100% { transform: translate(0, 0) scale(1); }

@@ -26,10 +26,12 @@ const navLinks = [
   { href: "/#faq", label: "FAQ" },
 ]
 
+// AutoClinic va siempre primero (es la prioridad del negocio); mismo orden que
+// la lista de productos del hero.
 const projectLinks = [
+  { href: "/proyectos/agente-whatsapp", label: "AutoClinic" },
   { href: "/proyectos/web-design", label: "Web Design" },
   { href: "/proyectos/facturia", label: "FacturIA" },
-  { href: "/proyectos/agente-whatsapp", label: "AutoClinic" },
 ]
 
 // Las páginas de Soluciones (/soluciones/clinicas y

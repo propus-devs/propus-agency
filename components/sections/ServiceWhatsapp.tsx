@@ -64,7 +64,10 @@ const chatMessages = [
 
 export default function ServiceWhatsapp() {
   return (
-    <section id="agente-whatsapp" className="py-20 md:py-28 relative overflow-hidden">
+    // scroll-mt negativo: compensa el padding superior de la sección para que, al
+    // llegar desde el botón de Movement, la cabecera quede justo bajo el navbar
+    // (80 px de scroll-padding global + padding de la sección = demasiado hueco).
+    <section id="agente-whatsapp" className="py-20 md:py-28 relative overflow-hidden scroll-mt-[-4.25rem] md:scroll-mt-[-6.25rem]">
 
       {/* Glow de fondo */}
       <div

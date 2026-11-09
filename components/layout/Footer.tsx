@@ -23,7 +23,6 @@ const footerLinks: FooterSection[] = [
   {
     label: 'Producto',
     links: [
-      { href: '/#servicios', label: 'Servicios' },
       { href: '/#proceso', label: 'Proceso' },
       { href: '/#resultados', label: 'Resultados' },
     ],

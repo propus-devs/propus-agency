@@ -22,9 +22,11 @@ const productos = [
     detail: "Agenda, recordatorios automáticos y CRM para clínicas de podología",
   },
   {
-    // Nombre provisional: el servicio está pendiente de bautizar.
+    // RuralProp es el nombre de las webs con reservas para turismo rural. El
+    // diseño web a medida es un servicio aparte (no todo es RuralProp): la
+    // página /proyectos/web-design cubre ambos de momento.
     href: "/proyectos/web-design",
-    name: "Webs con reservas",
+    name: "RuralProp",
     detail: "Web con reservas online, SEO y panel de gestión para turismo rural",
   },
   {

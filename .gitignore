@@ -50,6 +50,8 @@ next-env.d.ts
 # que el producto todavía no hace, que no debe acabar en GitHub.
 /APARTADOS-Autoclinic-explicados.md
 /apartados-Autoclinic-explicados.md
+# Plan interno de SEO y rediseño (auditoría, decisiones pendientes).
+/PLAN-SEO-REDISENO.md
 
 # Másteres de las portadas del blog generadas con Nano Banana Pro (2752x1536,
 # ~2 MB cada una). Se conservan en local para poder reexportar a mayor tamaño,

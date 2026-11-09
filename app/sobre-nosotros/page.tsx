@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Brain, Cpu, Workflow, Zap, MapPin, Mail, Phone, TrendingUp, Code, Handshake, Users, Rocket } from "lucide-react"
+import { Brain, Cpu, Workflow, Zap, Mail, Phone, TrendingUp, Code, Handshake, Users, Rocket } from "lucide-react"
 import { contact } from "@/lib/site"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -9,23 +9,23 @@ import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 
 const DESCRIPCION =
-  "Somos Propus, un equipo de Albacete que desarrolla webs, software a medida y automatizaciones para empresas de Castilla-La Mancha y toda España."
+  "Somos Propus, dos cofundadores que desarrollamos software de gestión para clínicas, webs con reservas y automatizaciones para negocios de toda España."
 
 export const metadata: Metadata = {
-  title: "Sobre nosotros · Desarrollo web en Albacete",
+  title: "Sobre nosotros · Software de gestión y webs con reservas",
   description: DESCRIPCION,
   keywords: [
-    "desarrollo web Albacete",
-    "software a medida Albacete",
-    "automatización Albacete",
-    "diseño web Castilla-La Mancha",
+    "software de gestión para clínicas",
+    "webs con reservas",
+    "automatización",
+    "integraciones inteligentes",
     "Propus",
   ],
   alternates: {
     canonical: "/sobre-nosotros",
   },
   openGraph: {
-    title: "Sobre nosotros · Desarrollo web en Albacete — Propus",
+    title: "Sobre nosotros · Software de gestión y webs con reservas — Propus",
     description: DESCRIPCION,
     type: "website",
     locale: "es_ES",
@@ -40,10 +40,10 @@ const differentiators = [
       "No somos una consultora generalista. Vivimos y respiramos inteligencia artificial aplicada. Cada solución que diseñamos aprovecha lo último en modelos de lenguaje, visión artificial y automatización inteligente.",
   },
   {
-    icon: MapPin,
-    title: "Enfoque local",
+    icon: Handshake,
+    title: "Trato directo",
     description:
-      "Con base en Albacete, conocemos de primera mano las necesidades de las empresas de Castilla-La Mancha. Ofrecemos un trato cercano y personalizado que las grandes consultoras no pueden igualar.",
+      "Hablas siempre con las dos personas que construyen tu proyecto, sin intermediarios. Ofrecemos un trato cercano y personalizado que las grandes consultoras no pueden igualar.",
   },
   {
     icon: TrendingUp,
@@ -81,16 +81,17 @@ export default function SobreNosotrosPage() {
         <section className="px-4 pt-28 pb-20 md:pt-36 md:pb-28">
           <div className="mx-auto max-w-4xl text-center">
             <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">
-              La agencia de IA que impulsa negocios en{" "}
+              Software, webs y automatización para negocios de{" "}
               <span className="bg-linear-to-r from-brand-sky to-brand-emerald bg-clip-text text-transparent">
-                Albacete y Castilla-La Mancha
+                toda España
               </span>
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              Propus es una agencia de inteligencia artificial y automatización
-              con sede en Albacete. Ayudamos a empresas locales y nacionales a
-              integrar IA en sus procesos para ser más eficientes, competitivas
-              y rentables.
+              Propus es una agencia de desarrollo de software e integraciones
+              inteligentes. Creamos software de gestión para clínicas, webs con
+              reservas y automatizaciones para que los negocios de toda España
+              dejen de perder tiempo en tareas repetitivas y sean más
+              eficientes, competitivos y rentables.
             </p>
           </div>
         </section>
@@ -108,21 +109,21 @@ export default function SobreNosotrosPage() {
               <p className="mb-4 leading-relaxed text-muted-foreground">
                 Creemos que la inteligencia artificial no debería ser un
                 privilegio de las grandes corporaciones. Nuestra misión es
-                acercar los servicios de IA en Albacete y toda España a
+                acercar los servicios de IA en toda España a
                 empresas de cualquier tamaño, democratizando el acceso a
                 tecnología que transforma negocios.
               </p>
               <p className="mb-4 leading-relaxed text-muted-foreground">
                 Nos especializamos en la automatización de procesos para pymes
-                en Castilla-La Mancha, diseñando soluciones a medida que
+                de toda España, diseñando soluciones a medida que
                 eliminan tareas repetitivas y liberan a los equipos para que se
                 concentren en lo que realmente importa: hacer crecer su negocio.
               </p>
               <p className="leading-relaxed text-muted-foreground">
-                Como agencia de inteligencia artificial, combinamos desarrollo
-                de software, integración de agentes inteligentes y consultoría
-                estratégica para ofrecer un servicio completo, desde la idea
-                hasta la implementación en producción.
+                Como agencia de desarrollo de software e integraciones
+                inteligentes, combinamos software de gestión, agentes
+                inteligentes y consultoría estratégica para ofrecer un servicio
+                completo, desde la idea hasta la implementación en producción.
               </p>
             </div>
             <div className="flex items-center justify-center">
@@ -197,7 +198,7 @@ export default function SobreNosotrosPage() {
                 </div>
                 <div className="mx-auto flex items-center justify-center gap-2 text-sm text-muted-foreground">
                   <Rocket className="size-4 text-brand-teal" />
-                  <span>De Albacete para toda España — construyendo el futuro de tu negocio</span>
+                  <span>Para toda España — construyendo el futuro de tu negocio</span>
                 </div>
               </div>
 
@@ -240,17 +241,13 @@ export default function SobreNosotrosPage() {
         <section className="px-4 py-20 md:py-28">
           <div className="mx-auto max-w-4xl text-center">
             <h2 className="mb-6 text-2xl font-semibold tracking-tight md:text-3xl">
-              Con base en Albacete, impacto global
+              Trabajamos en remoto, con negocios de toda España
             </h2>
             <p className="mx-auto mb-8 max-w-2xl leading-relaxed text-muted-foreground">
-              Trabajamos con empresas de toda España y más allá, pero nuestras
-              raíces están en Castilla-La Mancha. Nuestro enfoque local nos
-              permite ofrecer un servicio cercano y personalizado.
+              Trabajamos en remoto desde España con negocios de todo el país.
+              Nos coordinamos por videollamada y mensajería, así que da igual
+              dónde estés: el trato es igual de cercano y personalizado.
             </p>
-            <div className="mb-8 inline-flex items-center gap-2 text-muted-foreground">
-              <MapPin className="size-5 text-brand-teal" />
-              <span>Albacete, Castilla-La Mancha, España</span>
-            </div>
             <address className="mb-8 flex not-italic flex-col items-center justify-center gap-3 text-muted-foreground sm:flex-row sm:gap-8">
               <a
                 href={contact.phoneHref}

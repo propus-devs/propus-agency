@@ -37,8 +37,8 @@ export default function BlogPage() {
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">
               Ideas, guías y casos prácticos sobre inteligencia artificial,
-              automatización y transformación digital para empresas en Albacete y
-              Castilla-La Mancha.
+              automatización y transformación digital para negocios de toda
+              España.
             </p>
           </div>
         </section>

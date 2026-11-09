@@ -41,13 +41,15 @@ const instrumentSerif = Instrument_Serif({
   style: ["normal", "italic"],
 })
 
-// Posicionamiento: desarrollo web, software a medida y automatización en
-// Albacete. La IA es una herramienta, no la etiqueta de la agencia. Se definen
-// una vez y se reutilizan en title, openGraph y twitter para que no diverjan.
+// Posicionamiento: primero el software de gestión para clínicas (AutoClinic es
+// la prioridad) y después las webs con reservas y la automatización documental.
+// Sin sede ni ciudad: se trabaja en remoto para toda España y la base puede
+// cambiar. Se definen una vez y se reutilizan en title, openGraph y twitter
+// para que no diverjan.
 const TITULO_PORTADA =
-  "Propus · Desarrollo web, software y automatización en Albacete"
+  "Propus · Software de gestión para clínicas y webs con reservas"
 const DESCRIPCION_PORTADA =
-  "Desarrollo web, software a medida y automatización de procesos para empresas de Albacete y toda España. La IA, cuando aporta, como una herramienta más."
+  "Software de gestión para clínicas de podología, webs con pasarela de reservas y SEO, y automatización documental. Para negocios de toda España."
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

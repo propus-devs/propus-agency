@@ -7,7 +7,7 @@ import ProjectsShowcase, { type ShowcaseProject } from "@/components/sections/Pr
 export const metadata: Metadata = {
   title: "Portfolio de diseño y desarrollo web a medida",
   description:
-    "Selección de landing pages y diseños web creados por Propus: interfaces modernas, rápidas y orientadas a conversión para empresas de Albacete y toda España.",
+    "Selección de landing pages y diseños web creados por Propus: interfaces modernas, rápidas y orientadas a conversión para negocios de toda España.",
   alternates: {
     canonical: "/proyectos/web-design",
   },

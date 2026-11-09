@@ -13,12 +13,11 @@ export default function OrganizationSchema() {
     url: siteUrl,
     logo: `${siteUrl}/favicons/android-chrome-512x512.png`,
     description:
-      "Desarrollo web, software a medida y automatización de procesos para empresas de Albacete y toda España.",
-    areaServed: [
-      { "@type": "City", name: "Albacete" },
-      { "@type": "State", name: "Castilla-La Mancha" },
-      { "@type": "Country", name: "España" },
-    ],
+      "Software de gestión para clínicas de podología, webs con pasarela de reservas y SEO, y automatización documental para negocios de toda España.",
+    // Solo el país: Propus no declara sede ni base geográfica (puede cambiar
+    // y no se quiere reforzar un vínculo local). Los clientes de Albacete son
+    // prueba social, no el ámbito de actuación.
+    areaServed: { "@type": "Country", name: "España" },
     email: contact.email,
     telephone: contact.phone,
     contactPoint: [

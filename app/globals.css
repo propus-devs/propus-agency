@@ -29,6 +29,18 @@
   --color-wha-card: #0d1a2e;
   --color-wha-fg: #f0f6ff;
   --color-wha-muted: #7e97b8;
+  /* Paleta de marca RuralProp (servicio): campo, tierra y luz de atardecer.
+     Colores fijos (no dependen del tema), como las otras dos de producto. */
+  --color-rural-bg: #101710;
+  --color-rural-card: #172016;
+  --color-rural-line: #2c3a27;
+  --color-rural-fg: #f3eedd;
+  --color-rural-muted: #aab49a;
+  --color-rural-moss: #93b95c;
+  --color-rural-honey: #e6ab4a;
+  --color-rural-clay: #cf7a52;
+  --color-rural-paper: #f1e9d4;
+  --color-rural-ink: #1f2a1a;
   --font-sans: var(--font-sans);
   --font-mono: var(--font-sans);
   --font-heading: var(--font-heading);

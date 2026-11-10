@@ -11,26 +11,23 @@ const splineSceneLogo =
   (process.env.NODE_ENV === "development" && process.env.NEXT_PUBLIC_SPLINE_SCENE) ||
   "/spline/logo-v3.splinecode"
 
-// Cada producto con lo suyo: no mezclar lo de AutoClinic (agenda,
+// Cada servicio con lo suyo: no mezclar lo de AutoClinic (agenda,
 // recordatorios) con lo de las webs de turismo rural (reservas, SEO, panel).
-// Las rutas son las actuales; la fase 2 del plan SEO las moverá (redirigir y
-// reapuntar).
-const productos = [
+const servicios = [
   {
-    href: "/proyectos/agente-whatsapp",
+    href: "/servicios/autoclinic",
     name: "AutoClinic",
     detail: "Agenda, recordatorios automáticos y CRM para clínicas de podología",
   },
   {
     // RuralProp es el nombre de las webs con reservas para turismo rural. El
-    // diseño web a medida es un servicio aparte (no todo es RuralProp): la
-    // página /proyectos/web-design cubre ambos de momento.
-    href: "/proyectos/web-design",
+    // diseño web a medida es un servicio aparte (no todo es RuralProp).
+    href: "/servicios/ruralprop",
     name: "RuralProp",
     detail: "Web con reservas online, SEO y panel de gestión para turismo rural",
   },
   {
-    href: "/proyectos/facturia",
+    href: "/servicios/facturia",
     name: "FacturIA",
     detail: "Gestión documental automática",
   },
@@ -88,10 +85,10 @@ export default function Hero() {
 
           {/* En móvil solo el nombre: el detalle no cabe en la pantalla fija. */}
           <ul
-            aria-label="Nuestros productos"
+            aria-label="Nuestros servicios"
             className="escena-paso-4 mt-[max(1rem,3svh)] w-full max-w-2xl border-t border-border text-left"
           >
-            {productos.map(({ href, name, detail }) => (
+            {servicios.map(({ href, name, detail }) => (
               <li key={href} className="border-b border-border">
                 <Link
                   href={href}

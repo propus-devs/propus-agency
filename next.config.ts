@@ -33,6 +33,16 @@ const nextConfig: NextConfig = {
         destination: "https://propus.es/:path",
         permanent: true,
       },
+      // Reordenación de URLs (una por intención de búsqueda, en español).
+      // `permanent: true` responde 308, que Google trata igual que un 301.
+      // Las rutas viejas siguen existiendo en buscadores y en enlaces externos:
+      // no quitar estas redirecciones.
+      { source: "/proyectos/agente-whatsapp", destination: "/servicios/autoclinic", permanent: true },
+      { source: "/proyectos/facturia", destination: "/servicios/facturia", permanent: true },
+      { source: "/proyectos/web-design", destination: "/servicios/diseno-web-a-medida", permanent: true },
+      // La página de clínicas desapareció: lo que ofrecemos a las clínicas es AutoClinic.
+      { source: "/soluciones/clinicas", destination: "/servicios/autoclinic", permanent: true },
+      { source: "/servicios/diseno-web-clinicas", destination: "/servicios/diseno-web-a-medida", permanent: true },
     ];
   },
   async headers() {

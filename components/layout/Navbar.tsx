@@ -24,19 +24,15 @@ const navLinks = [
   { href: "/#faq", label: "FAQ" },
 ]
 
-// AutoClinic va siempre primero (es la prioridad del negocio); mismo orden que
-// la lista de productos del hero.
-const projectLinks = [
-  { href: "/proyectos/agente-whatsapp", label: "AutoClinic" },
-  { href: "/proyectos/web-design", label: "Web Design" },
-  { href: "/proyectos/facturia", label: "FacturIA" },
+// Los 4 servicios. AutoClinic va siempre primero (es la prioridad del
+// negocio) y FacturIA queda en segundo plano; el orden de los tres primeros
+// sigue el de la lista del hero. Es la misma lista que el pie.
+const serviceLinks = [
+  { href: "/servicios/autoclinic", label: "AutoClinic" },
+  { href: "/servicios/ruralprop", label: "RuralProp" },
+  { href: "/servicios/diseno-web-a-medida", label: "Diseño web a medida" },
+  { href: "/servicios/facturia", label: "FacturIA" },
 ]
-
-// Las páginas de Soluciones (/soluciones/clinicas y
-// /servicios/diseno-web-clinicas) se acceden solo desde el footer, que las
-// enlaza sitewide en su columna «Soluciones». No se quitan del sitemap: además
-// del pie, /soluciones/clinicas recibe 7 enlaces contextuales desde artículos
-// del blog, que es lo que sostiene su posicionamiento.
 
 const infoLinks = [
   { href: "/sobre-nosotros", label: "Sobre nosotros" },
@@ -67,11 +63,11 @@ export default function Navbar() {
 
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground outline-none">
-              Proyectos
+              Servicios
               <ChevronDown className="size-3.5" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              {projectLinks.map((link) => (
+              {serviceLinks.map((link) => (
                 <DropdownMenuItem key={link.href} asChild>
                   <Link href={link.href}>{link.label}</Link>
                 </DropdownMenuItem>
@@ -132,9 +128,9 @@ export default function Navbar() {
               ))}
 
               <span className="mt-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground/60">
-                Proyectos
+                Servicios
               </span>
-              {projectLinks.map((link) => (
+              {serviceLinks.map((link) => (
                 <SheetClose key={link.href} asChild>
                   <Link
                     href={link.href}

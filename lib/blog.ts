@@ -170,7 +170,7 @@ export const blogPosts: BlogPost[] = [
       <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Siguiente paso</h2>
       <p class="text-muted-foreground leading-relaxed mb-4">
         En Propus hemos desarrollado AutoClinic, el agente recepcionista de WhatsApp y CRM pensado para clínicas que trabajan por cita, con la podología como nicho principal y la odontología como segundo. Puedes conocer todos los detalles en
-        <a href="/soluciones/clinicas" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
+        <a href="/servicios/autoclinic" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
         o agendar una llamada de 30 minutos para revisar tu caso concreto sin compromiso.
       </p>
     `,
@@ -219,7 +219,7 @@ export const blogPosts: BlogPost[] = [
         Este funcionamiento técnico es la base sobre la que construimos AutoClinic, nuestro agente recepcionista para el sector salud. Si quieres ver cómo se aplica específicamente al caso de las clínicas dentales, con ejemplos de agenda por tipo de tratamiento, puedes leer nuestra
         <a href="/blog/recepcionista-virtual-clinica-dental" class="text-foreground underline underline-offset-4 hover:text-brand-teal">guía completa de recepcionista virtual para clínica dental</a>
         o conocer directamente
-        <a href="/soluciones/clinicas" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>.
+        <a href="/servicios/autoclinic" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>.
       </p>
     `,
   },
@@ -273,7 +273,7 @@ export const blogPosts: BlogPost[] = [
       </p>
       <p class="text-muted-foreground leading-relaxed mb-4">
         Si quieres calcular el impacto real de las ausencias en tu clínica y ver cómo AutoClinic las reduce, puedes conocer
-        <a href="/soluciones/clinicas" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
+        <a href="/servicios/autoclinic" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
         o agendar una llamada sin compromiso.
       </p>
     `,
@@ -329,7 +329,7 @@ export const blogPosts: BlogPost[] = [
       <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Cómo lo hemos resuelto en AutoClinic</h2>
       <p class="text-muted-foreground leading-relaxed mb-4">
         El CRM de AutoClinic cubre los seis puntos de este checklist y está diseñado para clínicas que trabajan por cita, incluidas las dentales. Puedes ver el detalle en
-        <a href="/soluciones/clinicas" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
+        <a href="/servicios/autoclinic" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
         o agendar una llamada para revisar tu caso concreto.
       </p>
     `,
@@ -378,7 +378,7 @@ export const blogPosts: BlogPost[] = [
       </p>
       <p class="text-muted-foreground leading-relaxed mb-4">
         Si diriges un centro de estética y quieres ver cómo encajaría en tu caso, puedes conocer
-        <a href="/soluciones/clinicas" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
+        <a href="/servicios/autoclinic" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
         o agendar una llamada sin compromiso.
       </p>
     `,
@@ -424,9 +424,9 @@ export const blogPosts: BlogPost[] = [
       </p>
       <p class="text-muted-foreground leading-relaxed mb-4">
         Si quieres ver ejemplos reales de webs que hemos diseñado, visita nuestro
-        <a href="/proyectos/web-design" class="text-foreground underline underline-offset-4 hover:text-brand-teal">portfolio de diseño web</a>,
+        <a href="/servicios/diseno-web-a-medida" class="text-foreground underline underline-offset-4 hover:text-brand-teal">portfolio de diseño web</a>,
         o descubre cómo lo aplicamos específicamente al sector salud en
-        <a href="/servicios/diseno-web-clinicas" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestro servicio de diseño web para clínicas</a>.
+        <a href="/servicios/diseno-web-a-medida" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestro servicio de diseño web para clínicas</a>.
       </p>
     `,
   },
@@ -474,7 +474,7 @@ export const blogPosts: BlogPost[] = [
       <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Siguiente paso</h2>
       <p class="text-muted-foreground leading-relaxed mb-4">
         Si diriges una clínica de podología y quieres ver cómo encajaría AutoClinic en tu agenda, puedes conocer
-        <a href="/soluciones/clinicas" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
+        <a href="/servicios/autoclinic" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
         o agendar una llamada de 30 minutos para revisar tu caso concreto sin compromiso.
       </p>
     `,
@@ -520,7 +520,7 @@ export const blogPosts: BlogPost[] = [
         Estamos en la fase de revisar las conversaciones reales del agente y afinar su base de conocimiento con las preguntas concretas que hacen los pacientes de podología. Es el mismo método de validación previa que aplicamos siempre: el agente se prueba y se aprueba antes de gestionar la agenda con total autonomía. Si quieres seguir el enfoque completo, empieza por nuestra
         <a href="/blog/recepcionista-virtual-clinica-podologia" class="text-foreground underline underline-offset-4 hover:text-brand-teal">guía de AutoClinic para clínicas de podología</a>
         y conoce
-        <a href="/soluciones/clinicas" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>.
+        <a href="/servicios/autoclinic" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>.
       </p>
     `,
   },
@@ -597,7 +597,7 @@ export const blogPosts: BlogPost[] = [
       <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Un caso real</h2>
       <p class="text-muted-foreground leading-relaxed mb-4">
         Hemos construido exactamente este sistema para Cabañas El Acuífero, seis cabañas rurales en las Lagunas de Ruidera. El propietario gestionaba las reservas por teléfono y boca a boca, sin web ni calendario. Hoy tiene su portal de reservas, un panel desde el que administra el blog y una aplicación de calendario que desarrollamos dentro del propio panel, vinculada a la web para controlar fechas y disponibilidad. Puedes ver el proyecto en
-        <a href="/proyectos/web-design" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestro portfolio de diseño web</a>.
+        <a href="/servicios/diseno-web-a-medida" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestro portfolio de diseño web</a>.
       </p>
       <p class="text-muted-foreground leading-relaxed mb-4">
         Si gestionas un alojamiento rural y estás en el punto de "las reservas me las lleva el teléfono", es probable que el sistema que necesitas sea más sencillo de lo que imaginas. Cuéntanos tu caso y lo vemos.
@@ -673,7 +673,7 @@ export const blogPosts: BlogPost[] = [
       </p>
       <p class="text-muted-foreground leading-relaxed mb-4">
         Puedes ver el detalle del producto en
-        <a href="/soluciones/clinicas" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
+        <a href="/servicios/autoclinic" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
         o leer cómo lo estamos aplicando en
         <a href="/blog/recepcionista-virtual-clinica-podologia" class="text-foreground underline underline-offset-4 hover:text-brand-teal">clínicas de podología</a>.
       </p>
@@ -746,7 +746,7 @@ export const blogPosts: BlogPost[] = [
       <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Cómo empezar</h2>
       <p class="text-muted-foreground leading-relaxed mb-4">
         El primer paso es sencillo: dinos qué software de gestión usa tu clínica. Con ese dato podemos comprobar si tiene API pública y qué permite hacer, normalmente en un par de días. A partir de ahí sabremos si la vía es integrar o migrar. Puedes ver el producto completo en
-        <a href="/soluciones/clinicas" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
+        <a href="/servicios/autoclinic" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
         o leer primero
         <a href="/blog/autoclinic-agente-crm-clinicas" class="text-foreground underline underline-offset-4 hover:text-brand-teal">qué es AutoClinic y cómo funciona</a>.
       </p>

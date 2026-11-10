@@ -2,13 +2,12 @@ import type { Metadata } from "next"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 import { Component as GradientShader } from "@/components/ui/stripe-like-gradient-shader"
-import WhaHero from "@/components/sections/agente-whatsapp/WhaHero"
-import WhaProblem from "@/components/sections/agente-whatsapp/WhaProblem"
-import WhaFeatures from "@/components/sections/agente-whatsapp/WhaFeatures"
-import WhaGallery from "@/components/sections/agente-whatsapp/WhaGallery"
-import WhaUseCases from "@/components/sections/agente-whatsapp/WhaUseCases"
-import WhaRoiCalculator from "@/components/sections/agente-whatsapp/WhaRoiCalculator"
-import WhaCTA from "@/components/sections/agente-whatsapp/WhaCTA"
+import WhaHero from "@/components/sections/autoclinic/WhaHero"
+import WhaProblem from "@/components/sections/autoclinic/WhaProblem"
+import WhaFeatures from "@/components/sections/autoclinic/WhaFeatures"
+import WhaGallery from "@/components/sections/autoclinic/WhaGallery"
+import WhaUseCases from "@/components/sections/autoclinic/WhaUseCases"
+import WhaCTA from "@/components/sections/autoclinic/WhaCTA"
 import ServiceSchema from "@/components/seo/ServiceSchema"
 
 export const metadata: Metadata = {
@@ -16,7 +15,7 @@ export const metadata: Metadata = {
   description:
     "Un agente de IA en WhatsApp que agenda, cancela y envía recordatorios — 24/7, en el idioma de tu paciente. Para clínicas de podología y dentales, veterinarias, estética y más.",
   alternates: {
-    canonical: "/proyectos/agente-whatsapp",
+    canonical: "/servicios/autoclinic",
   },
   openGraph: {
     title: "Agente recepcionista WhatsApp — Propus",
@@ -49,7 +48,10 @@ export default function AgenteWhatsappPage() {
         <WhaFeatures />
         <WhaGallery />
         <WhaUseCases />
-        <WhaRoiCalculator />
+        {/* WhaRoiCalculator (la calculadora de rentabilidad) está fuera de la
+            página hasta que estén fijados los precios finales de los planes. El
+            componente y lib/autoclinic-pricing.ts se conservan para volver a
+            ponerla. */}
         <WhaCTA />
       </main>
       <Footer />

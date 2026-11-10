@@ -51,8 +51,8 @@ export default function Movement() {
               className="bg-brand-emerald hover:bg-brand-teal text-background font-semibold px-8 gap-2"
               asChild
             >
-              {/* Lleva al primer servicio (AutoClinic); los demás siguen debajo */}
-              <Link href="/#agente-whatsapp">
+              {/* Lleva a la sección con los cuatro servicios */}
+              <Link href="/#servicios">
                 Descubrir mis opciones
                 <ArrowRightIcon className="size-4" />
               </Link>

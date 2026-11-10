@@ -5,16 +5,16 @@ import Footer from "@/components/layout/Footer"
 import ProjectsShowcase, { type ShowcaseProject } from "@/components/sections/ProjectsShowcase"
 
 export const metadata: Metadata = {
-  title: "Portfolio de diseño y desarrollo web a medida",
+  title: "Diseño y desarrollo web a medida",
   description:
-    "Selección de landing pages y diseños web creados por Propus: interfaces modernas, rápidas y orientadas a conversión para negocios de toda España.",
+    "Diseño web a medida de Propus: interfaces modernas, rápidas y orientadas a conversión para negocios de toda España. Mira los sitios que hemos creado.",
   alternates: {
-    canonical: "/proyectos/web-design",
+    canonical: "/servicios/diseno-web-a-medida",
   },
   openGraph: {
-    title: "Portfolio de diseño y desarrollo web a medida — Propus",
+    title: "Diseño y desarrollo web a medida — Propus",
     description:
-      "Selección de landing pages y diseños web creados por Propus.",
+      "Webs a medida para negocios de toda España: rápidas, modernas y orientadas a conversión.",
     type: "website",
     locale: "es_ES",
   },
@@ -81,11 +81,11 @@ export default function WebDesignPage() {
       <Navbar />
       <main>
         <ProjectsShowcase
-          eyebrow="Web Design"
+          eyebrow="Diseño web a medida"
           icon={<MdDesignServices className="size-3.5" />}
           title="Landing pages que"
           highlight="impresionan"
-          description="Diseñamos interfaces modernas, rápidas y a medida. Una selección de los sitios que hemos creado para nuestros clientes."
+          description="Diseñamos interfaces modernas, rápidas y a medida, pensadas para tu negocio. Una selección de los sitios que hemos creado para nuestros clientes."
           projects={projects}
         />
       </main>

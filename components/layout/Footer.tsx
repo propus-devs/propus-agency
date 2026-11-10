@@ -21,17 +21,13 @@ interface FooterSection {
 
 const footerLinks: FooterSection[] = [
   {
-    label: 'Producto',
+    // Los 4 servicios, en el mismo orden que el menú (AutoClinic primero).
+    label: 'Servicios',
     links: [
-      { href: '/#proceso', label: 'Proceso' },
-      { href: '/#resultados', label: 'Resultados' },
-    ],
-  },
-  {
-    label: 'Soluciones',
-    links: [
-      { href: '/soluciones/clinicas', label: 'Agente + CRM para clínicas' },
-      { href: '/servicios/diseno-web-clinicas', label: 'Diseño web para clínicas' },
+      { href: '/servicios/autoclinic', label: 'AutoClinic' },
+      { href: '/servicios/ruralprop', label: 'RuralProp' },
+      { href: '/servicios/diseno-web-a-medida', label: 'Diseño web a medida' },
+      { href: '/servicios/facturia', label: 'FacturIA' },
     ],
   },
   {
@@ -100,7 +96,7 @@ export default function Footer() {
         </AnimatedContainer>
 
         {/* Link columns */}
-        <div className="mt-10 grid grid-cols-2 gap-8 md:grid-cols-5 xl:col-span-2 xl:mt-0">
+        <div className="mt-10 grid grid-cols-2 gap-8 md:grid-cols-4 xl:col-span-2 xl:mt-0">
           {footerLinks.map((section, index) => (
             <AnimatedContainer key={section.label} delay={0.1 + index * 0.1}>
               <div className="mb-10 md:mb-0">

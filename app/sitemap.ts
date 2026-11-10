@@ -11,11 +11,10 @@ const BASE_URL = siteUrl
 // Si una página nueva no tiene fecha aquí, ponle la del día en que se publica.
 const MODIFICADO = {
   home: "2026-11-09",
-  autoclinic: "2026-10-08", // /proyectos/agente-whatsapp
-  clinicas: "2026-09-05", // /soluciones/clinicas
-  disenoWebClinicas: "2026-09-05", // /servicios/diseno-web-clinicas
-  webs: "2026-11-09", // /proyectos/web-design
-  facturia: "2026-07-30",
+  autoclinic: "2026-11-10", // /servicios/autoclinic (antes /proyectos/agente-whatsapp; sin calculadora)
+  ruralprop: "2026-11-10", // /servicios/ruralprop (nueva)
+  disenoWeb: "2026-11-10", // /servicios/diseno-web-a-medida (antes /proyectos/web-design)
+  facturia: "2026-07-30", // /servicios/facturia (antes /proyectos/facturia)
   sobreNosotros: "2026-11-09",
   blog: "2026-11-09",
   legal: "2026-10-28", // privacidad, términos, cookies y eliminación de datos
@@ -30,31 +29,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${BASE_URL}/proyectos/agente-whatsapp`,
+      url: `${BASE_URL}/servicios/autoclinic`,
       lastModified: MODIFICADO.autoclinic,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
-      url: `${BASE_URL}/soluciones/clinicas`,
-      lastModified: MODIFICADO.clinicas,
+      url: `${BASE_URL}/servicios/ruralprop`,
+      lastModified: MODIFICADO.ruralprop,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
-      url: `${BASE_URL}/servicios/diseno-web-clinicas`,
-      lastModified: MODIFICADO.disenoWebClinicas,
-      changeFrequency: "monthly",
-      priority: 0.85,
-    },
-    {
-      url: `${BASE_URL}/proyectos/web-design`,
-      lastModified: MODIFICADO.webs,
+      url: `${BASE_URL}/servicios/diseno-web-a-medida`,
+      lastModified: MODIFICADO.disenoWeb,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/proyectos/facturia`,
+      url: `${BASE_URL}/servicios/facturia`,
       lastModified: MODIFICADO.facturia,
       changeFrequency: "monthly",
       priority: 0.7,

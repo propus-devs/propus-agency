@@ -35,10 +35,12 @@ const TONES = {
   spring: "var(--color-brand-spring)",
   sky: "var(--color-brand-sky)",
   facturia: "var(--color-facturia)",
-  // Los CTA de /soluciones/clinicas van con degradado wha → wha-alt → wha-teal.
+  // Los CTA de /servicios/autoclinic van con degradado wha → wha-alt → wha-teal.
   // Se toma el color central: un canto derivado del rosa o del teal chirriaría
   // en el extremo opuesto del degradado.
   wha: "var(--color-wha-alt)",
+  // Los CTA de /servicios/ruralprop van en color miel sobre fondo verde bosque.
+  rural: "var(--color-rural-honey)",
 } as const
 
 type Tone = keyof typeof TONES

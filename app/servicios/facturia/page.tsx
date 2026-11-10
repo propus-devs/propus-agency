@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description:
     "FacturIA automatiza el ciclo completo de tus facturas: captura con OCR e IA, revisión y aprobación automática, dashboard de métricas en tiempo real y exportación de informes listos para tu gestoría. Multiempresa y seguro.",
   alternates: {
-    canonical: "/proyectos/facturia",
+    canonical: "/servicios/facturia",
   },
   openGraph: {
     title: "FacturIA — Gestión inteligente de facturas con IA",

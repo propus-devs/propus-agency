@@ -37,7 +37,7 @@ const cases: Caso[] = [
     tags: ["A medida", "SEO", "Carta"],
     imagen: "/img/landings/erdh-hero2.png",
     url: "elrincondehector.com",
-    href: "/proyectos/web-design#el-rincon-de-hector",
+    href: "/servicios/diseno-web-a-medida#el-rincon-de-hector",
     problema:
       "Contaba con una web obsoleta construida en Wix que únicamente mostraba la carta, sin actualizar y con una imagen que no hacía justicia al nivel real del restaurante.",
     solucion:
@@ -55,7 +55,7 @@ const cases: Caso[] = [
     tags: ["Reservas", "SEO", "Reseñas"],
     imagen: "/img/landings/hero-casino.png",
     url: "casinoelbonillo.com",
-    href: "/proyectos/web-design#casino-el-bonillo",
+    href: "/servicios/diseno-web-a-medida#casino-el-bonillo",
     problema:
       "El bar-restaurante más céntrico del pueblo no tenía web propia, perdiendo visibilidad y reservas online.",
     solucion:
@@ -73,7 +73,7 @@ const cases: Caso[] = [
     tags: ["Web app", "Eventos", "Google Maps"],
     imagen: "/img/landings/hero-lio-mobile.png",
     url: "liopub.com",
-    href: "/proyectos/web-design#lio-el-bonillo",
+    href: "/servicios/diseno-web-a-medida#lio-el-bonillo",
     problema:
       "El disco pub referente de la zona no aparecía ni en Google Maps y carecía de canal para promocionar sus fiestas.",
     solucion:
@@ -91,7 +91,7 @@ const cases: Caso[] = [
     tags: ["Reservas", "Panel admin", "SEO y AEO"],
     imagen: "/img/landings/acuiferohero.png",
     url: "elacuifero.es",
-    href: "/proyectos/web-design#cabanas-el-acuifero",
+    href: "/servicios/diseno-web-a-medida#cabanas-el-acuifero",
     problema:
       "José gestionaba las reservas de sus seis cabañas en la carretera de Ruidera únicamente por teléfono y boca a boca, sin web ni calendario: dependía de conocidos y anotaba las fechas a mano.",
     solucion:
@@ -109,7 +109,7 @@ const cases: Caso[] = [
     tags: ["Agente IA", "Reservas", "Festivos"],
     imagen: "/img/landings/golosea-hero2.png",
     url: "golosea.com",
-    href: "/proyectos/web-design#golosea",
+    href: "/servicios/diseno-web-a-medida#golosea",
     problema:
       "Arrastraba una web del Kit Digital pobre, mal estructurada, con exceso de texto y reseñas falsas.",
     solucion:

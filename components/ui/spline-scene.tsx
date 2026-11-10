@@ -1,13 +1,24 @@
 "use client"
 
 import dynamic from "next/dynamic"
+import { preload } from "react-dom"
 import { useCallback, useEffect, useMemo, useRef } from "react"
 import type { Application, SPEObject } from "@splinetool/runtime"
+import { marcarEscena, marcarMotor } from "@/lib/intro-loader"
 
-const Spline = dynamic(() => import("@splinetool/react-spline"), {
-  ssr: false,
-  loading: () => null,
-})
+// `marcarMotor` avisa a la pantalla de carga de la portada de que el código
+// del motor 3D ya está descargado (primer hito de la barra).
+const Spline = dynamic(
+  () =>
+    import("@splinetool/react-spline").then((modulo) => {
+      marcarMotor()
+      return modulo
+    }),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+)
 
 interface SplineSceneProps {
   scene: string
@@ -78,6 +89,10 @@ export function SplineScene({
     return url.toString()
   }, [scene])
 
+  // La escena se pide ya, en paralelo a la descarga del motor, en vez de
+  // esperar a que el motor arranque y la pida él.
+  preload(sceneUrl, { as: "fetch", crossOrigin: "anonymous" })
+
   const dragging = useRef(false)
   const dragOrigin = useRef({ x: 0, y: 0 })
   const dragRotation = useRef({ x: 0, y: 0 })
@@ -116,6 +131,8 @@ export function SplineScene({
       if ((spline as Application & { disposed?: boolean }).disposed) return
 
       appRef.current = spline
+      // Segundo hito de la pantalla de carga: la escena ya existe.
+      marcarEscena()
       // Si la escena termina de cargar con el hero ya fuera de pantalla
       // (recarga a mitad de página), arranca pausada.
       syncPlayback()

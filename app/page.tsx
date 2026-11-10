@@ -1,3 +1,4 @@
+import { IntroLoader } from "@/components/ui/intro-loader"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 import Hero from "@/components/sections/Hero"
@@ -13,6 +14,9 @@ import CTABanner from "@/components/sections/CTABanner"
 export default function Home() {
   return (
     <>
+      {/* Fuera de <main> (que crea su propio contexto de apilado): así queda
+          por encima del menú y tapa toda la portada hasta que el 3D carga. */}
+      <IntroLoader />
       <Navbar />
       <main className="relative z-10">
         <Hero />

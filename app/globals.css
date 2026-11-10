@@ -324,6 +324,154 @@
   to { opacity: 1; transform: none; filter: none; }
 }
 
+/* ── Pantalla de carga ───────────────────────────────────────────────────
+   Cubre la portada (y el menú) hasta que el logo 3D está listo
+   (components/ui/intro-loader.tsx). La barra se pinta con la variable --p
+   (0-100) que actualiza el componente; las celdas son una máscara repetida.
+   Sin JS no debe quedarse puesta: `scripting: none` la oculta y, si el JS no
+   llega a arrancar, la animación `intro-seguro` la retira a los 14 s. */
+.intro-loader {
+  --p: 0;
+  --celda: 10px;
+  --hueco: 4px;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(60rem 36rem at 50% 46%,
+      color-mix(in oklab, var(--color-brand-emerald) 9%, transparent), transparent 70%),
+    repeating-linear-gradient(0deg, transparent 0 47px, color-mix(in oklab, var(--foreground) 4%, transparent) 47px 48px),
+    repeating-linear-gradient(90deg, transparent 0 47px, color-mix(in oklab, var(--foreground) 4%, transparent) 47px 48px),
+    var(--background);
+  animation: intro-seguro 1ms linear 14s forwards;
+  transition: opacity 700ms ease, visibility 0s linear 700ms;
+}
+@media (min-width: 768px) {
+  .intro-loader { --celda: 14px; --hueco: 5px; }
+}
+@media (scripting: none) {
+  .intro-loader { display: none; }
+}
+@keyframes intro-seguro {
+  to { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+.intro-loader[data-fase="saliendo"] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intro-hud {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  transition: transform 700ms cubic-bezier(0.4, 0, 0.2, 1), filter 700ms ease;
+}
+.intro-loader[data-fase="saliendo"] .intro-hud {
+  transform: scale(1.06);
+  filter: blur(6px);
+}
+
+/* Marcas de esquina, como el visor de un juego. */
+.intro-esquina {
+  position: absolute;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 0 solid color-mix(in oklab, var(--color-brand-emerald) 55%, transparent);
+}
+.intro-esquina-tl { top: 1.25rem; left: 1.25rem; border-top-width: 2px; border-left-width: 2px; }
+.intro-esquina-tr { top: 1.25rem; right: 1.25rem; border-top-width: 2px; border-right-width: 2px; }
+.intro-esquina-bl { bottom: 1.25rem; left: 1.25rem; border-bottom-width: 2px; border-left-width: 2px; }
+.intro-esquina-br { bottom: 1.25rem; right: 1.25rem; border-bottom-width: 2px; border-right-width: 2px; }
+@media (min-width: 768px) {
+  .intro-esquina { width: 2.5rem; height: 2.5rem; }
+  .intro-esquina-tl { top: 2rem; left: 2rem; }
+  .intro-esquina-tr { top: 2rem; right: 2rem; }
+  .intro-esquina-bl { bottom: 2rem; left: 2rem; }
+  .intro-esquina-br { bottom: 2rem; right: 2rem; }
+}
+
+.intro-centro {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.5rem;
+  /* 20 celdas exactas, sin media celda al final. */
+  width: calc(20 * (var(--celda) + var(--hueco)) - var(--hueco));
+}
+.intro-marca {
+  text-align: center;
+  font-size: clamp(2.25rem, 7vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--foreground);
+}
+.intro-barra-halo {
+  filter: drop-shadow(0 0 10px color-mix(in oklab, var(--color-brand-emerald) 55%, transparent));
+}
+.intro-barra {
+  height: 0.75rem;
+  background: var(--border);
+  -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 var(--celda), transparent var(--celda) calc(var(--celda) + var(--hueco)));
+  mask-image: repeating-linear-gradient(90deg, #000 0 var(--celda), transparent var(--celda) calc(var(--celda) + var(--hueco)));
+}
+.intro-barra-relleno {
+  height: 100%;
+  width: calc(var(--p) * 1%);
+  background: linear-gradient(90deg, var(--color-brand-teal), var(--color-brand-emerald), var(--color-brand-green));
+}
+.intro-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.intro-estado::after {
+  content: "_";
+  margin-left: 0.15em;
+  color: var(--color-brand-emerald);
+}
+.intro-numero {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-brand-emerald);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .intro-estado::after { animation: intro-cursor 1s steps(1) infinite; }
+  /* Línea de barrido que baja despacio, muy tenue. */
+  .intro-loader::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 6rem;
+    background: linear-gradient(180deg, transparent, color-mix(in oklab, var(--color-brand-emerald) 7%, transparent), transparent);
+    animation: intro-barrido 3.2s linear infinite;
+    pointer-events: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro-loader,
+  .intro-hud { transition: none; }
+}
+@keyframes intro-cursor {
+  50% { opacity: 0; }
+}
+@keyframes intro-barrido {
+  from { transform: translateY(-6rem); }
+  to { transform: translateY(100svh); }
+}
+
 /* ── Movement: escenas en vivo ───────────────────────────────────────────
    Ilustraciones animadas que acompañan al texto de Movement.tsx (calendario,
    documentos y su cubo/moneda 3D). El chat va en JS (ChatScene.tsx).

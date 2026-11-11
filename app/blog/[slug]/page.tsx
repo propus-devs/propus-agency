@@ -7,8 +7,12 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
+import FondoMalla from "@/components/ui/fondo-malla"
 import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema"
 import { siteUrl } from "@/lib/site"
+import { viewportClaro } from "@/lib/tema-claro"
+
+export const viewport = viewportClaro
 
 export async function generateMetadata({
   params,
@@ -86,6 +90,7 @@ export default async function BlogPostPage({
           { name: post.title, path: `/blog/${post.slug}` },
         ]}
       />
+      <FondoMalla />
       <Navbar />
       <main className="relative z-10">
         <article className="mx-auto max-w-3xl px-4 py-20 md:py-28">

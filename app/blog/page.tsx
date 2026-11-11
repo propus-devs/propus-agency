@@ -3,6 +3,10 @@ import { DESCRIPCION_BLOG, getPostsByPage, getTotalPages } from "@/lib/blog"
 import BlogList from "@/components/sections/blog/BlogList"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
+import FondoMalla from "@/components/ui/fondo-malla"
+import { viewportClaro } from "@/lib/tema-claro"
+
+export const viewport = viewportClaro
 
 export const metadata: Metadata = {
   title: "Blog · Desarrollo web, software y automatización",
@@ -24,6 +28,7 @@ export default function BlogPage() {
 
   return (
     <>
+      <FondoMalla />
       <Navbar />
       <main className="relative z-10">
         {/* Hero */}

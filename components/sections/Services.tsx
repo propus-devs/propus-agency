@@ -17,8 +17,8 @@ const servicios = [
     tag: "Para clínicas de podología",
     description:
       "Un agente IA en WhatsApp que atiende a tus pacientes 24/7, gestiona las citas y envía los recordatorios, sin cambiar cómo trabajas hoy.",
-    icono: "bg-brand-spring/10 text-brand-spring",
-    tarjeta: "hover:border-brand-spring/40 hover:shadow-brand-spring/10",
+    icono: "bg-brand-spring/12 text-brand-spring",
+    tarjeta: "hover:border-brand-spring/40 hover:shadow-brand-spring/15",
     enlace: "group-hover:text-brand-spring",
   },
   {
@@ -28,9 +28,11 @@ const servicios = [
     tag: "Para turismo rural",
     description:
       "Web con reservas directas para casas rurales y cabañas: calendario centralizado, pago online, registro de viajeros y SEO.",
-    icono: "bg-rural-honey/10 text-rural-honey",
-    tarjeta: "hover:border-rural-honey/40 hover:shadow-rural-honey/10",
-    enlace: "group-hover:text-rural-honey",
+    // La miel de la página de RuralProp no se lee sobre fondo claro: aquí va
+    // su versión profunda (ámbar 700).
+    icono: "bg-amber-600/15 text-amber-700",
+    tarjeta: "hover:border-amber-600/40 hover:shadow-amber-600/15",
+    enlace: "group-hover:text-amber-700",
   },
   {
     href: "/servicios/diseno-web-a-medida",
@@ -39,8 +41,8 @@ const servicios = [
     tag: "Para cualquier negocio",
     description:
       "Diseñamos y desarrollamos tu web: diseño moderno, optimizada para SEO y preparada para crecer contigo. Sin plantillas genéricas.",
-    icono: "bg-brand-sky/10 text-brand-sky",
-    tarjeta: "hover:border-brand-sky/40 hover:shadow-brand-sky/10",
+    icono: "bg-brand-sky/12 text-brand-sky",
+    tarjeta: "hover:border-brand-sky/40 hover:shadow-brand-sky/15",
     enlace: "group-hover:text-brand-sky",
   },
   {
@@ -50,9 +52,9 @@ const servicios = [
     tag: "Gestión documental",
     description:
       "Sube una imagen o un PDF y obtén tus documentos procesados y clasificados, con extracción de datos y métricas para controlar tu empresa.",
-    icono: "bg-facturia/10 text-facturia",
-    tarjeta: "hover:border-facturia/40 hover:shadow-facturia/10",
-    enlace: "group-hover:text-facturia",
+    icono: "bg-facturia/15 text-facturia-dark",
+    tarjeta: "hover:border-facturia-dark/40 hover:shadow-facturia-dark/15",
+    enlace: "group-hover:text-facturia-dark",
   },
 ] as const
 
@@ -81,7 +83,7 @@ export default function Services() {
             <li key={servicio.href}>
               <Link
                 href={servicio.href}
-                className={`group flex h-full flex-col gap-4 rounded-2xl border border-border bg-card/60 p-7 backdrop-blur-sm transition-[border-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-px hover:shadow-lg motion-reduce:hover:translate-y-0 ${servicio.tarjeta}`}
+                className={`vidrio group flex h-full flex-col gap-4 rounded-2xl border p-7 backdrop-blur-sm transition-[border-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-px hover:shadow-lg motion-reduce:hover:translate-y-0 ${servicio.tarjeta}`}
               >
                 <div className="flex items-center gap-4">
                   <span

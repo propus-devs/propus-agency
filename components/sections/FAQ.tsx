@@ -62,7 +62,7 @@ export default function FAQ() {
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="rounded-xl border border-brand-teal/20 bg-brand-teal/5 backdrop-blur-sm px-5 overflow-hidden"
+                className="vidrio rounded-xl border backdrop-blur-sm px-5 overflow-hidden"
               >
                 <AccordionTrigger className="text-left text-base font-medium py-4 hover:no-underline">
                   {faq.question}

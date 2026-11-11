@@ -7,6 +7,10 @@ import { Card, CardContent } from "@/components/ui/card"
 import { GlowCard } from "@/components/ui/glow-card"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
+import FondoMalla from "@/components/ui/fondo-malla"
+import { viewportClaro } from "@/lib/tema-claro"
+
+export const viewport = viewportClaro
 
 const DESCRIPCION =
   "Somos Propus, dos cofundadores que desarrollamos software de gestión para clínicas, webs con reservas y automatizaciones para negocios de toda España."
@@ -75,6 +79,7 @@ const teamSquads = [
 export default function SobreNosotrosPage() {
   return (
     <>
+      <FondoMalla />
       <Navbar />
       <main className="relative z-10">
         {/* Hero */}
@@ -156,7 +161,7 @@ export default function SobreNosotrosPage() {
                   className="group border-border bg-card transition-all duration-300 hover:scale-105 hover:border-brand-teal/60 hover:bg-linear-to-br hover:from-brand-teal/20 hover:to-brand-green/20"
                 >
                   <CardContent className="pt-6">
-                    <item.icon className="mb-4 size-8 text-brand-teal transition-colors duration-300 group-hover:text-white" />
+                    <item.icon className="mb-4 size-8 text-brand-teal transition-colors duration-300 group-hover:text-foreground" />
                     <h3 className="mb-2 text-lg font-semibold">
                       {item.title}
                     </h3>

@@ -2,7 +2,11 @@ import type { Metadata } from "next"
 import { MdDesignServices } from "react-icons/md"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
+import FondoMalla from "@/components/ui/fondo-malla"
 import ProjectsShowcase, { type ShowcaseProject } from "@/components/sections/ProjectsShowcase"
+import { viewportClaro } from "@/lib/tema-claro"
+
+export const viewport = viewportClaro
 
 export const metadata: Metadata = {
   title: "Diseño y desarrollo web a medida",
@@ -78,6 +82,7 @@ const projects: ShowcaseProject[] = [
 export default function WebDesignPage() {
   return (
     <>
+      <FondoMalla />
       <Navbar />
       <main>
         <ProjectsShowcase

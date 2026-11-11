@@ -6,6 +6,7 @@ export default function AuroraBackground() {
   return (
     <div
       aria-hidden
+      data-fondo="aurora"
       className="fixed inset-0 -z-10 overflow-hidden bg-background"
     >
       {/* Glows de color, muy difuminados y a baja opacidad */}

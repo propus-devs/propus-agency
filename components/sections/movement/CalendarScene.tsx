@@ -19,10 +19,10 @@ const PLANTILLA =
   "grid-cols-[2rem_repeat(5,minmax(0,1fr))] grid-rows-[1.25rem_repeat(4,2.25rem)] gap-1"
 
 const PETICIONES = [
-  { i: 0, col: 2, row: 2, ini: "M", tono: "bg-sky-400/30 text-sky-100", cita: "Mar 10:00" },
-  { i: 1, col: 4, row: 1, ini: "J", tono: "bg-violet-400/30 text-violet-100", cita: "Jue 9:00" },
-  { i: 2, col: 1, row: 3, ini: "A", tono: "bg-amber-400/30 text-amber-100", cita: "Lun 11:00" },
-  { i: 3, col: 5, row: 4, ini: "L", tono: "bg-rose-400/30 text-rose-100", cita: "Vie 12:00" },
+  { i: 0, col: 2, row: 2, ini: "M", tono: "bg-sky-500/20 text-sky-800", cita: "Mar 10:00" },
+  { i: 1, col: 4, row: 1, ini: "J", tono: "bg-violet-500/20 text-violet-800", cita: "Jue 9:00" },
+  { i: 2, col: 1, row: 3, ini: "A", tono: "bg-amber-500/25 text-amber-900", cita: "Lun 11:00" },
+  { i: 3, col: 5, row: 4, ini: "L", tono: "bg-rose-500/20 text-rose-800", cita: "Vie 12:00" },
 ] as const
 
 /** Cubo que gira con un icono por cara: los avisos y reservas, en 3D con CSS. */
@@ -61,7 +61,7 @@ function Cubo() {
 export function CalendarScene({ className }: { className?: string }) {
   return (
     <Live className={className}>
-      <div className="mv-card rounded-2xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-sm">
+      <div className="mv-card vidrio rounded-2xl border p-4 backdrop-blur-sm">
         <div className="flex items-center gap-3">
           <Cubo />
           <div className="leading-tight">
@@ -103,7 +103,7 @@ export function CalendarScene({ className }: { className?: string }) {
                 <span className="mv-ok absolute -right-1 -top-1 grid size-3.5 place-items-center rounded-full bg-brand-emerald text-background">
                   <CheckIcon className="size-2.5" strokeWidth={3} />
                 </span>
-                <span className="mv-pending absolute -right-1 -top-1 grid size-3.5 place-items-center rounded-full bg-amber-400 text-background">
+                <span className="mv-pending absolute -right-1 -top-1 grid size-3.5 place-items-center rounded-full bg-amber-400 text-amber-950">
                   <ClockIcon className="size-2.5" strokeWidth={3} />
                 </span>
               </div>
@@ -115,7 +115,7 @@ export function CalendarScene({ className }: { className?: string }) {
           {PETICIONES.map((p) => (
             <div
               key={p.cita}
-              className="mv-toast absolute inset-0 flex items-center gap-2 rounded-lg border border-white/10 bg-black/30 px-2.5 text-xs"
+              className="mv-toast absolute inset-0 flex items-center gap-2 rounded-lg border border-border bg-card/70 px-2.5 text-xs"
               style={{ "--i": p.i } as CSSProperties}
             >
               <span
@@ -147,7 +147,7 @@ function FilaHora({ hora }: { hora: string }) {
     <>
       <span className="self-center text-[10px] text-muted-foreground">{hora}</span>
       {DIAS.map((dia) => (
-        <span key={dia} className="rounded-md bg-white/[0.04]" />
+        <span key={dia} className="rounded-md bg-foreground/[0.06]" />
       ))}
     </>
   )

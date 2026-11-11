@@ -30,10 +30,13 @@ import { cn } from "@/lib/utils"
 const MAX_TILT_Y = 16 // grados sobre el eje vertical (cursor izquierda ↔ derecha)
 const MAX_TILT_X = 12 // grados sobre el eje horizontal (cursor arriba ↕ abajo)
 
+// Los tonos de marca leen --brand-* (no --color-brand-*) para resolverse en el
+// propio botón: en la portada clara salen en su versión profunda, y dentro de
+// una isla oscura (cierre, pie) vuelven al neón.
 const TONES = {
-  emerald: "var(--color-brand-emerald)",
-  spring: "var(--color-brand-spring)",
-  sky: "var(--color-brand-sky)",
+  emerald: "var(--brand-emerald)",
+  spring: "var(--brand-spring)",
+  sky: "var(--brand-sky)",
   facturia: "var(--color-facturia)",
   // Los CTA de /servicios/autoclinic van con degradado wha → wha-alt → wha-teal.
   // Se toma el color central: un canto derivado del rosa o del teal chirriaría
@@ -151,8 +154,11 @@ function TiltCtaButton({
       style={
         {
           "--cta-tint": TONES[tone],
-          "--edge": "color-mix(in oklab, var(--cta-tint), black 45%)",
-          "--edge-deep": "color-mix(in oklab, var(--cta-tint), black 72%)",
+          // Cuánto negro lleva el canto: 45 % / 72 % por defecto. La portada
+          // clara (globals.css) los suaviza porque sobre fondo claro un canto
+          // casi negro pesa demasiado.
+          "--edge": "color-mix(in oklab, var(--cta-tint), black var(--tilt-edge-mix, 45%))",
+          "--edge-deep": "color-mix(in oklab, var(--cta-tint), black var(--tilt-edge-deep-mix, 72%))",
           "--bloom": "color-mix(in oklab, var(--cta-tint) 55%, transparent)",
           ...style,
         } as React.CSSProperties

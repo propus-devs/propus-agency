@@ -29,7 +29,7 @@ export default function Movement() {
 
           {/* Título: un solo h2 con dos líneas, no dos h2 seguidos */}
           <h2 className="text-4xl md:text-6xl font-semibold tracking-tight leading-tight">
-            <span className="block text-white">No es magia.</span>
+            <span className="block text-foreground">No es magia.</span>
             <span className="mt-1 block bg-linear-to-r from-brand-teal to-brand-green bg-clip-text text-transparent">
               Es simplemente trabajar mejor.
             </span>
@@ -38,7 +38,7 @@ export default function Movement() {
           {/* Subtítulo. Orden fijo: primero las citas (AutoClinic), después
               facturas (FacturIA) y webs. Sin cifras ni comparaciones con la
               competencia: lo que se afirma es lo que hace el producto. */}
-          <p className="text-lg text-slate-400 leading-relaxed max-w-2xl text-balance">
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl text-balance">
             Citas que se confirman solas. Facturas que se procesan solas. Webs
             que reciben reservas mientras duermes. Tú te quedas con lo que de
             verdad requiere una persona.
@@ -57,7 +57,7 @@ export default function Movement() {
                 <ArrowRightIcon className="size-4" />
               </Link>
             </TiltCtaButton>
-            <span className="text-xs text-slate-500">Sin compromiso · Consultoría gratuita</span>
+            <span className="text-xs text-muted-foreground">Sin compromiso · Consultoría gratuita</span>
           </div>
         </div>
 

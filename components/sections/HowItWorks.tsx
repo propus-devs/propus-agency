@@ -48,7 +48,7 @@ export default function HowItWorks() {
             const Icon = step.icon
             return (
               <div key={step.number} className="relative">
-                <div className="flex flex-col gap-4 rounded-2xl border border-brand-teal/20 bg-brand-teal/5 backdrop-blur-sm px-6 py-6 transition-colors duration-200 hover:bg-brand-teal/10 hover:border-brand-teal/40 h-full">
+                <div className="vidrio flex flex-col gap-4 rounded-2xl border backdrop-blur-sm px-6 py-6 transition-colors duration-200 hover:border-brand-teal/40 h-full">
                   <div className="flex items-center gap-4">
                     <div className="size-14 rounded-2xl bg-brand-emerald flex items-center justify-center shrink-0 shadow-lg shadow-brand-emerald/30">
                       <Icon className="size-6 text-background" />

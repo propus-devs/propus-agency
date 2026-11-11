@@ -1,6 +1,10 @@
 import Link from "next/link"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
+import FondoMalla from "@/components/ui/fondo-malla"
+import { viewportClaro } from "@/lib/tema-claro"
+
+export const viewport = viewportClaro
 
 export default function LegalLayout({
   children,
@@ -9,6 +13,7 @@ export default function LegalLayout({
 }>) {
   return (
     <>
+      <FondoMalla />
       <Navbar />
       <main className="relative z-10">
         <div className="mx-auto max-w-3xl px-4 py-20 md:py-28">

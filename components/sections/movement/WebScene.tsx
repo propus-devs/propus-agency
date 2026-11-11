@@ -13,7 +13,7 @@ function Pieza({ className, children }: { className?: string; children: ReactNod
     <div className={cn("relative", className)}>
       <span
         aria-hidden
-        className="mv-w-wire pointer-events-none absolute -inset-1 rounded-md border border-dashed border-white/30"
+        className="mv-w-wire pointer-events-none absolute -inset-1 rounded-md border border-dashed border-foreground/30"
       />
       {children}
     </div>
@@ -30,19 +30,19 @@ function Pieza({ className, children }: { className?: string; children: ReactNod
 export function WebScene({ className }: { className?: string }) {
   return (
     <Live className={className}>
-      <div className="mv-card rounded-2xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-sm">
+      <div className="mv-card vidrio rounded-2xl border p-4 backdrop-blur-sm">
         <div className="leading-tight">
           <p className="text-sm font-semibold text-foreground">Diseño web a medida</p>
           <p className="text-xs text-muted-foreground">Sin plantillas, hechas para tu marca</p>
         </div>
 
-        <div className="mt-3 overflow-hidden rounded-lg border border-white/10 bg-black/40">
+        <div className="mt-3 overflow-hidden rounded-lg border border-border bg-white/70">
           {/* Barra del navegador */}
-          <div className="flex items-center gap-1.5 border-b border-white/10 px-2.5 py-1.5">
-            <span className="size-1.5 rounded-full bg-white/20" />
-            <span className="size-1.5 rounded-full bg-white/20" />
-            <span className="size-1.5 rounded-full bg-white/20" />
-            <span className="ml-2 flex-1 truncate rounded bg-white/[0.06] px-2 py-0.5 text-[9px] text-muted-foreground">
+          <div className="flex items-center gap-1.5 border-b border-border px-2.5 py-1.5">
+            <span className="size-1.5 rounded-full bg-foreground/20" />
+            <span className="size-1.5 rounded-full bg-foreground/20" />
+            <span className="size-1.5 rounded-full bg-foreground/20" />
+            <span className="ml-2 flex-1 truncate rounded bg-foreground/[0.07] px-2 py-0.5 text-[9px] text-muted-foreground">
               tunegocio.es
             </span>
           </div>
@@ -53,9 +53,9 @@ export function WebScene({ className }: { className?: string }) {
               <Pieza>
                 <div className="mv-w-nav flex h-4 items-center gap-2">
                   <Image src="/favicons/noBGpropus1024.png" alt="" width={14} height={14} />
-                  <span className="h-1 w-5 rounded-full bg-white/25" />
-                  <span className="h-1 w-5 rounded-full bg-white/25" />
-                  <span className="h-1 w-5 rounded-full bg-white/25" />
+                  <span className="h-1 w-5 rounded-full bg-foreground/20" />
+                  <span className="h-1 w-5 rounded-full bg-foreground/20" />
+                  <span className="h-1 w-5 rounded-full bg-foreground/20" />
                   <span className="ml-auto h-3.5 w-8 rounded-full border border-brand-emerald/50 bg-brand-emerald/15" />
                 </div>
               </Pieza>
@@ -64,7 +64,7 @@ export function WebScene({ className }: { className?: string }) {
                 <div className="flex flex-col gap-1.5">
                   <Pieza>
                     <p className="mv-w-h1 text-[13px] font-semibold leading-[1.1] tracking-tight">
-                      <span className="block text-white">Tu marca</span>
+                      <span className="block text-foreground">Tu marca</span>
                       <span className="block bg-linear-to-r from-brand-teal to-brand-green bg-clip-text text-transparent">
                         en movimiento.
                       </span>
@@ -72,8 +72,8 @@ export function WebScene({ className }: { className?: string }) {
                   </Pieza>
                   <Pieza>
                     <div className="mv-w-sub flex origin-left flex-col gap-1">
-                      <span className="h-1 w-full rounded-full bg-white/20" />
-                      <span className="h-1 w-3/4 rounded-full bg-white/20" />
+                      <span className="h-1 w-full rounded-full bg-foreground/15" />
+                      <span className="h-1 w-3/4 rounded-full bg-foreground/15" />
                     </div>
                   </Pieza>
                   <Pieza className="w-fit">
@@ -96,7 +96,7 @@ export function WebScene({ className }: { className?: string }) {
               </div>
             </div>
 
-            <MousePointer2Icon className="mv-w-cursor absolute left-0 top-0 size-4 fill-white text-black" />
+            <MousePointer2Icon className="mv-w-cursor absolute left-0 top-0 size-4 fill-foreground text-background" />
           </div>
         </div>
       </div>

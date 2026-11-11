@@ -57,6 +57,26 @@ shadcn v4 usa un modelo de paquete npm, **no** el modelo copy-paste de versiones
 - API Routes: `app/api/<ruta>/route.ts` con exports `GET`, `POST`, etc.
 - Verifica cualquier API de Next.js en `node_modules/next/dist/docs/` antes de usarla.
 
+### Tema claro (portada y páginas de contenido)
+
+Son claras la portada (`/`), Sobre nosotros, el blog (listado, paginación y posts), las páginas
+legales, Diseño web a medida y la página offline. Siguen oscuras, cada una con su identidad propia,
+AutoClinic, RuralProp y FacturIA. No hay un tema por ruta: cada página clara monta
+`<FondoMalla />` (`components/ui/fondo-malla.tsx`) junto a `export const viewport = viewportClaro`
+(`lib/tema-claro.ts`, color de la barra del navegador en móvil). El fondo lleva la clase
+`.tema-claro` y, mientras exista, `html:has(.tema-claro)` (bloque "Tema claro" de `globals.css`)
+sustituye los tokens (`--background`, `--foreground`, `--card`…) y los tonos de marca por una versión
+clara. Una página nueva es clara si monta `<FondoMalla />`; si no, queda oscura.
+
+- Los colores de marca neón viven en `--brand-*` (`:root`); `--color-brand-*` solo los referencia.
+  En la portada pasan a versiones profundas. No escribas hex del neón en componentes de la portada.
+- Usa tokens (`text-foreground`, `text-muted-foreground`, `bg-card`, `border-border`) y `vidrio`
+  (tarjeta de cristal) en las páginas claras; nada de `text-white`, `bg-black` ni `slate-*` sueltos.
+- Para un bloque que deba seguir oscuro dentro de una página clara (pie, tarjeta del cierre) añade
+  `isla-oscura`: repite los tokens oscuros y el neón. La pantalla de carga ya lo es.
+- Las variantes `dark:` están apagadas en las páginas claras (ver `@custom-variant dark`).
+- Las páginas oscuras no se ven afectadas: sin `.tema-claro` en el DOM, nada de esto se activa.
+
 ### React 19
 
 - Hook `use()` para leer promesas y contextos.

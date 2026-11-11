@@ -180,13 +180,13 @@ export default function CaseStudies() {
           <span className="inline-flex items-center gap-2 rounded-full border border-brand-teal/30 bg-brand-teal/10 px-4 py-1.5 text-xs font-medium text-brand-teal">
             Resultados
           </span>
-          <h2 className="text-3xl font-semibold tracking-tight text-white md:text-4xl">
+          <h2 className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
             Clientes que ya{" "}
             <span className="bg-linear-to-r from-brand-sky to-brand-teal bg-clip-text text-transparent">
               confían en nosotros
             </span>
           </h2>
-          <p className="mx-auto max-w-3xl text-balance text-slate-400">
+          <p className="mx-auto max-w-3xl text-balance text-muted-foreground">
             Empresas que ya trabajan con Propus y han transformado su presencia
             digital en semanas.
           </p>
@@ -235,8 +235,7 @@ function Detalle({ c }: { c: Caso }) {
     <div
       className={cn(
         "flex h-full flex-col gap-6 rounded-2xl p-6 md:p-8",
-        "border border-white/10 bg-gradient-to-b from-slate-900/90 to-slate-950/95",
-        "shadow-xl shadow-black/40 ring-1 ring-white/5"
+        "vidrio border"
       )}
     >
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
@@ -244,7 +243,7 @@ function Detalle({ c }: { c: Caso }) {
           <span className="inline-flex w-fit items-center rounded-full border border-brand-teal/40 bg-brand-teal/10 px-3 py-1 text-xs font-medium text-brand-teal">
             {c.sector}
           </span>
-          <span className="font-mono text-xs text-slate-500">{c.url}</span>
+          <span className="font-mono text-xs text-muted-foreground">{c.url}</span>
         </div>
         <Link
           href={c.href}
@@ -258,8 +257,8 @@ function Detalle({ c }: { c: Caso }) {
       <div className="grid gap-6 md:grid-cols-3 md:gap-8">
         <Paso
           label="Problema"
-          color="text-red-400"
-          barra="border-red-400/40"
+          color="text-red-700"
+          barra="border-red-600/40"
           text={c.problema}
         />
         <Paso
@@ -303,7 +302,7 @@ function Paso({
       <p
         className={cn(
           "text-sm leading-relaxed md:text-[0.9375rem]",
-          highlight ? "font-semibold text-white" : "text-slate-300"
+          highlight ? "font-semibold text-foreground" : "text-muted-foreground"
         )}
       >
         {text}

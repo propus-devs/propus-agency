@@ -59,7 +59,7 @@ function FilaCarpetas({ capa }: { capa: "fondo" | "frente" }) {
 export function DocsScene({ className }: { className?: string }) {
   return (
     <Live className={className}>
-      <div className="mv-card rounded-2xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-sm">
+      <div className="mv-card vidrio rounded-2xl border p-4 backdrop-blur-sm">
         <div className="leading-tight">
           <p className="text-sm font-semibold text-foreground">FacturIA</p>
           <p className="text-xs text-muted-foreground">Gestión documental automática</p>
@@ -71,7 +71,7 @@ export function DocsScene({ className }: { className?: string }) {
           {CARPETAS.map((c) => (
             <div
               key={c.tipo}
-              className="mv-doc absolute left-1/2 top-7 z-10 -ml-[1.125rem] grid h-11 w-9 content-start gap-1 rounded-[4px] bg-slate-100 p-1 shadow-md"
+              className="mv-doc absolute left-1/2 top-7 z-10 -ml-[1.125rem] grid h-11 w-9 content-start gap-1 rounded-[4px] bg-slate-100 p-1 shadow-md ring-1 ring-slate-900/10"
               style={
                 { "--i": c.i, "--tx": c.tx, "--ty": "6.5rem", "--rot": c.rot } as CSSProperties
               }

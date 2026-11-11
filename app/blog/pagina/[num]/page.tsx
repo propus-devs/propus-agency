@@ -4,6 +4,10 @@ import { DESCRIPCION_BLOG, getPostsByPage, getTotalPages } from "@/lib/blog"
 import BlogList from "@/components/sections/blog/BlogList"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
+import FondoMalla from "@/components/ui/fondo-malla"
+import { viewportClaro } from "@/lib/tema-claro"
+
+export const viewport = viewportClaro
 
 /**
  * Páginas 2..N del listado. La página 1 vive en /blog, así que aquí solo se
@@ -65,6 +69,7 @@ export default async function BlogPaginaPage({
 
   return (
     <>
+      <FondoMalla />
       <Navbar />
       <main className="relative z-10">
         <section className="px-4 pt-28 pb-16 md:pt-36 md:pb-20">

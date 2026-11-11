@@ -8,7 +8,9 @@ export default function CTABanner() {
   return (
     <section id="contacto" className="py-20 md:py-28">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="relative rounded-3xl bg-neutral-950 overflow-hidden px-8 py-16 md:px-16 text-center border border-white/10">
+        {/* Isla oscura: sobre la portada clara, el cierre es la tarjeta de
+            contraste (con su neón de marca y su sombra para despegarla). */}
+        <div className="isla-oscura relative rounded-3xl bg-[#08171d] overflow-hidden px-8 py-16 md:px-16 text-center border border-white/10 shadow-[0_2rem_4rem_-1.75rem_rgb(15_34_48/0.55)]">
           <EtheralShadow
             color="rgba(0, 180, 130, 0.8)"
             animation={{ scale: 80, speed: 70 }}

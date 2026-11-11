@@ -1,4 +1,6 @@
+import { viewportClaro } from "@/lib/tema-claro"
 import { IntroLoader } from "@/components/ui/intro-loader"
+import FondoMalla from "@/components/ui/fondo-malla"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 import Hero from "@/components/sections/Hero"
@@ -9,9 +11,14 @@ import CaseStudies from "@/components/sections/CaseStudies"
 import FAQ from "@/components/sections/FAQ"
 import CTABanner from "@/components/sections/CTABanner"
 
+// La portada es clara: el color de la barra del navegador en móvil la sigue.
+export const viewport = viewportClaro
+
 export default function Home() {
   return (
     <>
+      {/* Fondo de malla + activa el tema claro (globals.css). */}
+      <FondoMalla />
       {/* Fuera de <main> (que crea su propio contexto de apilado): así queda
           por encima del menú y tapa toda la portada hasta que el 3D carga. */}
       <IntroLoader />

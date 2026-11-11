@@ -39,7 +39,7 @@ function Burbuja({ mensaje, escribiendo }: { mensaje: Mensaje; escribiendo: bool
         "max-w-[85%] px-3 py-2 text-[13px] leading-snug text-foreground animate-in fade-in-0 slide-in-from-bottom-1 duration-300",
         esBot
           ? "self-start rounded-2xl rounded-bl-md border border-brand-emerald/20 bg-brand-emerald/15"
-          : "self-end rounded-2xl rounded-br-md bg-white/10"
+          : "self-end rounded-2xl rounded-br-md bg-foreground/10"
       )}
     >
       {mensaje.text}
@@ -146,7 +146,7 @@ export function ChatScene({ className }: { className?: string }) {
       aria-hidden
       data-live={inView}
       className={cn(
-        "mv-live mv-card rounded-2xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-sm",
+        "mv-live mv-card vidrio rounded-2xl border p-4 backdrop-blur-sm",
         className
       )}
     >

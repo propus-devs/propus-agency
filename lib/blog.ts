@@ -171,7 +171,7 @@ export const blogPosts: BlogPost[] = [
       <p class="text-muted-foreground leading-relaxed mb-4">
         En Propus hemos desarrollado AutoClinic, el agente recepcionista de WhatsApp y CRM pensado para clínicas que trabajan por cita, con la podología como nicho principal y la odontología como segundo. Puedes conocer todos los detalles en
         <a href="/servicios/autoclinic" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
-        o agendar una llamada de 30 minutos para revisar tu caso concreto sin compromiso.
+        o agendar una llamada de 15 minutos para revisar tu caso concreto sin compromiso.
       </p>
     `,
   },
@@ -475,7 +475,7 @@ export const blogPosts: BlogPost[] = [
       <p class="text-muted-foreground leading-relaxed mb-4">
         Si diriges una clínica de podología y quieres ver cómo encajaría AutoClinic en tu agenda, puedes conocer
         <a href="/servicios/autoclinic" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
-        o agendar una llamada de 30 minutos para revisar tu caso concreto sin compromiso.
+        o agendar una llamada de 15 minutos para revisar tu caso concreto sin compromiso.
       </p>
     `,
   },

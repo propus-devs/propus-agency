@@ -5,7 +5,7 @@ const steps = [
     number: "01",
     icon: SearchIcon,
     title: "Entendemos tu negocio",
-    badge: "30 minutos · sin tecnicismos",
+    badge: "15 minutos · sin tecnicismos",
     description:
       "Nos cuentas cómo trabajas hoy y dónde pierdes más tiempo. Detectamos juntos qué tareas se pueden automatizar para que notes el impacto desde el primer mes.",
   },

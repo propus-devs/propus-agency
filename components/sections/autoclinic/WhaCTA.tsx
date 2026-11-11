@@ -42,7 +42,7 @@ export default function WhaCTA() {
             </div>
 
             <p className="mt-4 text-xs text-wha-muted">
-              Sin compromiso · 30 minutos · Con tu propia agenda
+              Sin compromiso · 15 minutos · Con tu propia agenda
             </p>
           </div>
         </div>

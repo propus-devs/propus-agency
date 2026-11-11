@@ -35,7 +35,7 @@ const faqs = [
   {
     question: "¿Cómo sé si esto me va a funcionar a mí?",
     answer:
-      "Por eso ofrecemos el diagnóstico gratuito: en 30 minutos analizamos tu caso concreto y te decimos con honestidad si tiene sentido o no. Si no vemos un impacto real para tu negocio, te lo decimos — no te vamos a vender algo que no necesitas.",
+      "Por eso ofrecemos el diagnóstico gratuito: en 15 minutos analizamos tu caso concreto y te decimos con honestidad si tiene sentido o no. Si no vemos un impacto real para tu negocio, te lo decimos — no te vamos a vender algo que no necesitas.",
   },
 ]
 

@@ -24,7 +24,7 @@ export default function CTABanner() {
               </span>
             </h2>
             <p className="mt-4 text-neutral-300 max-w-xl mx-auto">
-              Agenda una llamada gratuita y descubre en 30 minutos cómo la IA puede transformar tus procesos más críticos.
+              Agenda una llamada gratuita y descubre en 15 minutos cómo la IA puede transformar tus procesos más críticos.
             </p>
 
             <div className="mt-10 flex justify-center">

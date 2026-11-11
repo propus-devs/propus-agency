@@ -21,7 +21,7 @@ export default function FacturiaCTA() {
               </span>
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-slate-300">
-              Solicita una demo y descubre en 30 minutos cómo FacturIA automatiza tus facturas,
+              Solicita una demo y descubre en 15 minutos cómo FacturIA automatiza tus facturas,
               tus movimientos financieros y tus informes para la gestoría.
             </p>
 

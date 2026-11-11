@@ -73,7 +73,8 @@ clara. Una página nueva es clara si monta `<FondoMalla />`; si no, queda oscura
 - Usa tokens (`text-foreground`, `text-muted-foreground`, `bg-card`, `border-border`) y `vidrio`
   (tarjeta de cristal) en las páginas claras; nada de `text-white`, `bg-black` ni `slate-*` sueltos.
 - Para un bloque que deba seguir oscuro dentro de una página clara (pie, tarjeta del cierre) añade
-  `isla-oscura`: repite los tokens oscuros y el neón. La pantalla de carga ya lo es.
+  `isla-oscura`: repite los tokens oscuros y el neón. La pantalla de carga de la portada ya no lo
+  es: usa la paleta clara (anillo de progreso con el logo) y debe seguir sin tramos quietos.
 - Las variantes `dark:` están apagadas en las páginas claras (ver `@custom-variant dark`).
 - Las páginas oscuras no se ven afectadas: sin `.tema-claro` en el DOM, nada de esto se activa.
 

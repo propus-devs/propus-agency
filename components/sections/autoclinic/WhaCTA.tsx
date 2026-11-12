@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { ArrowRightIcon } from "lucide-react"
 import { TiltCtaButton } from "@/components/ui/tilt-cta-button"
+import { rutaReservar } from "@/lib/site"
 
 export default function WhaCTA() {
   return (
@@ -34,7 +35,7 @@ export default function WhaCTA() {
                 className="h-11 gap-2 bg-linear-to-r from-wha via-wha-alt to-wha-teal px-8 text-base font-semibold text-white hover:opacity-90 [&_svg]:transition-transform hover:[&_svg]:translate-x-1"
                 asChild
               >
-                <Link href="https://calendar.app.google/CNBch8s1Q8iqoqdE9" target="_blank" rel="noopener noreferrer">
+                <Link href={rutaReservar}>
                   Solicita una demo
                   <ArrowRightIcon className="size-4" />
                 </Link>

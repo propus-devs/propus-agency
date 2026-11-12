@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { Brain, Cpu, Workflow, Zap, Mail, Phone, TrendingUp, Code, Handshake, Users, Rocket } from "lucide-react"
-import { contact } from "@/lib/site"
+import { contact, rutaReservar } from "@/lib/site"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { GlowCard } from "@/components/ui/glow-card"
@@ -278,7 +278,7 @@ export default function SobreNosotrosPage() {
               className="bg-brand-emerald text-background font-semibold hover:bg-brand-teal"
               asChild
             >
-              <Link href="https://calendar.app.google/CNBch8s1Q8iqoqdE9" target="_blank" rel="noopener noreferrer">Agendar llamada</Link>
+              <Link href={rutaReservar}>Agendar llamada</Link>
             </Button>
           </div>
         </section>

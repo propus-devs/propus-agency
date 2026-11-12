@@ -3,6 +3,7 @@ import { ArrowRightIcon, TreePineIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { TiltCtaButton } from "@/components/ui/tilt-cta-button"
 import RuralPropColinas from "@/components/sections/ruralprop/RuralPropColinas"
+import { rutaReservar } from "@/lib/site"
 
 export default function RuralPropHero() {
   return (
@@ -41,7 +42,7 @@ export default function RuralPropHero() {
             className="h-11 gap-2 bg-rural-honey px-6 font-semibold text-rural-ink hover:bg-[#f0bb62] [&_svg]:transition-transform hover:[&_svg]:translate-x-1"
             asChild
           >
-            <Link href="https://calendar.app.google/CNBch8s1Q8iqoqdE9" target="_blank" rel="noopener noreferrer">
+            <Link href={rutaReservar}>
               Agendar llamada
               <ArrowRightIcon className="size-4" />
             </Link>

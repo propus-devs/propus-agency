@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { ArrowRightIcon } from "lucide-react"
 import { TiltCtaButton } from "@/components/ui/tilt-cta-button"
+import { rutaReservar } from "@/lib/site"
 
 export default function FacturiaCTA() {
   return (
@@ -35,7 +36,7 @@ export default function FacturiaCTA() {
                 className="h-11 gap-2 bg-linear-to-r from-facturia to-facturia-dark px-8 text-base font-semibold text-white hover:opacity-90 [&_svg]:transition-transform hover:[&_svg]:translate-x-1"
                 asChild
               >
-                <Link href="https://calendar.app.google/CNBch8s1Q8iqoqdE9" target="_blank" rel="noopener noreferrer">
+                <Link href={rutaReservar}>
                   Solicita una demo
                   <ArrowRightIcon className="size-4" />
                 </Link>

@@ -101,19 +101,13 @@ export default function CookiesPage() {
         Recursos y enlaces de terceros
       </h2>
       <p className="mb-4 leading-relaxed text-muted-foreground">
-        Aunque no instalamos cookies de terceros, sí existe un punto en el que
-        tu navegador puede comunicarse con un proveedor externo, y queremos que
-        lo sepas:
+        Este sitio web no carga recursos de terceros (fuentes, scripts, mapas ni
+        vídeos) y no te lleva a herramientas externas para reservar una llamada:
+        el botón «Agendar llamada» abre el calendario de reservas de Propus, que
+        funciona en esta misma web y no usa cookies. Si en el futuro
+        incorporamos algún recurso o enlace de un tercero con el que tu
+        navegador llegue a comunicarse, lo indicaremos aquí.
       </p>
-      <ul className="mb-4 list-disc space-y-2 pl-6 text-muted-foreground">
-        <li>
-          <strong className="text-foreground">Reserva de llamadas:</strong> el
-          botón «Agendar llamada» te lleva a una herramienta de citas de Google
-          alojada fuera de este sitio web. Solo se abre si haces clic en él, y a
-          partir de ese momento se aplican las políticas de cookies y privacidad
-          de dicho proveedor.
-        </li>
-      </ul>
 
       <h2 className="mt-12 mb-4 text-xl font-semibold md:text-2xl">
         Base jurídica

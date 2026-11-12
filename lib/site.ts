@@ -9,6 +9,13 @@ export const siteUrl = (
 ).replace(/\/+$/, "")
 
 /**
+ * Página de reserva de llamadas (propia, con el calendario de Propus). Todos los
+ * botones «Agendar llamada» de la web apuntan aquí: no se usan enlaces a
+ * herramientas externas de citas.
+ */
+export const rutaReservar = "/reservar"
+
+/**
  * Datos de contacto públicos de Propus.
  * Fuente única para footer, páginas legales y schema.org — Meta y otras
  * plataformas verifican que el teléfono y el email coincidan en todo el sitio.

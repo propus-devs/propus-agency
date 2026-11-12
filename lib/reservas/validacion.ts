@@ -151,6 +151,100 @@ export function leerBloqueo(
   return { ok: true, desde, hasta, motivo }
 }
 
+// ── Reserva pública ────────────────────────────────────────────────────────
+
+export type CampoReserva = "nombre" | "email" | "telefono" | "mensaje" | "inicio" | "privacidad" | "ticket"
+
+export type DatosReserva = {
+  inicio: Date
+  nombre: string
+  email: string
+  telefono: string | null
+  mensaje: string | null
+  ticket: string
+}
+
+export type ErrorReserva =
+  | { ok: false; error: "datos"; campo: CampoReserva; mensaje: string }
+  /** Rellenó el campo trampa: es un robot. La API finge que salió bien y no guarda nada. */
+  | { ok: false; error: "honeypot" }
+
+/** Quita caracteres de control (salvo el salto de línea si se permite) y recorta. */
+function limpiar(texto: string, permitirSaltos: boolean): string {
+  return Array.from(texto)
+    .map((c) => {
+      const codigo = c.charCodeAt(0)
+      if (permitirSaltos && c === "\n") return c
+      return codigo < 32 || codigo === 127 ? " " : c
+    })
+    .join("")
+}
+
+const EMAIL = /^[^\s@<>()[\]\\,;:"]+@[^\s@<>()[\]\\,;:"]+\.[^\s@<>()[\]\\,;:"]{2,}$/
+
+/**
+ * Lee y valida el JSON que manda el formulario público de reserva. Todo lo que
+ * llega de internet se trata como no fiable: tipos, longitudes y formato.
+ */
+export function leerReservaPublica(
+  cuerpo: unknown
+): { ok: true; datos: DatosReserva } | ErrorReserva {
+  const malo = (campo: CampoReserva, mensaje: string): ErrorReserva => ({
+    ok: false,
+    error: "datos",
+    campo,
+    mensaje,
+  })
+  if (typeof cuerpo !== "object" || cuerpo === null || Array.isArray(cuerpo)) {
+    return malo("nombre", "Los datos no son válidos. Recarga la página e inténtalo de nuevo.")
+  }
+  const c = cuerpo as Record<string, unknown>
+  const texto = (clave: string): string => (typeof c[clave] === "string" ? (c[clave] as string) : "")
+
+  // Campo trampa: invisible para las personas, los robots lo rellenan.
+  if (texto("web").trim() !== "") return { ok: false, error: "honeypot" }
+
+  const nombre = limpiar(texto("nombre"), false).replace(/\s+/g, " ").trim()
+  if (nombre.length < 2 || nombre.length > 80 || !/\p{L}/u.test(nombre)) {
+    return malo("nombre", "Escribe tu nombre (entre 2 y 80 caracteres).")
+  }
+
+  const email = texto("email").trim().toLowerCase()
+  if (email.length > 254 || !EMAIL.test(email) || email.includes("..")) {
+    return malo("email", "Escribe un correo electrónico válido.")
+  }
+
+  const telefonoCrudo = limpiar(texto("telefono"), false).trim()
+  let telefono: string | null = null
+  if (telefonoCrudo !== "") {
+    const digitos = telefonoCrudo.replace(/\D/g, "")
+    if (!/^\+?[\d\s().-]{6,20}$/.test(telefonoCrudo) || digitos.length < 6 || digitos.length > 15) {
+      return malo("telefono", "El teléfono no parece válido. Puedes dejarlo en blanco.")
+    }
+    telefono = telefonoCrudo
+  }
+
+  const mensajeCrudo = limpiar(texto("mensaje"), true).trim()
+  if (mensajeCrudo.length > 500) {
+    return malo("mensaje", "El mensaje es demasiado largo (máximo 500 caracteres).")
+  }
+  const mensaje = mensajeCrudo === "" ? null : mensajeCrudo
+
+  const inicio = leerInstante(texto("inicio"))
+  if (!inicio) return malo("inicio", "Elige un día y una hora.")
+
+  if (c.privacidad !== true) {
+    return malo("privacidad", "Para reservar tienes que aceptar la política de privacidad.")
+  }
+
+  const ticket = texto("ticket")
+  if (ticket === "" || ticket.length > 600) {
+    return malo("ticket", "La página lleva mucho tiempo abierta. Recárgala e inténtalo de nuevo.")
+  }
+
+  return { ok: true, datos: { inicio, nombre, email, telefono, mensaje, ticket } }
+}
+
 // ── Identificadores ────────────────────────────────────────────────────────
 
 export function esUuid(texto: string): boolean {

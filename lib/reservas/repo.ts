@@ -152,6 +152,35 @@ export async function alternarCerrado(inicio: Date): Promise<boolean> {
   })
 }
 
+/** Reservas confirmadas que aún no han terminado y que se hicieron con este correo. */
+export async function contarReservasFuturas(email: string): Promise<number> {
+  const filas = await consulta<{ n: number }>(
+    "select count(*)::int as n from reservas where email = $1 and estado = 'confirmada' and fin > now()",
+    [email]
+  )
+  return filas[0]?.n ?? 0
+}
+
+/**
+ * Guarda una reserva confirmada. Si el hueco ya está ocupado, la restricción de
+ * la base lanza un error (ver `esHuecoOcupado` en lib/db).
+ */
+export async function crearReserva(r: {
+  inicio: Date
+  fin: Date
+  nombre: string
+  email: string
+  telefono: string | null
+  mensaje: string | null
+}): Promise<string> {
+  const filas = await consulta<{ id: string }>(
+    `insert into reservas (inicio, fin, nombre, email, telefono, mensaje)
+     values ($1, $2, $3, $4, $5, $6) returning id`,
+    [r.inicio, r.fin, r.nombre, r.email, r.telefono, r.mensaje]
+  )
+  return filas[0].id
+}
+
 /** Cancela una reserva confirmada. Devuelve false si no existía o ya estaba cancelada. */
 export async function cancelarReserva(id: string): Promise<boolean> {
   const filas = await consulta<{ id: string }>(

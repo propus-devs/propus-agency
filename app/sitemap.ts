@@ -16,6 +16,7 @@ const MODIFICADO = {
   disenoWeb: "2026-11-10", // /servicios/diseno-web-a-medida (antes /proyectos/web-design)
   facturia: "2026-07-30", // /servicios/facturia (antes /proyectos/facturia)
   sobreNosotros: "2026-11-09",
+  reservar: "2026-11-12", // /reservar (nueva; sustituye a la agenda de Google)
   blog: "2026-11-09",
   legal: "2026-10-28", // privacidad, términos, cookies y eliminación de datos
 } as const
@@ -51,6 +52,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: MODIFICADO.facturia,
       changeFrequency: "monthly",
       priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/reservar`,
+      lastModified: MODIFICADO.reservar,
+      changeFrequency: "monthly",
+      priority: 0.8,
     },
     {
       url: `${BASE_URL}/sobre-nosotros`,

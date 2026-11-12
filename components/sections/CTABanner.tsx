@@ -2,7 +2,7 @@ import Link from "next/link"
 import { TiltCtaButton } from "@/components/ui/tilt-cta-button"
 import { ArrowRightIcon, Mail, Phone } from "lucide-react"
 import { EtheralShadow } from "@/components/ui/etheral-shadow"
-import { contact } from "@/lib/site"
+import { contact, rutaReservar } from "@/lib/site"
 
 export default function CTABanner() {
   return (
@@ -38,7 +38,7 @@ export default function CTABanner() {
                 className="bg-linear-to-r from-brand-emerald to-brand-green hover:from-brand-teal hover:to-brand-spring text-background gap-2 h-11 px-8 font-semibold text-base"
                 asChild
               >
-                <Link href="https://calendar.app.google/CNBch8s1Q8iqoqdE9" target="_blank" rel="noopener noreferrer">
+                <Link href={rutaReservar}>
                   Agendar llamada
                   <ArrowRightIcon className="size-4" />
                 </Link>

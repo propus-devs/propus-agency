@@ -64,6 +64,16 @@ export interface PrivacidadEstado {
    * dominios ajenos (todo autohospedado).
    */
   recursosTercerosPanel: boolean
+
+  /**
+   * Borrado diario programado de las reservas de llamadas (30 días tras la llamada).
+   * El borrado ya se dispara solo con el uso normal de la web y del admin (como
+   * mucho una vez por hora), pero eso no garantiza que se ejecute si nadie entra.
+   * Para ponerlo en true: definir CRON_SECRET en Easypanel, programar una tarea
+   * diaria que llame a POST /api/cron/purga con `Authorization: Bearer <CRON_SECRET>`
+   * y comprobar en producción que responde 200 y que borra lo caducado.
+   */
+  purgaReservasProgramada: boolean
 }
 
 export const privacidadEstado: PrivacidadEstado = {
@@ -74,6 +84,7 @@ export const privacidadEstado: PrivacidadEstado = {
   purgaEjecucionesN8n72h: false,
   paisContaboConfirmado: false,
   recursosTercerosPanel: true,
+  purgaReservasProgramada: false,
 }
 
 /**
@@ -90,4 +101,4 @@ export const textoCopiasSeguridad =
   "Se hacen copias de seguridad cifradas, que se guardan en la Unión Europea."
 
 /** Fecha que se muestra al pie de la política. Poner el día real de publicación. */
-export const ultimaActualizacion = "28 de octubre de 2026"
+export const ultimaActualizacion = "12 de noviembre de 2026"

@@ -11,6 +11,7 @@ import {
 } from "lucide-react"
 
 import { TiltCtaButton } from "@/components/ui/tilt-cta-button"
+import { rutaReservar } from "@/lib/site"
 import { cn } from "@/lib/utils"
 import {
   ALTA,
@@ -557,11 +558,7 @@ export default function WhaRoiCalculator() {
                     className="h-11 w-full gap-2 bg-linear-to-r from-wha via-wha-alt to-wha-teal px-6 text-base font-semibold text-white hover:opacity-90 [&_svg]:transition-transform hover:[&_svg]:translate-x-1"
                     asChild
                   >
-                    <Link
-                      href="https://calendar.app.google/CNBch8s1Q8iqoqdE9"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <Link href={rutaReservar}>
                       Revisa estos números con nosotros
                       <ArrowRightIcon className="size-4" />
                     </Link>

@@ -97,7 +97,9 @@ export default function EliminacionDeDatosPage() {
         <li>
           <strong className="text-foreground">Datos de la reunión:</strong> si
           reservaste una llamada, la fecha, la hora y los datos que
-          proporcionaste al hacer la reserva.
+          proporcionaste al hacer la reserva. Estos datos se conservan como
+          máximo 30 días después de la llamada; si prefieres que los
+          borremos antes, pídenoslo.
         </li>
         <li>
           <strong className="text-foreground">

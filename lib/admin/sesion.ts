@@ -1,6 +1,7 @@
 import "server-only"
 import { cookies, headers } from "next/headers"
 import { redirect } from "next/navigation"
+import { ipDeCabeceras } from "@/lib/http/ip"
 import { firmarSesion, huellaPassword, leerSesion } from "./token"
 
 /**
@@ -83,11 +84,5 @@ export async function exigirAdmin(): Promise<void> {
  * anteriores los puede escribir el propio visitante.
  */
 export async function ipCliente(): Promise<string> {
-  const h = await headers()
-  const reenviadas = h.get("x-forwarded-for")
-  if (reenviadas) {
-    const ultima = reenviadas.split(",").at(-1)?.trim()
-    if (ultima) return ultima
-  }
-  return h.get("x-real-ip")?.trim() || "desconocida"
+  return ipDeCabeceras(await headers())
 }

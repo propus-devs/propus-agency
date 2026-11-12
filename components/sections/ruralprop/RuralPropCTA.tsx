@@ -2,6 +2,7 @@ import Link from "next/link"
 import { ArrowRightIcon, CalendarCheckIcon, CheckIcon } from "lucide-react"
 import { TiltCtaButton } from "@/components/ui/tilt-cta-button"
 import RuralPropColinas from "@/components/sections/ruralprop/RuralPropColinas"
+import { rutaReservar } from "@/lib/site"
 
 const GRANO =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")"
@@ -76,7 +77,7 @@ export default function RuralPropCTA() {
               className="h-12 gap-2 bg-rural-honey px-8 text-base font-semibold text-rural-ink hover:bg-[#f0bb62] [&_svg]:transition-transform hover:[&_svg]:translate-x-1"
               asChild
             >
-              <Link href="https://calendar.app.google/CNBch8s1Q8iqoqdE9" target="_blank" rel="noopener noreferrer">
+              <Link href={rutaReservar}>
                 Agendar llamada
                 <ArrowRightIcon className="size-4" />
               </Link>

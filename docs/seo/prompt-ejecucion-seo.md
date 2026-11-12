@@ -13,7 +13,7 @@ Implementa las mejoras SEO de esta auditoría en la web de Propus (agencia de IA
 - Posicionamiento: nacional con base local en Albacete (la única página con ángulo local es /sobre-nosotros; no propagues "Albacete" al resto).
 - Negocio: (1) agentes recepcionistas autónomos en WhatsApp + CRM de control interno para clínicas — nicho principal dental, secundario estética (producto: AutoClinic, en /proyectos/agente-whatsapp); (2) diseño web experto — portfolio real en /proyectos/web-design con 4 clientes (elrincondehector.com, casinoelbonillo.com, liopub.com, golosea.com).
 - Stack: Next.js 16 App Router, React 19, TS estricto (sin any), Tailwind v4 (NO crear tailwind.config.js; tema en app/globals.css con @theme), shadcn v4, radix-ui monorepo, imports `@/`. Server Components por defecto. Secciones en components/sections/. Blog hardcodeado en lib/blog.ts (interface BlogPost, content en HTML con clases Tailwind — imita exactamente el formato del post existente).
-- CTA estándar de toda la web: botón "Agendar llamada" → https://calendar.app.google/CNBch8s1Q8iqoqdE9 (target _blank, rel noopener noreferrer). Úsalo en las landings nuevas.
+- CTA estándar de toda la web: botón "Agendar llamada" → `/reservar` (calendario propio; usa `rutaReservar` de `lib/site.ts`, enlace interno, sin target _blank). Úsalo en las landings nuevas. Desde el 12/11/2026 ya no se usa la agenda de Google.
 - Estilo visual: replica los patrones existentes (gradientes bg-linear-to-r con tokens brand-teal/brand-green/brand-sky/brand-emerald/brand-lime, Cards de shadcn, secciones py-20 md:py-28, max-w-6xl). Lee 2-3 secciones existentes antes de escribir las nuevas.
 
 # RESTRICCIONES DURAS

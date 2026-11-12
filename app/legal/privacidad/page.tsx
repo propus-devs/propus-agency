@@ -82,6 +82,12 @@ const finalidades = [
     base: "Interés legítimo en atender a quien nos escribe (art. 6.1.f RGPD) o, si pides información antes de contratar, medidas precontractuales a petición tuya (art. 6.1.b)",
   },
   {
+    finalidad: "Reservar una llamada con nosotros",
+    datos:
+      "Nombre, correo electrónico, teléfono (opcional), mensaje (opcional) y el día y la hora que eliges",
+    base: "Medidas precontractuales a petición tuya (art. 6.1.b RGPD): reservas la llamada para que hablemos de un posible servicio",
+  },
+  {
     finalidad: "Ejecutar los contratos con clientes",
     datos:
       "Datos de contacto y los necesarios para prestar el servicio contratado",
@@ -293,14 +299,18 @@ export default function PrivacidadPage() {
       <UL>
         <li>
           <B>Cómo contactar con nosotros:</B> por correo electrónico, por
-          teléfono o reservando una llamada. Esta web no tiene formulario de
-          contacto.
+          teléfono o reservando una llamada en esta web. El formulario de
+          reserva de llamadas es el único formulario del sitio.
         </li>
         <li>
-          <B>Reserva de llamadas:</B> el botón «Agendar llamada» te lleva a la
-          agenda de Google (Google Ireland Limited), fuera de esta web. Los
-          datos que facilites al reservar se tratan en esa herramienta y se
-          usan para atender tu reserva.
+          <B>Reserva de llamadas:</B> el botón «Agendar llamada» te lleva a una
+          página de esta misma web, donde eliges día y hora e indicas tu nombre
+          y tu correo (el teléfono y un mensaje son opcionales). Esos datos se
+          guardan en nuestra base de datos, los ve únicamente el equipo de
+          Propus y se usan para atender tu reserva y nada más. Se eliminan 30
+          días después de la fecha de la llamada. Para evitar reservas
+          automáticas o abusivas, el formulario lleva un campo oculto y el
+          servidor limita el número de reservas por hora.
         </li>
         <li>
           <B>Llamadas telefónicas:</B> las llamadas al número de teléfono de
@@ -311,8 +321,10 @@ export default function PrivacidadPage() {
           <B>Datos técnicos:</B> para servirte la web, el servidor procesa de
           forma transitoria tu dirección IP y datos técnicos de tu navegador.
           Propus no almacena tu dirección IP en registros de acceso ni en
-          ningún otro sitio. No usamos herramientas de analítica, de
-          perfilado ni de publicidad.
+          ningún otro sitio. Al reservar una llamada, el servidor usa tu
+          dirección IP unos instantes, sólo en memoria, para limitar el número
+          de reservas por hora; no se guarda. No usamos herramientas de
+          analítica, de perfilado ni de publicidad.
         </li>
       </UL>
 
@@ -587,12 +599,12 @@ export default function PrivacidadPage() {
       </P>
       <UL>
         <li>
-          <B>DigitalOcean:</B> aloja esta web, en su región LON1 (Londres,
-          Reino Unido).
+          <B>DigitalOcean:</B> aloja esta web y la base de datos donde se
+          guardan las reservas de llamadas, en su región LON1 (Londres, Reino
+          Unido).
         </li>
         <li>
-          <B>Google Ireland Limited</B> (Irlanda): correo corporativo y agenda
-          para reservar llamadas.
+          <B>Google Ireland Limited</B> (Irlanda): correo corporativo.
         </li>
         <li>
           <B>Contabo GmbH:</B> servidor donde funcionan AutoClinic y el agente
@@ -651,6 +663,13 @@ export default function PrivacidadPage() {
       <UL>
         <li>
           <B>Consultas:</B> mientras sean necesarios para atender tu consulta.
+        </li>
+        <li>
+          <B>Reservas de llamadas:</B> como máximo 30 días naturales después de
+          la fecha de la llamada (o de su cancelación); pasado ese plazo se
+          eliminan.
+          {estado.purgaReservasProgramada &&
+            " El borrado se ejecuta cada día de forma automática."}
         </li>
         <li>
           <B>Clientes:</B> mientras dure la relación contractual y, después,

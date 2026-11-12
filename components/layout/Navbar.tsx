@@ -17,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { MenuIcon, ChevronDown, CalendarDaysIcon } from "lucide-react"
+import { rutaReservar } from "@/lib/site"
 
 const navLinks = [
   { href: "/#proceso", label: "Proceso" },
@@ -95,7 +96,7 @@ export default function Navbar() {
             className="h-9 gap-2 px-5 text-sm bg-brand-emerald hover:bg-brand-teal text-background font-semibold"
             asChild
           >
-            <Link href="https://calendar.app.google/CNBch8s1Q8iqoqdE9" target="_blank" rel="noopener noreferrer">
+            <Link href={rutaReservar}>
               <CalendarDaysIcon className="size-4" />
               Agendar llamada
             </Link>
@@ -161,7 +162,7 @@ export default function Navbar() {
                   className="h-11 w-full gap-2 text-base bg-brand-emerald hover:bg-brand-teal text-background font-semibold"
                   asChild
                 >
-                  <Link href="https://calendar.app.google/CNBch8s1Q8iqoqdE9" target="_blank" rel="noopener noreferrer">
+                  <Link href={rutaReservar}>
                     <CalendarDaysIcon className="size-4" />
                     Agendar llamada
                   </Link>

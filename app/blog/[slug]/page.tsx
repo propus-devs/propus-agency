@@ -9,7 +9,7 @@ import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 import FondoMalla from "@/components/ui/fondo-malla"
 import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema"
-import { siteUrl } from "@/lib/site"
+import { rutaReservar, siteUrl } from "@/lib/site"
 import { viewportClaro } from "@/lib/tema-claro"
 
 export const viewport = viewportClaro
@@ -144,7 +144,7 @@ export default async function BlogPostPage({
               className="bg-brand-emerald text-background font-semibold hover:bg-brand-teal"
               asChild
             >
-              <Link href="https://calendar.app.google/CNBch8s1Q8iqoqdE9" target="_blank" rel="noopener noreferrer">Agendar llamada</Link>
+              <Link href={rutaReservar}>Agendar llamada</Link>
             </Button>
           </div>
         </article>

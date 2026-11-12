@@ -6,7 +6,9 @@
  *  - Resto de GET: network con fallback a caché.
  */
 
-const VERSION = "v1"
+// v2: el admin y la API quedan fuera de la caché; al subir la versión, el
+// navegador borra las cachés anteriores (ver "activate").
+const VERSION = "v2"
 const PRECACHE = `propus-precache-${VERSION}`
 const RUNTIME = `propus-runtime-${VERSION}`
 
@@ -69,6 +71,11 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET") return
   const url = new URL(request.url)
   if (url.origin !== self.location.origin) return
+
+  // El admin y la API llevan datos de clientes (nombres, correos) y cambian en
+  // cada petición: no se guardan en la caché del navegador ni se sirven de ella.
+  const p = url.pathname
+  if (p === "/admin" || p.startsWith("/admin/") || p === "/api" || p.startsWith("/api/")) return
 
   // 1) Navegación (documentos HTML): network-first.
   if (request.mode === "navigate") {

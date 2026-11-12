@@ -48,6 +48,18 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        // Admin y API: fuera de buscadores y sin caché (llevan datos de clientes).
+        source: "/admin/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" },
+          { key: "Cache-Control", value: "no-store" },
+        ],
+      },
+      {
+        source: "/api/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+      {
         // Escena 3D auto-hospedada: contenido inmutable (si cambia, se renombra)
         source: "/spline/:path*",
         headers: [

@@ -84,6 +84,34 @@ clara. Una página nueva es clara si monta `<FondoMalla />`; si no, queda oscura
 - Formularios con `action={...}`, `useActionState`, `useFormStatus`.
 - `useTransition` admite funciones async directamente.
 
+### Reservas y admin (`/admin`, `lib/reservas`, `lib/db`, `lib/admin`)
+
+Calendario propio de llamadas de 15 min y su panel, dentro de este mismo repo y contenedor (Easypanel,
+DigitalOcean). La web pública sigue siendo estática; solo `/admin` y la futura `/api/reservas` son dinámicas.
+**Este repositorio es público**: ningún secreto, contraseña ni dato real va en el código.
+
+- **Variables** (solo en Easypanel, servicio `propus`; en local, `.env.local`): `DATABASE_URL` (URL interna de
+  `propus-db`), `ADMIN_PASSWORD_HASH` y `AUTH_SECRET` (ambas con `npm run admin:password`). Sin las dos últimas
+  el admin queda cerrado; sin `DATABASE_URL` el panel lo avisa. `DATABASE_POOL_MAX=1` solo en local.
+- **Cada página y cada Server Action del admin empieza por `await exigirAdmin()`**
+  (`lib/admin/sesion.ts`). El layout no basta: no se vuelve a ejecutar al navegar y las acciones son endpoints
+  públicos. Las acciones terminan siempre en `redirect` con `?ok=…`/`?error=…` (textos en
+  `lib/admin/mensajes.ts`; nunca se pinta tal cual un texto de la URL).
+- **`haySesion()` lee la cookie antes que nada**: es lo que hace dinámicas las páginas del admin. Si se
+  comprueba antes una variable de entorno, `next build` (sin variables) prerenderiza una redirección fija al
+  login y el admin deja de funcionar en producción. Tras tocar esto, `next build` debe mostrar `ƒ` en `/admin*`.
+- **Hora**: todo se guarda en UTC (`timestamptz`) y se muestra y se escribe en `Europe/Madrid`
+  (`lib/reservas/huecos.ts`, que además calcula los huecos y no importa nada para poder probarse).
+- **Datos personales**: las reservas se borran a los 30 días de la llamada (`purgarCaducadas` en
+  `lib/reservas/repo.ts`, hoy colgada del uso del panel; falta un disparo programado). Las IP del límite de
+  intentos de login solo viven en memoria.
+- **Esquema**: `lib/db/migraciones.ts`; se aplica solo al primer uso. Una migración ya publicada no se edita:
+  se añade otra al final.
+- **Service worker** (`public/sw.js`): no cachea `/admin` ni `/api` (llevan datos de clientes). Subir `VERSION`
+  si cambia la lógica de caché.
+- **Pruebas**: `npm test` (`node --test`, archivos `*.test.mjs`; lo que prueban no importa nada de Next).
+  Base local sin Docker: `npm run db:dev` (puerto 5433) y `.env.local` con `DATABASE_URL`/`DATABASE_POOL_MAX`.
+
 ---
 
 ## Estructura de archivos
@@ -136,5 +164,8 @@ Tono de la landing: técnico, moderno, confiable.
 npm run dev                    # Servidor de desarrollo (Turbopack)
 npm run build                  # Build de producción
 npm run lint                   # ESLint
+npm test                       # Pruebas unitarias (huecos, validación, login)
+npm run db:dev                 # Postgres embebido para desarrollo (puerto 5433)
+npm run admin:password         # Genera ADMIN_PASSWORD_HASH y AUTH_SECRET
 npx shadcn add <componente>    # Agregar componente shadcn
 ```

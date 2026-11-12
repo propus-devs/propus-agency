@@ -61,4 +61,19 @@ export const migraciones: Migracion[] = [
       create index reservas_inicio_idx on reservas (inicio);
     `,
   },
+  {
+    id: "002-visibilidad-y-huecos-cerrados",
+    sql: `
+      -- Porcentaje de huecos de cada día que se enseñan al cliente (100 = todos) y
+      -- semilla del reparto: con otra semilla se esconden otros huecos.
+      alter table ajustes
+        add column visibilidad_pct     smallint not null default 100 check (visibilidad_pct between 10 and 100),
+        add column visibilidad_semilla integer  not null default 1;
+
+      -- Huecos cerrados a mano desde el calendario del admin. No llevan datos personales.
+      create table huecos_cerrados (
+        inicio timestamptz primary key
+      );
+    `,
+  },
 ]

@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 
 const ENLACES = [
   { id: "reservas", href: "/admin", texto: "Reservas" },
+  { id: "calendario", href: "/admin/calendario", texto: "Calendario" },
   { id: "horarios", href: "/admin/horarios", texto: "Horario y ajustes" },
   { id: "bloqueos", href: "/admin/bloqueos", texto: "Días bloqueados" },
 ] as const
@@ -27,18 +28,22 @@ export default function Pagina({
   return (
     <>
       <header className="border-b border-border/60 bg-background/60 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center gap-x-6 gap-y-3 px-4 py-3">
+        <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
           <Link href="/admin" className="font-heading text-lg font-semibold tracking-tight">
             Propus <span className="font-normal text-muted-foreground">· Admin</span>
           </Link>
-          <nav aria-label="Secciones del admin" className="flex flex-1 flex-wrap gap-1">
+          {/* En móvil la navegación pasa a una fila propia que se desliza de lado. */}
+          <nav
+            aria-label="Secciones del admin"
+            className="order-last flex w-full gap-1 overflow-x-auto sm:order-none sm:w-auto sm:flex-1"
+          >
             {ENLACES.map((enlace) => (
               <Link
                 key={enlace.id}
                 href={enlace.href}
                 aria-current={enlace.id === actual ? "page" : undefined}
                 className={cn(
-                  "rounded-md px-3 py-1.5 text-sm transition-colors",
+                  "shrink-0 rounded-md px-3 py-1.5 text-sm whitespace-nowrap transition-colors",
                   enlace.id === actual
                     ? "bg-muted text-foreground"
                     : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
@@ -48,7 +53,7 @@ export default function Pagina({
               </Link>
             ))}
           </nav>
-          <form action={cerrarSesionAccion}>
+          <form action={cerrarSesionAccion} className="ml-auto sm:ml-0">
             <Button type="submit" variant="ghost" size="sm">
               <LogOut aria-hidden />
               Cerrar sesión

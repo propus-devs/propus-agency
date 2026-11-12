@@ -78,6 +78,7 @@ export function leerAjustes(
         margenMin: number
         antelacionHoras: number
         ventanaDias: number
+        visibilidadPct: number
         activo: boolean
       }
     }
@@ -86,13 +87,34 @@ export function leerAjustes(
   const margenMin = entero(leer("margen_min"), 0, 120)
   const antelacionHoras = entero(leer("antelacion_horas"), 0, 720)
   const ventanaDias = entero(leer("ventana_dias"), 1, 120)
-  if (duracionMin === null || margenMin === null || antelacionHoras === null || ventanaDias === null) {
+  const visibilidadPct = entero(leer("visibilidad_pct"), 10, 100)
+  if (
+    duracionMin === null ||
+    margenMin === null ||
+    antelacionHoras === null ||
+    ventanaDias === null ||
+    visibilidadPct === null
+  ) {
     return { ok: false, error: "ajustes-invalidos" }
   }
   return {
     ok: true,
-    ajustes: { duracionMin, margenMin, antelacionHoras, ventanaDias, activo: leer("activo") === "on" },
+    ajustes: {
+      duracionMin,
+      margenMin,
+      antelacionHoras,
+      ventanaDias,
+      visibilidadPct,
+      activo: leer("activo") === "on",
+    },
   }
+}
+
+/** "2026-11-16T09:00:00.000Z" (como lo escribe `toISOString`) → Date. null si no lo es. */
+export function leerInstante(texto: string): Date | null {
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(texto)) return null
+  const fecha = new Date(texto)
+  return Number.isNaN(fecha.getTime()) ? null : fecha
 }
 
 // ── Bloqueos ───────────────────────────────────────────────────────────────

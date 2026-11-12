@@ -1,11 +1,11 @@
 import "server-only"
 import { consulta, transaccion } from "@/lib/db"
-import type { ConfigHuecos, DiaSemana, Franja, Intervalo } from "./huecos"
+import type { ConfigAgenda, DiaSemana, Franja, Intervalo } from "./huecos"
 
 /** Datos personales de las reservas: días que se conservan tras la llamada. */
 export const DIAS_DE_CONSERVACION = 30
 
-export type Ajustes = ConfigHuecos & { activo: boolean }
+export type Ajustes = ConfigAgenda & { activo: boolean }
 
 export type Bloqueo = { id: number; desde: Date; hasta: Date; motivo: string }
 
@@ -27,19 +27,46 @@ export type Reserva = {
 export async function obtenerAjustes(): Promise<Ajustes> {
   const filas = await consulta<Ajustes>(
     `select duracion_min as "duracionMin", margen_min as "margenMin",
-            antelacion_horas as "antelacionHoras", ventana_dias as "ventanaDias", activo
+            antelacion_horas as "antelacionHoras", ventana_dias as "ventanaDias",
+            visibilidad_pct as "visibilidadPct", visibilidad_semilla as "semilla", activo
        from ajustes where id = 1`
   )
   if (!filas[0]) throw new Error("Falta la fila de ajustes (migración 001)")
   return filas[0]
 }
 
-export async function guardarAjustes(a: Ajustes): Promise<void> {
+/**
+ * Guarda los ajustes y el horario semanal de una vez (todo o nada). La semilla
+ * del reparto no se toca aquí: ver `barajarHuecos`.
+ */
+export async function guardarAgenda(
+  a: Omit<Ajustes, "semilla">,
+  franjas: Franja[]
+): Promise<void> {
+  await transaccion(async (q) => {
+    await q(
+      `update ajustes
+          set duracion_min = $1, margen_min = $2, antelacion_horas = $3, ventana_dias = $4,
+              visibilidad_pct = $5, activo = $6
+        where id = 1`,
+      [a.duracionMin, a.margenMin, a.antelacionHoras, a.ventanaDias, a.visibilidadPct, a.activo]
+    )
+    await q("delete from franjas")
+    if (franjas.length === 0) return
+    await q(
+      `insert into franjas (dia_semana, inicio_min, fin_min)
+       select * from unnest($1::int[], $2::int[], $3::int[])`,
+      [franjas.map((f) => f.diaSemana), franjas.map((f) => f.inicioMin), franjas.map((f) => f.finMin)]
+    )
+  })
+}
+
+/** Cambia la semilla: se esconden otros huecos (con el mismo porcentaje). */
+export async function barajarHuecos(): Promise<void> {
   await consulta(
     `update ajustes
-        set duracion_min = $1, margen_min = $2, antelacion_horas = $3, ventana_dias = $4, activo = $5
-      where id = 1`,
-    [a.duracionMin, a.margenMin, a.antelacionHoras, a.ventanaDias, a.activo]
+        set visibilidad_semilla = 1 + floor(random() * 2000000000)::int
+      where id = 1`
   )
 }
 
@@ -52,19 +79,6 @@ export async function listarFranjas(): Promise<Franja[]> {
   )
   // La base garantiza (check) que el día va de 1 a 7.
   return filas.map((f) => ({ ...f, diaSemana: f.diaSemana as DiaSemana }))
-}
-
-/** Sustituye todo el horario por el nuevo, de una vez. */
-export async function guardarFranjas(franjas: Franja[]): Promise<void> {
-  await transaccion(async (q) => {
-    await q("delete from franjas")
-    if (franjas.length === 0) return
-    await q(
-      `insert into franjas (dia_semana, inicio_min, fin_min)
-       select * from unnest($1::int[], $2::int[], $3::int[])`,
-      [franjas.map((f) => f.diaSemana), franjas.map((f) => f.inicioMin), franjas.map((f) => f.finMin)]
-    )
-  })
 }
 
 // ── Bloqueos ───────────────────────────────────────────────────────────────
@@ -96,6 +110,46 @@ const COLUMNAS_RESERVA = `id, inicio, fin, nombre, email, telefono, mensaje, est
 /** Todas las reservas que se conservan (las de los últimos 30 días y las futuras). */
 export async function listarReservas(): Promise<Reserva[]> {
   return consulta<Reserva>(`select ${COLUMNAS_RESERVA} from reservas order by inicio`)
+}
+
+/** Reservas (también las canceladas) que se tocan con el rango [desde, hasta). */
+export async function listarReservasEntre(desde: Date, hasta: Date): Promise<Reserva[]> {
+  return consulta<Reserva>(
+    `select ${COLUMNAS_RESERVA} from reservas where fin > $1 and inicio < $2 order by inicio`,
+    [desde, hasta]
+  )
+}
+
+/** Bloqueos que se tocan con el rango [desde, hasta). */
+export async function listarBloqueosEntre(desde: Date, hasta: Date): Promise<Bloqueo[]> {
+  return consulta<Bloqueo>(
+    `select id, desde, hasta, motivo from bloqueos where hasta > $1 and desde < $2 order by desde`,
+    [desde, hasta]
+  )
+}
+
+// ── Huecos cerrados a mano ─────────────────────────────────────────────────
+
+/** Inicio (ms) de los huecos cerrados a mano que empiezan en [desde, hasta). */
+export async function listarCerrados(desde: Date, hasta: Date): Promise<Set<number>> {
+  const filas = await consulta<{ inicio: Date }>(
+    "select inicio from huecos_cerrados where inicio >= $1 and inicio < $2",
+    [desde, hasta]
+  )
+  return new Set(filas.map((f) => f.inicio.getTime()))
+}
+
+/** Cierra el hueco si estaba abierto y lo abre si estaba cerrado. Devuelve true si queda cerrado. */
+export async function alternarCerrado(inicio: Date): Promise<boolean> {
+  return transaccion(async (q) => {
+    const abiertos = await q<{ inicio: Date }>(
+      "delete from huecos_cerrados where inicio = $1 returning inicio",
+      [inicio]
+    )
+    if (abiertos.length > 0) return false
+    await q("insert into huecos_cerrados (inicio) values ($1) on conflict do nothing", [inicio])
+    return true
+  })
 }
 
 /** Cancela una reserva confirmada. Devuelve false si no existía o ya estaba cancelada. */
@@ -136,8 +190,10 @@ export async function purgarCaducadas(): Promise<{ reservas: number; bloqueos: n
         returning 1
      ), b as (
        delete from bloqueos where hasta < now() - make_interval(days => $1) returning 1
+     ), c as (
+       delete from huecos_cerrados where inicio < now() - make_interval(days => $1) returning 1
      )
-     select (select count(*) from r)::int as reservas, (select count(*) from b)::int as bloqueos`,
+     select (select count(*) from r)::int as reservas, (select count(*) from b)::int + (select count(*) from c)::int as bloqueos`,
     [DIAS_DE_CONSERVACION]
   )
   return filas[0] ?? { reservas: 0, bloqueos: 0 }

@@ -1,13 +1,12 @@
 import { borrarBloqueoAccion, crearBloqueoAccion } from "@/app/admin/actions"
 import Aviso from "@/components/admin/Aviso"
-import { claseAyuda, claseEtiqueta } from "@/components/admin/campos"
+import FormularioBloqueo from "@/components/admin/FormularioBloqueo"
 import Pagina from "@/components/admin/Pagina"
 import SinBaseDeDatos from "@/components/admin/SinBaseDeDatos"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { exigirAdmin } from "@/lib/admin/sesion"
 import { hayBaseDeDatos } from "@/lib/db"
-import { formatearFechaCorta, formatearHora } from "@/lib/reservas/huecos"
+import { claveDiaMadrid, formatearFechaCorta, formatearHora, sumarDias } from "@/lib/reservas/huecos"
 import { listarBloqueos, type Bloqueo } from "@/lib/reservas/repo"
 
 /** "jue, 24 dic" (un día), "jue, 24 dic – sáb, 26 dic" (varios) o con horas si no son días completos. */
@@ -25,6 +24,22 @@ function describir(b: Bloqueo): string {
   return diaDesde === diaHasta
     ? `${diaDesde} · ${horaDesde}–${horaHasta}`
     : `${diaDesde} ${horaDesde} → ${formatearFechaCorta(b.hasta)} ${horaHasta}`
+}
+
+/** Todos los días de Madrid que toca algún bloqueo, para marcarlos en el calendario. */
+function diasConBloqueo(bloqueos: Bloqueo[]): string[] {
+  const dias = new Set<string>()
+  for (const b of bloqueos) {
+    const ultimo = claveDiaMadrid(new Date(b.hasta.getTime() - 1))
+    let dia = claveDiaMadrid(b.desde)
+    for (let vueltas = 0; vueltas < 400 && dia <= ultimo; vueltas++) {
+      dias.add(dia)
+      const siguiente = sumarDias(dia, 1)
+      if (!siguiente) break
+      dia = siguiente
+    }
+  }
+  return [...dias]
 }
 
 export default async function PaginaBloqueos({
@@ -53,55 +68,11 @@ export default async function PaginaBloqueos({
     >
       <Aviso ok={ok} error={error} />
 
-      <form
-        action={crearBloqueoAccion}
-        className="vidrio space-y-5 rounded-xl border p-5"
-        aria-labelledby="titulo-nuevo"
-      >
-        <h2 id="titulo-nuevo" className="font-heading text-lg font-medium">
-          Bloquear un día o un tramo
-        </h2>
-
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="space-y-2">
-            <label htmlFor="desde_fecha" className={claseEtiqueta}>
-              Desde (día)
-            </label>
-            <Input id="desde_fecha" name="desde_fecha" type="date" required />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="desde_hora" className={claseEtiqueta}>
-              Desde (hora, opcional)
-            </label>
-            <Input id="desde_hora" name="desde_hora" type="time" />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="hasta_fecha" className={claseEtiqueta}>
-              Hasta (día, opcional)
-            </label>
-            <Input id="hasta_fecha" name="hasta_fecha" type="date" />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="hasta_hora" className={claseEtiqueta}>
-              Hasta (hora, opcional)
-            </label>
-            <Input id="hasta_hora" name="hasta_hora" type="time" />
-          </div>
-        </div>
-
-        <p className={claseAyuda}>
-          Sin horas se bloquean los días enteros. Sin «hasta (día)» es solo el día de inicio.
-        </p>
-
-        <div className="space-y-2">
-          <label htmlFor="motivo" className={claseEtiqueta}>
-            Motivo (solo lo ves tú)
-          </label>
-          <Input id="motivo" name="motivo" type="text" maxLength={120} placeholder="Vacaciones, festivo…" />
-        </div>
-
-        <Button type="submit">Añadir bloqueo</Button>
-      </form>
+      <FormularioBloqueo
+        hoy={claveDiaMadrid(new Date())}
+        diasBloqueados={diasConBloqueo(bloqueos)}
+        accion={crearBloqueoAccion}
+      />
 
       <section aria-labelledby="titulo-lista" className="space-y-3">
         <h2 id="titulo-lista" className="font-heading text-lg font-medium">

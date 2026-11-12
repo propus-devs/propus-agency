@@ -6,43 +6,39 @@ import ReservaItem from "@/components/admin/ReservaItem"
 import SinBaseDeDatos from "@/components/admin/SinBaseDeDatos"
 import { exigirAdmin } from "@/lib/admin/sesion"
 import { hayBaseDeDatos } from "@/lib/db"
+import { cargarAgenda } from "@/lib/reservas/agenda"
 import {
-  calcularHuecos,
   claveDiaMadrid,
   formatearFechaCorta,
   formatearHora,
+  sumarDias,
   type Intervalo,
 } from "@/lib/reservas/huecos"
 import {
   DIAS_DE_CONSERVACION,
-  intervalosOcupados,
-  listarFranjas,
   listarReservas,
   obtenerAjustes,
   purgarSiToca,
 } from "@/lib/reservas/repo"
 import { cn } from "@/lib/utils"
 
-const MS_DIA = 86_400_000
 const DIAS_EN_VISTA_PREVIA = 6
 
 async function cargarPanel() {
   const ahora = new Date()
-  const [ajustes, franjas, reservas] = await Promise.all([
-    obtenerAjustes(),
-    listarFranjas(),
+  const hoy = claveDiaMadrid(ahora)
+  const { ventanaDias } = await obtenerAjustes()
+  const [agenda, reservas] = await Promise.all([
+    cargarAgenda({ ahora, desde: hoy, hasta: sumarDias(hoy, ventanaDias) ?? hoy }),
     listarReservas(),
   ])
-  const ocupados = await intervalosOcupados(
-    ahora,
-    new Date(ahora.getTime() + (ajustes.ventanaDias + 2) * MS_DIA)
-  )
-  const huecos = calcularHuecos({ ahora, franjas, config: ajustes, ocupados })
+  // Lo que ve el cliente: solo los huecos libres (ni cerrados, ni ocultos por el %).
+  const huecos = agenda.huecos.filter((h) => h.estado === "libre")
   const proximas = reservas.filter((r) => r.estado === "confirmada" && r.fin >= ahora)
   const anteriores = reservas
     .filter((r) => !proximas.includes(r))
     .sort((a, b) => b.inicio.getTime() - a.inicio.getTime())
-  return { ajustes, franjas, huecos, proximas, anteriores }
+  return { ajustes: agenda.ajustes, franjas: agenda.franjas, huecos, proximas, anteriores }
 }
 
 /** Huecos agrupados por día de Madrid, para la vista previa. */
@@ -151,7 +147,9 @@ export default async function PaginaReservas({
               <>
                 <p className="text-sm text-muted-foreground">
                   {huecos.length} {huecos.length === 1 ? "hueco" : "huecos"} en los próximos{" "}
-                  {ajustes.ventanaDias} días (hora de Madrid). Primeros días:
+                  {ajustes.ventanaDias} días (hora de Madrid)
+                  {ajustes.visibilidadPct < 100 ? `, enseñando el ${ajustes.visibilidadPct} % de cada día` : ""}.
+                  Primeros días:
                 </p>
                 <ul className="space-y-3">
                   {dias.slice(0, DIAS_EN_VISTA_PREVIA).map((dia) => (

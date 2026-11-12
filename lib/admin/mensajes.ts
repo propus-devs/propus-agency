@@ -7,11 +7,11 @@ import { DIAS_SEMANA } from "@/lib/reservas/validacion"
  */
 
 const OK: Record<string, string> = {
-  ajustes: "Ajustes guardados.",
-  horario: "Horario guardado.",
+  agenda: "Cambios guardados.",
   "bloqueo-creado": "Bloqueo añadido.",
   "bloqueo-borrado": "Bloqueo eliminado.",
   "reserva-cancelada": "Reserva cancelada.",
+  barajado: "Listo: se esconden otros huecos (el mismo porcentaje).",
 }
 
 const ERROR: Record<string, string> = {
@@ -25,6 +25,7 @@ const ERROR: Record<string, string> = {
   "bloqueo-hora": "La hora del bloqueo no es válida (o esa hora no existe por el cambio de hora).",
   "bloqueo-orden": "El bloqueo tiene que terminar después de empezar.",
   "reserva-no-encontrada": "No se ha encontrado la reserva (puede que ya estuviera cancelada).",
+  "hueco-no-valido": "Ese hueco ya no existe en el horario o está reservado o bloqueado.",
 }
 
 const ERROR_HORARIO: Record<string, string> = {

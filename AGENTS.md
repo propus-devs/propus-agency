@@ -109,6 +109,19 @@ DigitalOcean). La web pública sigue siendo estática; solo `/admin` y la futura
   se añade otra al final.
 - **Service worker** (`public/sw.js`): no cachea `/admin` ni `/api` (llevan datos de clientes). Subir `VERSION`
   si cambia la lógica de caché.
+- **Una sola fuente de verdad para la agenda**: `calcularAgenda` (`lib/reservas/huecos.ts`, pura) da el estado
+  de cada hueco (`libre`, `reservado`, `bloqueado`, `cerrado` a mano, `oculto` por el % de visibilidad, `fuera`)
+  y `cargarAgenda` (`lib/reservas/agenda.ts`) la alimenta desde la base. El calendario del admin enseña todos; la
+  web pública debe enseñar SOLO los `libre` y leerlos siempre de aquí, sin copias ni cachés: así lo que se cambia
+  en el admin se ve al instante fuera. El % se aplica por día sobre todos los huecos teóricos del día y con una
+  semilla fija, de modo que lo oculto no se mueve al recargar ni cuando alguien reserva.
+- **Ajustes y horario son UN formulario** (`FormularioAgenda`, un solo «Guardar cambios», acción
+  `guardarAgendaAccion`). Motivo: tras cada redirect con `?ok=`/`?error=` Next vuelve a montar la página y se
+  pierden los cambios sin guardar de cualquier otro formulario de la misma pantalla. Mismo motivo para que el
+  botón se desactive con horas mal escritas, en vez de depender del error del servidor.
+- Los selectores, el popover y el interruptor de `components/ui` (`select`, `popover`, `switch`) están hechos a
+  mano con el patrón de shadcn: la CLI de shadcn intentó instalar un paquete ajeno (`cn`) y se cortó. Revisar
+  lo que pida instalar antes de aceptarlo.
 - **Pruebas**: `npm test` (`node --test`, archivos `*.test.mjs`; lo que prueban no importa nada de Next).
   Base local sin Docker: `npm run db:dev` (puerto 5433) y `.env.local` con `DATABASE_URL`/`DATABASE_POOL_MAX`.
 

@@ -2,19 +2,46 @@ import Link from "next/link"
 import { ArrowRightIcon, CalendarCheckIcon, CheckIcon } from "lucide-react"
 import { TiltCtaButton } from "@/components/ui/tilt-cta-button"
 import RuralPropColinas from "@/components/sections/ruralprop/RuralPropColinas"
-import { rutaReservar } from "@/lib/site"
+import { ruta, type Lang } from "@/lib/i18n/idiomas"
+
+interface Textos {
+  pastilla: string
+  titulo: [string, string]
+  descripcion: string
+  boton: string
+  puntos: [string, string, string]
+}
+
+const textos: Record<Lang, Textos> = {
+  es: {
+    pastilla: "Primera llamada",
+    titulo: ["Que tu próxima reserva llegue ", "directa a ti"],
+    descripcion:
+      "Cuéntanos cuántos alojamientos tienes, en qué plataformas estás y qué quieres que haga tu web. Lo vemos juntos.",
+    boton: "Agendar llamada",
+    puntos: ["15 minutos", "Sin compromiso", "Te damos el precio exacto en la llamada"],
+  },
+  en: {
+    pastilla: "First call",
+    titulo: ["Let your next booking come ", "straight to you"],
+    descripcion:
+      "Tell us how many accommodations you have, which platforms you're on and what you want your website to do. We'll look at it together.",
+    boton: "Book a call",
+    puntos: ["15 minutes", "No strings attached", "We give you the exact price on the call"],
+  },
+}
 
 const GRANO =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")"
-
-const puntos = ["15 minutos", "Sin compromiso", "Te damos el precio exacto en la llamada"]
 
 /**
  * Cierre en forma de amanecer sobre el campo: cielo que pasa de la noche al
  * ámbar, sol asomando tras las colinas y la llamada en primer plano. Todo
  * estático (CSS/SVG), sin imágenes.
  */
-export default function RuralPropCTA() {
+export default function RuralPropCTA({ lang = "es" }: { lang?: Lang }) {
+  const t = textos[lang]
+
   return (
     <section className="px-4 pt-12 pb-20 md:pt-16 md:pb-28">
       <div className="relative isolate mx-auto max-w-5xl overflow-hidden rounded-[2rem] border border-rural-honey/25 shadow-[0_30px_80px_-30px_rgba(230,171,74,0.35)]">
@@ -58,16 +85,15 @@ export default function RuralPropCTA() {
         <div className="relative px-6 pt-14 pb-52 text-center md:px-14 md:pt-20 md:pb-72">
           <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-rural-honey/30 bg-rural-bg/60 px-4 py-1.5 text-xs font-medium text-rural-honey backdrop-blur-sm">
             <CalendarCheckIcon className="size-3.5" />
-            Primera llamada
+            {t.pastilla}
           </span>
 
           <h2 className="mx-auto max-w-3xl font-display-serif text-4xl font-normal leading-[1.04] tracking-tight text-rural-fg md:text-6xl">
-            Que tu próxima reserva llegue <em className="italic text-rural-honey">directa a ti</em>
+            {t.titulo[0]}<em className="italic text-rural-honey">{t.titulo[1]}</em>
           </h2>
 
           <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-rural-fg/80">
-            Cuéntanos cuántos alojamientos tienes, en qué plataformas estás y qué quieres que haga
-            tu web. Lo vemos juntos.
+            {t.descripcion}
           </p>
 
           <div className="mt-9 flex flex-col items-center gap-5">
@@ -77,14 +103,14 @@ export default function RuralPropCTA() {
               className="h-12 gap-2 bg-rural-honey px-8 text-base font-semibold text-rural-ink hover:bg-[#f0bb62] [&_svg]:transition-transform hover:[&_svg]:translate-x-1"
               asChild
             >
-              <Link href={rutaReservar}>
-                Agendar llamada
+              <Link href={ruta("reservar", lang)}>
+                {t.boton}
                 <ArrowRightIcon className="size-4" />
               </Link>
             </TiltCtaButton>
 
             <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-rural-fg/75">
-              {puntos.map((punto) => (
+              {t.puntos.map((punto) => (
                 <li key={punto} className="flex items-center gap-1.5">
                   <CheckIcon className="size-4 text-rural-honey" />
                   {punto}

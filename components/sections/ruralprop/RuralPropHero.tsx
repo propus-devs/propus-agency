@@ -1,11 +1,54 @@
+import type { ReactNode } from "react"
 import Link from "next/link"
 import { ArrowRightIcon, TreePineIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { TiltCtaButton } from "@/components/ui/tilt-cta-button"
 import RuralPropColinas from "@/components/sections/ruralprop/RuralPropColinas"
-import { rutaReservar } from "@/lib/site"
+import { ruta, type Lang } from "@/lib/i18n/idiomas"
 
-export default function RuralPropHero() {
+interface Textos {
+  pastilla: string
+  titulo: ReactNode
+  descripcion: string
+  agendar: string
+  verPrecios: string
+  pie: [string, string, string]
+}
+
+const textos: Record<Lang, Textos> = {
+  es: {
+    pastilla: "Para casas rurales, cabañas y apartamentos turísticos",
+    titulo: (
+      <>
+        <span className="italic text-rural-honey">RuralProp</span>: la web con reservas directas
+        para tu <span className="italic text-rural-moss">alojamiento rural</span>
+      </>
+    ),
+    descripcion:
+      "Calendario centralizado, reservas con pago online, registro de viajeros para SES Hospedajes y un SEO preparado también para los buscadores con IA. Todo en una web tuya, con un panel para gestionarla.",
+    agendar: "Agendar llamada",
+    verPrecios: "Ver precios",
+    pie: ["Reservas directas", "Registro de viajeros", "En español e inglés"],
+  },
+  en: {
+    pastilla: "For country houses, cabins and holiday apartments",
+    titulo: (
+      <>
+        <span className="italic text-rural-honey">RuralProp</span>: the website with direct
+        bookings for your <span className="italic text-rural-moss">rural accommodation</span>
+      </>
+    ),
+    descripcion:
+      "Centralized calendar, bookings with online payment, guest registration for SES Hospedajes and SEO that is also ready for AI search engines. All on a website of your own, with a panel to manage it.",
+    agendar: "Book a call",
+    verPrecios: "See pricing",
+    pie: ["Direct bookings", "Guest registration", "In Spanish and English"],
+  },
+}
+
+export default function RuralPropHero({ lang = "es" }: { lang?: Lang }) {
+  const t = textos[lang]
+
   return (
     <section className="relative isolate overflow-hidden px-4 pt-28 pb-48 md:pt-40 md:pb-72">
       {/* Sol bajo, detrás de las colinas */}
@@ -21,18 +64,15 @@ export default function RuralPropHero() {
       <div className="mx-auto max-w-4xl text-center">
         <span className="mb-8 inline-flex items-center gap-2 rounded-full border border-rural-honey/30 bg-rural-honey/10 px-4 py-1.5 text-xs font-medium text-rural-honey">
           <TreePineIcon className="size-3.5" />
-          Para casas rurales, cabañas y apartamentos turísticos
+          {t.pastilla}
         </span>
 
         <h1 className="font-display-serif text-5xl font-normal leading-[1.02] tracking-tight text-rural-fg md:text-7xl">
-          <span className="italic text-rural-honey">RuralProp</span>: la web con reservas directas
-          para tu <span className="italic text-rural-moss">alojamiento rural</span>
+          {t.titulo}
         </h1>
 
         <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-rural-muted">
-          Calendario centralizado, reservas con pago online, registro de viajeros para SES
-          Hospedajes y un SEO preparado también para los buscadores con IA. Todo en una web
-          tuya, con un panel para gestionarla.
+          {t.descripcion}
         </p>
 
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
@@ -42,8 +82,8 @@ export default function RuralPropHero() {
             className="h-11 gap-2 bg-rural-honey px-6 font-semibold text-rural-ink hover:bg-[#f0bb62] [&_svg]:transition-transform hover:[&_svg]:translate-x-1"
             asChild
           >
-            <Link href={rutaReservar}>
-              Agendar llamada
+            <Link href={ruta("reservar", lang)}>
+              {t.agendar}
               <ArrowRightIcon className="size-4" />
             </Link>
           </TiltCtaButton>
@@ -53,13 +93,13 @@ export default function RuralPropHero() {
             className="h-11 border-rural-line bg-transparent px-6 text-rural-fg hover:bg-rural-fg/5 hover:text-rural-fg dark:border-rural-line dark:bg-transparent dark:hover:bg-rural-fg/5"
             asChild
           >
-            <Link href="#precios">Ver precios</Link>
+            <Link href="#precios">{t.verPrecios}</Link>
           </Button>
         </div>
 
         <p className="mt-8 text-sm text-rural-muted/80">
-          Reservas directas <span aria-hidden className="mx-2">·</span> Registro de viajeros{" "}
-          <span aria-hidden className="mx-2">·</span> En español e inglés
+          {t.pie[0]} <span aria-hidden className="mx-2">·</span> {t.pie[1]}{" "}
+          <span aria-hidden className="mx-2">·</span> {t.pie[2]}
         </p>
       </div>
     </section>

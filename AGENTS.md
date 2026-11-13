@@ -78,6 +78,32 @@ clara. Una página nueva es clara si monta `<FondoMalla />`; si no, queda oscura
 - Las variantes `dark:` están apagadas en las páginas claras (ver `@custom-variant dark`).
 - Las páginas oscuras no se ven afectadas: sin `.tema-claro` en el DOM, nada de esto se activa.
 
+### Idiomas (español e inglés)
+
+El español vive en la raíz (grupo `app/(es)`, con las URLs de siempre) y el inglés cuelga de `/en`
+(`app/en`). Cada uno tiene su propio layout raíz (así `<html lang>` sale bien en el HTML estático) y los dos
+usan `lib/root-shell.tsx`. `/admin` va solo en español, con su layout raíz. Tiene que seguir sin existir
+`app/layout.tsx`.
+
+- **Rutas de pareja**: `lib/i18n/idiomas.ts` (`RUTAS`, pura y con pruebas). El inglés tiene sus propios
+  nombres (`/en/services/…`, `/en/about-us`, `/en/book-a-call`). Una página con versión en los dos idiomas se
+  da de alta ahí, en `app/sitemap.ts` (`conPareja`) y con `alternates.languages: alternas(clave)` en sus dos
+  rutas (hreflang). El selector ES | EN del menú usa esa tabla.
+- **Páginas compartidas**: el contenido vive en `components/pages/*Page.tsx` con una prop `lang`; las rutas de
+  `app/(es)` y `app/en` son finas (metadatos + `<XPage lang="…" />`).
+- **Textos**: cada componente lleva su objeto `textos: Record<Lang, …>` (TypeScript obliga a que los dos
+  idiomas tengan las mismas claves) y una prop `lang` que por defecto es `"es"`. Cambiar un texto es cambiarlo
+  en los dos. Los anclajes (`#proceso`, `#faq`…) son iguales en ambos idiomas.
+- **Solo en español**: el blog y las páginas legales. En inglés se enlazan con la etiqueta «(in Spanish)» y
+  `/en/blog` y `/en/legal/…` redirigen a la versión española (`next.config.ts`). Al traducir el blog, quitar
+  esas redirecciones y darlo de alta en `RUTAS`.
+- **Reservas**: la API contesta siempre en español; la web en inglés traduce los mensajes en el navegador con
+  `lib/reservas/mensajes-en.ts`. Su prueba lee `route.ts`, `publico.ts` y `validacion.ts` y falla si un
+  mensaje nuevo no tiene traducción. Las capturas de producto de AutoClinic y FacturIA están en español.
+- **Páginas de error y sin conexión**: el 404 existe en cada idioma (`app/(es)/not-found.tsx` y
+  `app/en/not-found.tsx`, con una ruta comodín `[...rest]` que lanza `notFound()`); `/offline` es una sola
+  página en los dos idiomas a la vez, porque la sirve el service worker sin saber el idioma.
+
 ### React 19
 
 - Hook `use()` para leer promesas y contextos.
@@ -131,21 +157,27 @@ DigitalOcean). La web pública sigue siendo estática; solo `/admin` y la futura
 
 ```
 app/
-  layout.tsx, page.tsx, globals.css   # Raíz, portada, TailwindCSS v4 + tema + shadcn base
-  servicios/<nombre>/                 # autoclinic, facturia, ruralprop, diseno-web-a-medida
-  blog/  sobre-nosotros/  legal/      # Contenido
-  reservar/  offline/                 # Reserva pública de llamadas y página sin conexión
+  globals.css                         # TailwindCSS v4 + tema + shadcn base
+  (es)/                               # Español, en la raíz (layout raíz propio)
+    page.tsx, not-found.tsx           # Portada y 404
+    servicios/<nombre>/               # autoclinic, facturia, ruralprop, diseno-web-a-medida
+    blog/  sobre-nosotros/  legal/    # Contenido
+    reservar/  offline/               # Reserva pública de llamadas y página sin conexión
+  en/                                 # Inglés, bajo /en (layout raíz propio)
+    page.tsx, not-found.tsx
+    services/<nombre>/  about-us/  book-a-call/
   admin/                              # Panel de reservas (dinámico, protegido con exigirAdmin)
   api/                                # reservas (huecos y reserva) y cron/purga
 
 components/
   ui/                 # Primitivos (shadcn y piezas propias)
+  pages/              # Una página completa por archivo, compartida por los dos idiomas
   sections/           # Secciones de la portada y de cada servicio (una subcarpeta por servicio)
   layout/ seo/ admin/ reservas/ pwa/
 
 lib/
-  utils.ts, site.ts, blog.ts, tema-claro.ts, privacidad-estado.ts
-  admin/ db/ http/ reservas/          # Sesión, Postgres, utilidades HTTP, agenda y reservas
+  utils.ts, site.ts, blog.ts, tema-claro.ts, privacidad-estado.ts, root-shell.tsx
+  i18n/ admin/ db/ http/ reservas/    # Idiomas, sesión, Postgres, utilidades HTTP, agenda y reservas
 
 docs/                 # Notas internas (blog, legal)
 scripts/              # Utilidades: hash de contraseña, favicons, descarga de la escena Spline

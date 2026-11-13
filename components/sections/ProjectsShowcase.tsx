@@ -6,6 +6,23 @@ import type { ReactNode } from "react"
 import { ArrowUpRightIcon } from "lucide-react"
 import { GradientDots } from "@/components/ui/gradient-dots"
 import { cn } from "@/lib/utils"
+import type { Lang } from "@/lib/i18n/idiomas"
+
+const TEXTOS: Record<
+  Lang,
+  { pronto: string; preview: (titulo: string) => string; previewN: (titulo: string, n: number) => string }
+> = {
+  es: {
+    pronto: "Pronto publicaremos nuestros proyectos aquí.",
+    preview: (titulo) => `Preview de ${titulo}`,
+    previewN: (titulo, n) => `Preview de ${titulo} (${n})`,
+  },
+  en: {
+    pronto: "We will publish our projects here soon.",
+    preview: (titulo) => `Preview of ${titulo}`,
+    previewN: (titulo, n) => `Preview of ${titulo} (${n})`,
+  },
+}
 
 export interface ShowcaseProject {
   /** Nombre del proyecto / cliente */
@@ -38,6 +55,7 @@ interface ProjectsShowcaseProps {
   highlight: string
   description: string
   projects: ShowcaseProject[]
+  lang?: Lang
 }
 
 const cardVariants = {
@@ -56,7 +74,10 @@ export default function ProjectsShowcase({
   highlight,
   description,
   projects,
+  lang = "es",
 }: ProjectsShowcaseProps) {
+  const t = TEXTOS[lang]
+
   return (
     <section className="relative z-10 px-4 pt-28 pb-20 md:pt-36 md:pb-28">
       <div className="mx-auto max-w-6xl">
@@ -80,12 +101,12 @@ export default function ProjectsShowcase({
         {/* Galería */}
         {projects.length === 0 ? (
           <p className="py-20 text-center text-muted-foreground">
-            Pronto publicaremos nuestros proyectos aquí.
+            {t.pronto}
           </p>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:gap-8">
             {projects.map((project, i) => (
-              <ProjectCard key={project.title} project={project} index={i} />
+              <ProjectCard key={project.title} project={project} index={i} t={t} />
             ))}
           </div>
         )}
@@ -94,7 +115,15 @@ export default function ProjectsShowcase({
   )
 }
 
-function ProjectCard({ project, index }: { project: ShowcaseProject; index: number }) {
+function ProjectCard({
+  project,
+  index,
+  t,
+}: {
+  project: ShowcaseProject
+  index: number
+  t: (typeof TEXTOS)[Lang]
+}) {
   const domain =
     project.domain ??
     project.url?.replace(/^https?:\/\//, "").replace(/\/$/, "") ??
@@ -153,7 +182,7 @@ function ProjectCard({ project, index }: { project: ShowcaseProject; index: numb
                   <Image
                     key={src}
                     src={src}
-                    alt={i === 0 ? `Preview de ${project.title}` : `Preview de ${project.title} (${i + 1})`}
+                    alt={i === 0 ? t.preview(project.title) : t.previewN(project.title, i + 1)}
                     width={300}
                     height={650}
                     sizes="(max-width: 640px) 40vw, 20vw"
@@ -177,7 +206,7 @@ function ProjectCard({ project, index }: { project: ShowcaseProject; index: numb
               {/* Captura completa centrada, sin recorte */}
               <Image
                 src={project.image}
-                alt={`Preview de ${project.title}`}
+                alt={t.preview(project.title)}
                 fill
                 sizes="(max-width: 640px) 100vw, 50vw"
                 className="object-contain p-3 transition-transform duration-500 group-hover:scale-[1.03]"
@@ -186,7 +215,7 @@ function ProjectCard({ project, index }: { project: ShowcaseProject; index: numb
           ) : project.image ? (
             <Image
               src={project.image}
-              alt={`Preview de ${project.title}`}
+              alt={t.preview(project.title)}
               fill
               sizes="(max-width: 640px) 100vw, 50vw"
               className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"

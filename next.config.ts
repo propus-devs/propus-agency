@@ -43,6 +43,11 @@ const nextConfig: NextConfig = {
       // La página de clínicas desapareció: lo que ofrecemos a las clínicas es AutoClinic.
       { source: "/soluciones/clinicas", destination: "/servicios/autoclinic", permanent: true },
       { source: "/servicios/diseno-web-clinicas", destination: "/servicios/diseno-web-a-medida", permanent: true },
+      // El blog y las páginas legales solo existen en español. Quien teclee
+      // /en/blog o /en/legal/… llega a la versión en español en vez de a un 404.
+      // Temporales (307): si algún día se traducen, esta ruta pasa a existir.
+      { source: "/en/blog/:path*", destination: "/blog/:path*", permanent: false },
+      { source: "/en/legal/:path*", destination: "/legal/:path*", permanent: false },
     ];
   },
   async headers() {

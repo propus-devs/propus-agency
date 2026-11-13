@@ -3,8 +3,39 @@ import Image from "next/image"
 import { ArrowRightIcon, ScanLineIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { TiltCtaButton } from "@/components/ui/tilt-cta-button"
+import type { Lang } from "@/lib/i18n/idiomas"
 
-export default function FacturiaHero() {
+interface Textos {
+  pastilla: string
+  /** Antes del degradado, el degradado y lo que va tras el salto de línea */
+  titulo: [string, string, string]
+  descripcion: string
+  demo: string
+  funcionalidades: string
+}
+
+const textos: Record<Lang, Textos> = {
+  es: {
+    pastilla: "Gestión inteligente de facturas",
+    titulo: ["De la foto de tu factura al ", "informe contable,", "sin teclear ni una cifra."],
+    descripcion:
+      "Plataforma inteligente de gestión de facturas y movimientos financieros para empresas. Captura con OCR e IA, revisión y aprobación automática, y exportación de informes listos para tu gestoría — todo multiempresa y seguro.",
+    demo: "Solicita una demo",
+    funcionalidades: "Ver funcionalidades",
+  },
+  en: {
+    pastilla: "Smart invoice management",
+    titulo: ["From a photo of your invoice to the ", "accounting report,", "without typing a single figure."],
+    descripcion:
+      "A smart platform for managing invoices and financial transactions for businesses. OCR and AI capture, automatic review and approval, and export of reports ready for your accountant — all multi-company and secure.",
+    demo: "Request a demo",
+    funcionalidades: "See features",
+  },
+}
+
+export default function FacturiaHero({ lang = "es" }: { lang?: Lang }) {
+  const t = textos[lang]
+
   return (
     <section className="relative overflow-hidden pt-32 pb-20 md:pt-44 md:pb-28">
       {/* Glows de fondo en cian */}
@@ -19,21 +50,19 @@ export default function FacturiaHero() {
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
             <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-facturia/30 bg-facturia/10 px-4 py-1.5 text-xs font-semibold text-facturia">
               <ScanLineIcon className="size-3.5" />
-              Gestión inteligente de facturas
+              {t.pastilla}
             </span>
 
             <h1 className="text-4xl font-semibold leading-[1.1] tracking-tight md:text-5xl lg:text-6xl">
-              De la foto de tu factura al{" "}
+              {t.titulo[0]}
               <span className="bg-linear-to-r from-facturia to-facturia-dark bg-clip-text text-transparent">
-                informe contable,
+                {t.titulo[1]}
               </span>
-              <br /> sin teclear ni una cifra.
+              <br /> {t.titulo[2]}
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-              Plataforma inteligente de gestión de facturas y movimientos financieros para
-              empresas. Captura con OCR e IA, revisión y aprobación automática, y exportación
-              de informes listos para tu gestoría — todo multiempresa y seguro.
+              {t.descripcion}
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -47,12 +76,12 @@ export default function FacturiaHero() {
                 asChild
               >
                 <Link href="#demo">
-                  Solicita una demo
+                  {t.demo}
                   <ArrowRightIcon className="size-4" />
                 </Link>
               </TiltCtaButton>
               <Button variant="outline" size="lg" className="h-11 px-7" asChild>
-                <Link href="#funcionalidades">Ver funcionalidades</Link>
+                <Link href="#funcionalidades">{t.funcionalidades}</Link>
               </Button>
             </div>
           </div>

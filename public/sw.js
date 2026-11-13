@@ -6,15 +6,17 @@
  *  - Resto de GET: network con fallback a caché.
  */
 
-// v2: el admin y la API quedan fuera de la caché; al subir la versión, el
-// navegador borra las cachés anteriores (ver "activate").
-const VERSION = "v2"
+// v3: llega la versión en inglés (/en); al subir la versión, el navegador borra
+// las cachés anteriores (ver "activate"). v2: el admin y la API quedan fuera de
+// la caché.
+const VERSION = "v3"
 const PRECACHE = `propus-precache-${VERSION}`
 const RUNTIME = `propus-runtime-${VERSION}`
 
 // App shell y assets críticos para funcionar offline.
 const PRECACHE_URLS = [
   "/",
+  "/en",
   "/offline",
   "/manifest.webmanifest",
   "/favicons/favicon.ico",

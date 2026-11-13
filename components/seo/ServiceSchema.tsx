@@ -1,12 +1,16 @@
 import { siteUrl } from "@/lib/site"
+import type { Lang } from "@/lib/i18n/idiomas"
 
 interface ServiceSchemaProps {
   name: string
   description: string
   serviceType: string
+  lang?: Lang
 }
 
-export default function ServiceSchema({ name, description, serviceType }: ServiceSchemaProps) {
+const PAIS: Record<Lang, string> = { es: "España", en: "Spain" }
+
+export default function ServiceSchema({ name, description, serviceType, lang = "es" }: ServiceSchemaProps) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -20,7 +24,7 @@ export default function ServiceSchema({ name, description, serviceType }: Servic
     },
     areaServed: {
       "@type": "Country",
-      name: "España",
+      name: PAIS[lang],
     },
   }
 

@@ -1,40 +1,88 @@
+import type { ReactNode } from "react"
 import Link from "next/link"
 import { ArrowUpRightIcon } from "lucide-react"
 import RuralPropHeading from "@/components/sections/ruralprop/RuralPropHeading"
+import type { Lang } from "@/lib/i18n/idiomas"
 
-// El Tranquilo se nombra sin enlace: su web aún no está publicada con dominio.
-// Cuando lo esté, añadir `url` y `domain`. Sin datos personales de propietarios.
-const clients = [
-  {
-    name: "Cabañas El Acuífero",
-    place: "Lagunas de Ruidera",
-    description:
-      "Seis cabañas con reserva directa, panel con calendario y blog que gestiona el propio propietario. Las peticiones de reserva le llegan directamente y las gestiona él.",
-    url: "https://elacuifero.es",
-    domain: "elacuifero.es",
-    status: null,
-    giro: "md:-rotate-1",
+interface Textos {
+  etiqueta: string
+  titulo: ReactNode
+  acuifero: { place: string; description: string }
+  tranquilo: { place: string; description: string; status: string }
+}
+
+const textos: Record<Lang, Textos> = {
+  es: {
+    etiqueta: "Casos reales",
+    titulo: (
+      <>
+        Ya funciona en <em>alojamientos reales</em>
+      </>
+    ),
+    acuifero: {
+      place: "Lagunas de Ruidera",
+      description:
+        "Seis cabañas con reserva directa, panel con calendario y blog que gestiona el propio propietario. Las peticiones de reserva le llegan directamente y las gestiona él.",
+    },
+    tranquilo: {
+      place: "Alcalá del Júcar",
+      description:
+        "Casa cueva con calendario con precio por noche, pago online con Stripe, sincronización con Booking por iCal (con paso a Channel Manager próximamente) y registro de viajeros para SES Hospedajes.",
+      status: "En desarrollo",
+    },
   },
-  {
-    name: "El Tranquilo",
-    place: "Alcalá del Júcar",
-    description:
-      "Casa cueva con calendario con precio por noche, pago online con Stripe, sincronización con Booking por iCal (con paso a Channel Manager próximamente) y registro de viajeros para SES Hospedajes.",
-    url: null,
-    domain: null,
-    status: "En desarrollo",
-    giro: "md:rotate-1",
+  en: {
+    etiqueta: "Real cases",
+    titulo: (
+      <>
+        Already working in <em>real accommodations</em>
+      </>
+    ),
+    acuifero: {
+      place: "Lagunas de Ruidera",
+      description:
+        "Six cabins with direct booking, a panel with a calendar and a blog managed by the owner. Booking requests reach the owner directly, who handles them.",
+    },
+    tranquilo: {
+      place: "Alcalá del Júcar",
+      description:
+        "A cave house with a calendar with a price per night, online payment with Stripe, synchronization with Booking via iCal (with a move to Channel Manager coming soon) and guest registration for SES Hospedajes.",
+      status: "In development",
+    },
   },
-]
+}
 
 /** Cada cliente va en una "postal" de papel crema, ligeramente girada en pantallas anchas. */
-export default function RuralPropClients() {
+export default function RuralPropClients({ lang = "es" }: { lang?: Lang }) {
+  const t = textos[lang]
+
+  // El Tranquilo se nombra sin enlace: su web aún no está publicada con dominio.
+  // Cuando lo esté, añadir `url` y `domain`. Sin datos personales de propietarios.
+  const clients = [
+    {
+      name: "Cabañas El Acuífero",
+      place: t.acuifero.place,
+      description: t.acuifero.description,
+      url: "https://elacuifero.es",
+      domain: "elacuifero.es",
+      status: null,
+      giro: "md:-rotate-1",
+    },
+    {
+      name: "El Tranquilo",
+      place: t.tranquilo.place,
+      description: t.tranquilo.description,
+      url: null,
+      domain: null,
+      status: t.tranquilo.status,
+      giro: "md:rotate-1",
+    },
+  ]
+
   return (
     <section className="px-4 py-20 md:py-28">
       <div className="mx-auto max-w-6xl">
-        <RuralPropHeading eyebrow="Casos reales">
-          Ya funciona en <em>alojamientos reales</em>
-        </RuralPropHeading>
+        <RuralPropHeading eyebrow={t.etiqueta}>{t.titulo}</RuralPropHeading>
 
         <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-2 md:gap-10">
           {clients.map((client) => (

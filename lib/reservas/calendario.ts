@@ -68,42 +68,63 @@ export function semanasDelMes(anio: number, mes: number): Celda[][] {
   return semanas
 }
 
-const fmtMes = new Intl.DateTimeFormat("es-ES", { month: "long", year: "numeric", timeZone: "UTC" })
-const fmtDiaLargo = new Intl.DateTimeFormat("es-ES", {
-  weekday: "long",
-  day: "numeric",
-  month: "long",
-  timeZone: "UTC",
-})
-const fmtDiaCorto = new Intl.DateTimeFormat("es-ES", {
-  weekday: "short",
-  day: "numeric",
-  month: "short",
-  timeZone: "UTC",
-})
+/** Idiomas de los nombres de días y meses. El español es el de siempre (y el del admin). */
+export type IdiomaCalendario = "es" | "en"
+
+// El inglés va en en-GB (día antes que mes), como se escribe en España.
+const LOCALES: Record<IdiomaCalendario, string> = { es: "es-ES", en: "en-GB" }
+
+function formatos(idioma: IdiomaCalendario) {
+  const locale = LOCALES[idioma]
+  return {
+    mes: new Intl.DateTimeFormat(locale, { month: "long", year: "numeric", timeZone: "UTC" }),
+    diaLargo: new Intl.DateTimeFormat(locale, {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      timeZone: "UTC",
+    }),
+    diaCorto: new Intl.DateTimeFormat(locale, {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+      timeZone: "UTC",
+    }),
+  }
+}
+
+const FORMATOS: Record<IdiomaCalendario, ReturnType<typeof formatos>> = {
+  es: formatos("es"),
+  en: formatos("en"),
+}
 
 function aDate(fecha: string): Date | null {
   const f = parsearFecha(fecha)
   return f ? new Date(Date.UTC(f.anio, f.mes - 1, f.dia)) : null
 }
 
-/** "noviembre de 2026" */
-export function nombreMes(mes: string): string {
+/** "noviembre de 2026" (en: "November 2026") */
+export function nombreMes(mes: string, idioma: IdiomaCalendario = "es"): string {
   const p = parsearMes(mes)
-  return p ? fmtMes.format(new Date(Date.UTC(p.anio, p.mes - 1, 1))) : mes
+  return p ? FORMATOS[idioma].mes.format(new Date(Date.UTC(p.anio, p.mes - 1, 1))) : mes
 }
 
-/** "lunes, 16 de noviembre" */
-export function nombreDiaLargo(fecha: string): string {
+/** "lunes, 16 de noviembre" (en: "Monday 16 November") */
+export function nombreDiaLargo(fecha: string, idioma: IdiomaCalendario = "es"): string {
   const d = aDate(fecha)
-  return d ? fmtDiaLargo.format(d) : fecha
+  return d ? FORMATOS[idioma].diaLargo.format(d) : fecha
 }
 
 /** "lun, 16 nov" */
-export function nombreDiaCorto(fecha: string): string {
+export function nombreDiaCorto(fecha: string, idioma: IdiomaCalendario = "es"): string {
   const d = aDate(fecha)
-  return d ? fmtDiaCorto.format(d) : fecha
+  return d ? FORMATOS[idioma].diaCorto.format(d) : fecha
 }
 
 /** Cabeceras de la cuadrícula, de lunes a domingo. */
 export const DIAS_CORTOS = ["L", "M", "X", "J", "V", "S", "D"] as const
+
+/** Lo mismo que DIAS_CORTOS, en el idioma que se pida. */
+export function diasCortos(idioma: IdiomaCalendario = "es"): readonly string[] {
+  return idioma === "en" ? ["M", "T", "W", "T", "F", "S", "S"] : DIAS_CORTOS
+}

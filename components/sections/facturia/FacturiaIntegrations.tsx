@@ -1,13 +1,51 @@
 import Image from "next/image"
 import { WorkflowIcon, ArrowRightIcon, CheckIcon } from "lucide-react"
+import type { Lang } from "@/lib/i18n/idiomas"
 
-const benefits = [
-  "Cada factura procesada se archiva ordenada en tu Google Drive, por empresa y periodo.",
-  "Los datos extraídos se vuelcan automáticamente en Google Sheets, listos para consultar.",
-  "La automatización OCR corre sobre n8n: sin copiar, pegar ni mover archivos a mano.",
-]
+interface Textos {
+  pastilla: string
+  titulo: [string, string]
+  descripcion: string
+  beneficios: [string, string, string]
+  ocrSub: string
+  driveSub: string
+  sheetsSub: string
+}
 
-export default function FacturiaIntegrations() {
+const textos: Record<Lang, Textos> = {
+  es: {
+    pastilla: "Integración & automatización",
+    titulo: ["Lo complementamos con ", "Google Drive y Sheets"],
+    descripcion:
+      "Más allá de la plataforma, organizamos tu información en Google Drive y Google Sheets, que se completan solos desde la automatización OCR construida sobre n8n.",
+    beneficios: [
+      "Cada factura procesada se archiva ordenada en tu Google Drive, por empresa y periodo.",
+      "Los datos extraídos se vuelcan automáticamente en Google Sheets, listos para consultar.",
+      "La automatización OCR corre sobre n8n: sin copiar, pegar ni mover archivos a mano.",
+    ],
+    ocrSub: "Automatización",
+    driveSub: "Archivado ordenado",
+    sheetsSub: "Datos volcados",
+  },
+  en: {
+    pastilla: "Integration & automation",
+    titulo: ["We complement it with ", "Google Drive and Sheets"],
+    descripcion:
+      "Beyond the platform, we organize your information in Google Drive and Google Sheets, which fill themselves from the OCR automation built on n8n.",
+    beneficios: [
+      "Every processed invoice is filed in order in your Google Drive, by company and period.",
+      "Extracted data is loaded automatically into Google Sheets, ready to consult.",
+      "The OCR automation runs on n8n: no copying, pasting or moving files by hand.",
+    ],
+    ocrSub: "Automation",
+    driveSub: "Orderly filing",
+    sheetsSub: "Data loaded",
+  },
+}
+
+export default function FacturiaIntegrations({ lang = "es" }: { lang?: Lang }) {
+  const t = textos[lang]
+
   return (
     <section className="py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-4">
@@ -17,21 +55,18 @@ export default function FacturiaIntegrations() {
             <div>
               <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-facturia/30 bg-facturia/10 px-4 py-1.5 text-xs font-semibold text-facturia">
                 <WorkflowIcon className="size-3.5" />
-                Integración & automatización
+                {t.pastilla}
               </span>
               <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">
-                Lo complementamos con{" "}
+                {t.titulo[0]}
                 <span className="bg-linear-to-r from-facturia to-facturia-dark bg-clip-text text-transparent">
-                  Google Drive y Sheets
+                  {t.titulo[1]}
                 </span>
               </h2>
-              <p className="mt-4 text-muted-foreground">
-                Más allá de la plataforma, organizamos tu información en Google Drive y Google
-                Sheets, que se completan solos desde la automatización OCR construida sobre n8n.
-              </p>
+              <p className="mt-4 text-muted-foreground">{t.descripcion}</p>
 
               <ul className="mt-6 flex flex-col gap-3">
-                {benefits.map((b) => (
+                {t.beneficios.map((b) => (
                   <li key={b} className="flex items-start gap-3">
                     <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-facturia/15">
                       <CheckIcon className="size-3 text-facturia" />
@@ -44,11 +79,11 @@ export default function FacturiaIntegrations() {
 
             {/* Diagrama de integración */}
             <div className="flex flex-col items-center gap-4">
-              <IntegrationNode icon={<Image src="/img/integrations/n8n.svg" alt="n8n" width={28} height={28} className="size-7" />} label="OCR · n8n" sub="Automatización" />
+              <IntegrationNode icon={<Image src="/img/integrations/n8n.svg" alt="n8n" width={28} height={28} className="size-7" />} label="OCR · n8n" sub={t.ocrSub} />
               <ArrowRightIcon className="size-5 rotate-90 text-facturia/50" />
               <div className="grid w-full grid-cols-2 gap-4">
-                <IntegrationNode icon={<Image src="/img/integrations/googledrive.svg" alt="Google Drive" width={24} height={24} className="size-6" />} label="Google Drive" sub="Archivado ordenado" />
-                <IntegrationNode icon={<Image src="/img/integrations/googlesheets.svg" alt="Google Sheets" width={24} height={24} className="size-6" />} label="Google Sheets" sub="Datos volcados" />
+                <IntegrationNode icon={<Image src="/img/integrations/googledrive.svg" alt="Google Drive" width={24} height={24} className="size-6" />} label="Google Drive" sub={t.driveSub} />
+                <IntegrationNode icon={<Image src="/img/integrations/googlesheets.svg" alt="Google Sheets" width={24} height={24} className="size-6" />} label="Google Sheets" sub={t.sheetsSub} />
               </div>
             </div>
           </div>

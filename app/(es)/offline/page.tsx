@@ -15,6 +15,8 @@ export const metadata: Metadata = {
   },
 }
 
+// Esta página la sirve el service worker cuando no hay red, así que no sabe en
+// qué idioma estaba la persona: va en español e inglés a la vez.
 export default function OfflinePage() {
   return (
     <>
@@ -30,11 +32,17 @@ export default function OfflinePage() {
             nuevo.
           </p>
         </div>
+        <div lang="en" className="flex flex-col gap-2">
+          <h2 className="text-xl font-semibold tracking-tight md:text-2xl">You&apos;re offline</h2>
+          <p className="max-w-md text-muted-foreground">
+            We couldn&apos;t load this page. Check your internet connection and try again.
+          </p>
+        </div>
         <Link
           href="/"
           className="vidrio rounded-full border px-6 py-2.5 text-sm font-semibold transition-colors hover:bg-card/90"
         >
-          Reintentar
+          Reintentar · Try again
         </Link>
       </main>
     </>

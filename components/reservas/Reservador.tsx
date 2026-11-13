@@ -16,10 +16,12 @@ import {
 import SinHuecos, { type Contacto } from "@/components/reservas/SinHuecos"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { DIAS_CORTOS, nombreDiaLargo, nombreMes, semanasDelMes, sumarMeses } from "@/lib/reservas/calendario"
+import { diasCortos, nombreDiaLargo, nombreMes, semanasDelMes, sumarMeses } from "@/lib/reservas/calendario"
 import { horaAMinutos, minutosAHora } from "@/lib/reservas/huecos"
 import { crearIcs } from "@/lib/reservas/ics"
+import { traducirMensaje } from "@/lib/reservas/mensajes-en"
 import type { HuecoPublico, RespuestaMes, RespuestaReserva } from "@/lib/reservas/publico-tipos"
+import { ruta, type Lang } from "@/lib/i18n/idiomas"
 import { cn } from "@/lib/utils"
 
 type Paso = "hora" | "datos" | "listo"
@@ -45,6 +47,179 @@ const FORMULARIO_VACIO: Formulario = {
   web: "",
 }
 
+interface Textos {
+  errorCarga: string
+  errorEnvio: string
+  /** Aviso cuando, al volver a la pestaña, el hueco elegido ya no existe. */
+  huecoNoDisponible: string
+  icsResumen: string
+  icsDescripcion: (minutos: number, email: string) => string
+  icsArchivo: string
+  sinAgendaTitulo: string
+  sinAgendaTexto: string
+  sinHuecosTitulo: string
+  cerradaTitulo: string
+  sinHuecosTexto: string
+  pasos: [string, string, string]
+  llamadaDe: (minutos: number) => string
+  minutosSinCompromiso: (minutos: number) => string
+  porVideollamada: string
+  datosSoloLlamada: string
+  tuReserva: string
+  horasMadrid: string
+  prefieresEscribir: string
+  ariaReserva: string
+  ariaPasos: string
+  mesAnterior: string
+  mesSiguiente: string
+  sinHuecosDia: string
+  sinHuecosMes: string
+  diasResaltados: string
+  horas: string
+  horasDisponibles: string
+  eligeDia: string
+  huecosLibres: (n: number, dia: string) => string
+  cambiarDiaHora: string
+  cuentanos: string
+  soloNecesitamos: string
+  nombre: string
+  correo: string
+  telefono: string
+  opcional: string
+  queContar: string
+  placeholderMensaje: string
+  campoTrampa: string
+  privacidadAntes: string
+  privacidadEnlace: string
+  privacidadDespues: string
+  reservando: string
+  confirmar: string
+  confirmada: string
+  guardada: string
+  horaDeMadrid: string
+  anadirCalendario: string
+  volverInicio: string
+  cambiarHora: string
+  cargandoHuecos: string
+}
+
+const textos: Record<Lang, Textos> = {
+  es: {
+    errorCarga: "No hemos podido cargar los huecos. Inténtalo de nuevo.",
+    errorEnvio: "No hemos podido enviar la reserva. Revisa tu conexión e inténtalo de nuevo.",
+    huecoNoDisponible: "Ese hueco ya no está disponible. Elige otra hora.",
+    icsResumen: "Llamada con Propus",
+    icsDescripcion: (minutos, email) =>
+      `Llamada de ${minutos} minutos con Propus (propus.es). Si necesitas cambiarla, escríbenos a ${email}.`,
+    icsArchivo: "llamada-propus.ics",
+    sinAgendaTitulo: "Ahora mismo no podemos enseñarte la agenda",
+    sinAgendaTexto: "Escríbenos o llámanos y buscamos un hueco juntos. Respondemos lo antes posible.",
+    sinHuecosTitulo: "No quedan huecos libres por ahora",
+    cerradaTitulo: "Ahora mismo no aceptamos reservas online",
+    sinHuecosTexto: "Escríbenos o llámanos y te buscamos un hueco. Respondemos lo antes posible.",
+    pasos: ["Día y hora", "Tus datos", "Listo"],
+    llamadaDe: (m) => `Llamada de ${m} minutos`,
+    minutosSinCompromiso: (m) => `${m} minutos, sin compromiso`,
+    porVideollamada: "Por videollamada o teléfono",
+    datosSoloLlamada: "Tus datos sólo se usan para esta llamada",
+    tuReserva: "Tu reserva",
+    horasMadrid: "Horas de Madrid.",
+    prefieresEscribir: "¿Prefieres escribirnos? Estamos en",
+    ariaReserva: "Reserva de la llamada",
+    ariaPasos: "Pasos",
+    mesAnterior: "Mes anterior",
+    mesSiguiente: "Mes siguiente",
+    sinHuecosDia: ", sin huecos",
+    sinHuecosMes: "No quedan huecos libres este mes. Prueba con el siguiente.",
+    diasResaltados: "Los días resaltados tienen huecos libres.",
+    horas: "Horas",
+    horasDisponibles: "Horas disponibles",
+    eligeDia: "Elige un día resaltado para ver sus horas.",
+    huecosLibres: (n, dia) => `${n} huecos libres el ${dia}`,
+    cambiarDiaHora: "Cambiar día u hora",
+    cuentanos: "Cuéntanos quién eres",
+    soloNecesitamos: "Sólo necesitamos tu nombre y un correo. Lo demás es opcional.",
+    nombre: "Nombre",
+    correo: "Correo electrónico",
+    telefono: "Teléfono",
+    opcional: "(opcional)",
+    queContar: "¿Qué te gustaría contarnos?",
+    placeholderMensaje: "Qué quieres automatizar, qué web necesitas…",
+    campoTrampa: "No rellenes este campo",
+    privacidadAntes: "He leído la",
+    privacidadEnlace: "política de privacidad",
+    privacidadDespues:
+      "y acepto que Propus use estos datos para gestionar mi llamada. Se borran 30 días después de la llamada.",
+    reservando: "Reservando…",
+    confirmar: "Confirmar reserva",
+    confirmada: "¡Reserva confirmada!",
+    guardada:
+      "Hemos guardado tu llamada. Nos pondremos en contacto contigo a la hora acordada con los datos que nos has dejado.",
+    horaDeMadrid: "Hora de Madrid",
+    anadirCalendario: "Añadir a mi calendario",
+    volverInicio: "Volver al inicio",
+    cambiarHora: "¿Necesitas cambiar la hora? Escríbenos a",
+    cargandoHuecos: "Cargando huecos…",
+  },
+  en: {
+    errorCarga: "We couldn't load the available slots. Please try again.",
+    errorEnvio: "We couldn't send your booking. Check your connection and try again.",
+    huecoNoDisponible: "That slot is no longer available. Pick another time.",
+    icsResumen: "Call with Propus",
+    icsDescripcion: (minutos, email) =>
+      `${minutos}-minute call with Propus (propus.es). If you need to change it, email us at ${email}.`,
+    icsArchivo: "propus-call.ics",
+    sinAgendaTitulo: "We can't show you the calendar right now",
+    sinAgendaTexto: "Email or call us and we'll find a slot together. We reply as soon as we can.",
+    sinHuecosTitulo: "There are no free slots for now",
+    cerradaTitulo: "We're not accepting online bookings right now",
+    sinHuecosTexto: "Email or call us and we'll find you a slot. We reply as soon as we can.",
+    pasos: ["Day and time", "Your details", "Done"],
+    llamadaDe: (m) => `${m}-minute call`,
+    minutosSinCompromiso: (m) => `${m} minutes, no strings attached`,
+    porVideollamada: "By video call or phone",
+    datosSoloLlamada: "Your details are only used for this call",
+    tuReserva: "Your booking",
+    horasMadrid: "Madrid time.",
+    prefieresEscribir: "Prefer to write to us? We're at",
+    ariaReserva: "Call booking",
+    ariaPasos: "Steps",
+    mesAnterior: "Previous month",
+    mesSiguiente: "Next month",
+    sinHuecosDia: ", no slots",
+    sinHuecosMes: "There are no free slots this month. Try the next one.",
+    diasResaltados: "Highlighted days have free slots.",
+    horas: "Times",
+    horasDisponibles: "Available times",
+    eligeDia: "Pick a highlighted day to see its times.",
+    huecosLibres: (n, dia) => `${n} free slots on ${dia}`,
+    cambiarDiaHora: "Change day or time",
+    cuentanos: "Tell us who you are",
+    soloNecesitamos: "We only need your name and an email. Everything else is optional.",
+    nombre: "Name",
+    correo: "Email",
+    telefono: "Phone",
+    opcional: "(optional)",
+    queContar: "What would you like to tell us?",
+    placeholderMensaje: "What you want to automate, what website you need…",
+    campoTrampa: "Do not fill in this field",
+    privacidadAntes: "I have read the",
+    privacidadEnlace: "privacy policy (in Spanish)",
+    privacidadDespues:
+      "and I agree that Propus uses this data to manage my call. It is deleted 30 days after the call.",
+    reservando: "Booking…",
+    confirmar: "Confirm booking",
+    confirmada: "Booking confirmed!",
+    guardada:
+      "We've saved your call. We'll get in touch with you at the agreed time using the details you left us.",
+    horaDeMadrid: "Madrid time",
+    anadirCalendario: "Add to my calendar",
+    volverInicio: "Back to home",
+    cambiarHora: "Need to change the time? Email us at",
+    cargandoHuecos: "Loading slots…",
+  },
+}
+
 function capitalizar(texto: string): string {
   return texto.charAt(0).toUpperCase() + texto.slice(1)
 }
@@ -57,12 +232,16 @@ const claseTextarea =
  * huecos llegan de /api/reservas/huecos (siempre al momento, sin caché), así que
  * lo que se cambie en el admin se ve aquí en la siguiente carga o al volver a la
  * pestaña. Todas las horas son de Madrid y vienen ya formateadas del servidor.
+ *
+ * En inglés, los textos de la página y los mensajes de error de la API (que el
+ * servidor da en español) se traducen aquí, en el navegador.
  */
 export default function Reservador({
   inicial,
   ticket,
   hoy,
   contacto,
+  lang = "es",
 }: {
   /** Mes con el que abre la página, o null si no se pudo cargar la agenda. */
   inicial: RespuestaMes | null
@@ -71,7 +250,9 @@ export default function Reservador({
   /** Día de hoy en Madrid, "AAAA-MM-DD". */
   hoy: string
   contacto: Contacto
+  lang?: Lang
 }) {
+  const t = textos[lang]
   const [cache, setCache] = useState<Record<string, RespuestaMes>>(inicial ? { [inicial.mes]: inicial } : {})
   const [mes, setMes] = useState(inicial?.mes ?? "")
   const [dia, setDia] = useState<string | null>(inicial?.dias[0]?.fecha ?? null)
@@ -101,7 +282,7 @@ export default function Reservador({
       setCache((c) => ({ ...c, [datos.mes]: datos }))
       return datos
     } catch {
-      setErrorCarga("No hemos podido cargar los huecos. Inténtalo de nuevo.")
+      setErrorCarga(t.errorCarga)
       return null
     } finally {
       if (!silencioso) setCargando(false)
@@ -124,7 +305,7 @@ export default function Reservador({
       if (!datos || !hueco || paso !== "datos") return
       const sigue = datos.dias.some((d) => d.huecos.some((h) => h.inicio === hueco.inicio))
       if (!sigue) {
-        setAviso("Ese hueco ya no está disponible. Elige otra hora.")
+        setAviso(t.huecoNoDisponible)
         setHueco(null)
         setPaso("hora")
       }
@@ -177,16 +358,16 @@ export default function Reservador({
         setPaso("listo")
         subirALaTarjeta()
       } else if (datos.error === "hueco-ocupado") {
-        setAviso(datos.mensaje)
+        setAviso(traducirMensaje(datos.mensaje, lang))
         setHueco(null)
         setPaso("hora")
         void traerMes(mes, true)
       } else {
-        setErrorForm({ campo: datos.campo, mensaje: datos.mensaje })
+        setErrorForm({ campo: datos.campo, mensaje: traducirMensaje(datos.mensaje, lang) })
         if (datos.campo) document.getElementById(`campo-${datos.campo}`)?.focus()
       }
     } catch {
-      setErrorForm({ mensaje: "No hemos podido enviar la reserva. Revisa tu conexión e inténtalo de nuevo." })
+      setErrorForm({ mensaje: t.errorEnvio })
     } finally {
       setEnviando(false)
     }
@@ -197,15 +378,15 @@ export default function Reservador({
     const ics = crearIcs({
       inicio: new Date(confirmada.inicio),
       fin: new Date(confirmada.fin),
-      resumen: "Llamada con Propus",
-      descripcion: `Llamada de ${duracionMin} minutos con Propus (propus.es). Si necesitas cambiarla, escríbenos a ${contacto.email}.`,
+      resumen: t.icsResumen,
+      descripcion: t.icsDescripcion(duracionMin, contacto.email),
       uid: `${crypto.randomUUID()}@propus.es`,
       ahora: new Date(),
     })
     const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }))
     const enlace = document.createElement("a")
     enlace.href = url
-    enlace.download = "llamada-propus.ics"
+    enlace.download = t.icsArchivo
     document.body.appendChild(enlace)
     enlace.click()
     enlace.remove()
@@ -216,11 +397,7 @@ export default function Reservador({
   if (!inicial || !ticket) {
     return (
       <div className="vidrio overflow-hidden rounded-3xl border shadow-xl">
-        <SinHuecos
-          titulo="Ahora mismo no podemos enseñarte la agenda"
-          texto="Escríbenos o llámanos y buscamos un hueco juntos. Respondemos lo antes posible."
-          contacto={contacto}
-        />
+        <SinHuecos titulo={t.sinAgendaTitulo} texto={t.sinAgendaTexto} contacto={contacto} />
       </div>
     )
   }
@@ -228,8 +405,8 @@ export default function Reservador({
     return (
       <div className="vidrio overflow-hidden rounded-3xl border shadow-xl">
         <SinHuecos
-          titulo={inicial.abierta ? "No quedan huecos libres por ahora" : "Ahora mismo no aceptamos reservas online"}
-          texto="Escríbenos o llámanos y te buscamos un hueco. Respondemos lo antes posible."
+          titulo={inicial.abierta ? t.sinHuecosTitulo : t.cerradaTitulo}
+          texto={t.sinHuecosTexto}
           contacto={contacto}
         />
       </div>
@@ -239,9 +416,9 @@ export default function Reservador({
   const semanas = actual ? semanasDelMes(Number(mes.slice(0, 4)), Number(mes.slice(5, 7))) : []
   const diasConHuecos = new Set(actual?.dias.map((d) => d.fecha))
   const pasos: { id: Paso; texto: string }[] = [
-    { id: "hora", texto: "Día y hora" },
-    { id: "datos", texto: "Tus datos" },
-    { id: "listo", texto: "Listo" },
+    { id: "hora", texto: t.pasos[0] },
+    { id: "datos", texto: t.pasos[1] },
+    { id: "listo", texto: t.pasos[2] },
   ]
   const indicePaso = pasos.findIndex((p) => p.id === paso)
 
@@ -252,27 +429,27 @@ export default function Reservador({
         <aside className="space-y-6 border-b border-border/60 bg-primary/5 p-6 sm:p-8 lg:border-r lg:border-b-0">
           <div className="space-y-1.5">
             <p className="font-mono text-xs tracking-[0.18em] text-primary uppercase">Propus</p>
-            <h2 className="font-heading text-xl font-semibold tracking-tight">Llamada de {duracionMin} minutos</h2>
+            <h2 className="font-heading text-xl font-semibold tracking-tight">{t.llamadaDe(duracionMin)}</h2>
           </div>
           <ul className="space-y-3 text-sm text-muted-foreground">
             <li className="flex items-center gap-3">
               <Clock className="size-4 shrink-0 text-primary" aria-hidden />
-              {duracionMin} minutos, sin compromiso
+              {t.minutosSinCompromiso(duracionMin)}
             </li>
             <li className="flex items-center gap-3">
               <Video className="size-4 shrink-0 text-primary" aria-hidden />
-              Por videollamada o teléfono
+              {t.porVideollamada}
             </li>
             <li className="flex items-center gap-3">
               <ShieldCheck className="size-4 shrink-0 text-primary" aria-hidden />
-              Tus datos sólo se usan para esta llamada
+              {t.datosSoloLlamada}
             </li>
           </ul>
 
           {hueco && dia && paso === "datos" ? (
             <div className="rounded-xl border border-primary/30 bg-card/70 p-4 text-sm">
-              <p className="text-xs text-muted-foreground">Tu reserva</p>
-              <p className="mt-1 font-medium">{capitalizar(nombreDiaLargo(dia))}</p>
+              <p className="text-xs text-muted-foreground">{t.tuReserva}</p>
+              <p className="mt-1 font-medium">{capitalizar(nombreDiaLargo(dia, lang))}</p>
               <p className="font-mono text-foreground tabular-nums">
                 {hueco.hora} – {minutosAHora(((horaAMinutos(hueco.hora) ?? 0) + duracionMin) % 1440)}
               </p>
@@ -280,7 +457,7 @@ export default function Reservador({
           ) : null}
 
           <p className="text-xs leading-relaxed text-muted-foreground">
-            Horas de Madrid. ¿Prefieres escribirnos? Estamos en{" "}
+            {t.horasMadrid} {t.prefieresEscribir}{" "}
             <a href={contacto.emailHref} className="text-foreground underline underline-offset-4">
               {contacto.email}
             </a>
@@ -289,8 +466,8 @@ export default function Reservador({
         </aside>
 
         {/* Principal */}
-        <section className="min-w-0 p-6 sm:p-8" aria-label="Reserva de la llamada">
-          <ol className="mb-6 flex items-center gap-2 text-xs" aria-label="Pasos">
+        <section className="min-w-0 p-6 sm:p-8" aria-label={t.ariaReserva}>
+          <ol className="mb-6 flex items-center gap-2 text-xs" aria-label={t.ariaPasos}>
             {pasos.map((p, i) => (
               <li key={p.id} className="flex items-center gap-2" aria-current={i === indicePaso ? "step" : undefined}>
                 <span
@@ -322,13 +499,13 @@ export default function Reservador({
             <div className="grid gap-8 animate-in fade-in-0 slide-in-from-bottom-2 duration-300 md:grid-cols-[minmax(0,1fr)_13rem] motion-reduce:animate-none">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-heading text-lg font-medium first-letter:uppercase">{nombreMes(mes)}</h3>
+                  <h3 className="font-heading text-lg font-medium first-letter:uppercase">{nombreMes(mes, lang)}</h3>
                   <div className="flex items-center gap-1">
                     <Button
                       type="button"
                       variant="ghost"
                       size="icon"
-                      aria-label="Mes anterior"
+                      aria-label={t.mesAnterior}
                       disabled={cargando || mes <= actual.mesMin}
                       onClick={() => {
                         const anterior = sumarMeses(mes, -1)
@@ -341,7 +518,7 @@ export default function Reservador({
                       type="button"
                       variant="ghost"
                       size="icon"
-                      aria-label="Mes siguiente"
+                      aria-label={t.mesSiguiente}
                       disabled={cargando || mes >= actual.mesMax}
                       onClick={() => {
                         const siguiente = sumarMeses(mes, 1)
@@ -354,8 +531,8 @@ export default function Reservador({
                 </div>
 
                 <div className={cn("grid grid-cols-7 gap-y-1.5 text-center transition-opacity", cargando && "opacity-50")}>
-                  {DIAS_CORTOS.map((d) => (
-                    <span key={d} aria-hidden className="pb-1 font-mono text-xs text-muted-foreground">
+                  {diasCortos(lang).map((d, i) => (
+                    <span key={i} aria-hidden className="pb-1 font-mono text-xs text-muted-foreground">
                       {d}
                     </span>
                   ))}
@@ -369,7 +546,7 @@ export default function Reservador({
                         type="button"
                         disabled={!hayHuecos}
                         aria-pressed={elegido}
-                        aria-label={`${capitalizar(nombreDiaLargo(celda.fecha))}${hayHuecos ? "" : ", sin huecos"}`}
+                        aria-label={`${capitalizar(nombreDiaLargo(celda.fecha, lang))}${hayHuecos ? "" : t.sinHuecosDia}`}
                         onClick={() => setDia(celda.fecha)}
                         className={cn(
                           "relative mx-auto flex size-10 items-center justify-center rounded-xl text-sm tabular-nums transition-all outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:size-11",
@@ -391,19 +568,23 @@ export default function Reservador({
                   </p>
                 ) : null}
                 {actual.dias.length === 0 ? (
-                  <p className="text-sm text-muted-foreground">No quedan huecos libres este mes. Prueba con el siguiente.</p>
+                  <p className="text-sm text-muted-foreground">{t.sinHuecosMes}</p>
                 ) : (
-                  <p className="text-xs text-muted-foreground">Los días resaltados tienen huecos libres.</p>
+                  <p className="text-xs text-muted-foreground">{t.diasResaltados}</p>
                 )}
               </div>
 
               <div className="space-y-3">
                 <h3 className="font-heading text-lg font-medium">
-                  {dia ? <span className="first-letter:uppercase">{nombreDiaLargo(dia).split(",")[0]}</span> : "Horas"}
+                  {dia ? (
+                    <span className="first-letter:uppercase">{nombreDiaLargo(dia, lang).split(/[ ,]/)[0]}</span>
+                  ) : (
+                    t.horas
+                  )}
                   {dia ? <span className="text-muted-foreground"> {Number(dia.slice(8))}</span> : null}
                 </h3>
                 {diaActual ? (
-                  <ul className="grid max-h-[22rem] grid-cols-3 gap-2 overflow-y-auto pr-1 md:grid-cols-1" aria-label="Horas disponibles">
+                  <ul className="grid max-h-[22rem] grid-cols-3 gap-2 overflow-y-auto pr-1 md:grid-cols-1" aria-label={t.horasDisponibles}>
                     {diaActual.huecos.map((h) => (
                       <li key={h.inicio}>
                         <button
@@ -417,10 +598,10 @@ export default function Reservador({
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-sm text-muted-foreground">Elige un día resaltado para ver sus horas.</p>
+                  <p className="text-sm text-muted-foreground">{t.eligeDia}</p>
                 )}
                 <p aria-live="polite" className="sr-only">
-                  {diaActual ? `${diaActual.huecos.length} huecos libres el ${nombreDiaLargo(diaActual.fecha)}` : ""}
+                  {diaActual ? t.huecosLibres(diaActual.huecos.length, nombreDiaLargo(diaActual.fecha, lang)) : ""}
                 </p>
               </div>
             </div>
@@ -438,20 +619,18 @@ export default function Reservador({
                 className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
               >
                 <ArrowLeft className="size-4" aria-hidden />
-                Cambiar día u hora
+                {t.cambiarDiaHora}
               </button>
 
               <div>
-                <h3 className="font-heading text-xl font-semibold tracking-tight">Cuéntanos quién eres</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Sólo necesitamos tu nombre y un correo. Lo demás es opcional.
-                </p>
+                <h3 className="font-heading text-xl font-semibold tracking-tight">{t.cuentanos}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{t.soloNecesitamos}</p>
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <label htmlFor="campo-nombre" className="text-sm font-medium">
-                    Nombre <span aria-hidden>*</span>
+                    {t.nombre} <span aria-hidden>*</span>
                   </label>
                   <Input
                     id="campo-nombre"
@@ -468,7 +647,7 @@ export default function Reservador({
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="campo-email" className="text-sm font-medium">
-                    Correo electrónico <span aria-hidden>*</span>
+                    {t.correo} <span aria-hidden>*</span>
                   </label>
                   <Input
                     id="campo-email"
@@ -487,7 +666,7 @@ export default function Reservador({
 
               <div className="space-y-2">
                 <label htmlFor="campo-telefono" className="text-sm font-medium">
-                  Teléfono <span className="font-normal text-muted-foreground">(opcional)</span>
+                  {t.telefono} <span className="font-normal text-muted-foreground">{t.opcional}</span>
                 </label>
                 <Input
                   id="campo-telefono"
@@ -504,14 +683,14 @@ export default function Reservador({
 
               <div className="space-y-2">
                 <label htmlFor="campo-mensaje" className="text-sm font-medium">
-                  ¿Qué te gustaría contarnos? <span className="font-normal text-muted-foreground">(opcional)</span>
+                  {t.queContar} <span className="font-normal text-muted-foreground">{t.opcional}</span>
                 </label>
                 <textarea
                   id="campo-mensaje"
                   name="mensaje"
                   maxLength={500}
                   rows={3}
-                  placeholder="Qué quieres automatizar, qué web necesitas…"
+                  placeholder={t.placeholderMensaje}
                   value={form.mensaje}
                   onChange={(e) => cambiar("mensaje", e.target.value)}
                   aria-invalid={errorForm?.campo === "mensaje" || undefined}
@@ -522,7 +701,7 @@ export default function Reservador({
 
               {/* Campo trampa: fuera de la pantalla y del orden de tabulación. */}
               <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
-                <label htmlFor="campo-web">No rellenes este campo</label>
+                <label htmlFor="campo-web">{t.campoTrampa}</label>
                 <input
                   id="campo-web"
                   name="web"
@@ -547,11 +726,11 @@ export default function Reservador({
                     className="mt-0.5 size-4 shrink-0 accent-primary"
                   />
                   <span className="text-muted-foreground">
-                    He leído la{" "}
+                    {t.privacidadAntes}{" "}
                     <Link href="/legal/privacidad" target="_blank" className="text-foreground underline underline-offset-4">
-                      política de privacidad
+                      {t.privacidadEnlace}
                     </Link>{" "}
-                    y acepto que Propus use estos datos para gestionar mi llamada. Se borran 30 días después de la llamada.
+                    {t.privacidadDespues}
                   </span>
                 </label>
               </div>
@@ -571,10 +750,10 @@ export default function Reservador({
                 {enviando ? (
                   <>
                     <Loader2 className="animate-spin" aria-hidden />
-                    Reservando…
+                    {t.reservando}
                   </>
                 ) : (
-                  "Confirmar reserva"
+                  t.confirmar
                 )}
               </Button>
             </form>
@@ -587,29 +766,27 @@ export default function Reservador({
                 <Check className="size-8" aria-hidden />
               </span>
               <div className="space-y-2">
-                <h3 className="font-heading text-2xl font-semibold tracking-tight">¡Reserva confirmada!</h3>
-                <p className="leading-relaxed text-muted-foreground">
-                  Hemos guardado tu llamada. Nos pondremos en contacto contigo a la hora acordada con los datos que nos has dejado.
-                </p>
+                <h3 className="font-heading text-2xl font-semibold tracking-tight">{t.confirmada}</h3>
+                <p className="leading-relaxed text-muted-foreground">{t.guardada}</p>
               </div>
               <div className="w-full rounded-2xl border border-primary/30 bg-card/70 p-5">
-                <p className="font-medium">{capitalizar(nombreDiaLargo(confirmada.dia))}</p>
+                <p className="font-medium">{capitalizar(nombreDiaLargo(confirmada.dia, lang))}</p>
                 <p className="mt-1 font-mono text-lg tabular-nums">
                   {confirmada.hora} – {confirmada.horaFin}
                 </p>
-                <p className="mt-1 text-xs text-muted-foreground">Hora de Madrid</p>
+                <p className="mt-1 text-xs text-muted-foreground">{t.horaDeMadrid}</p>
               </div>
               <div className="flex flex-col items-center gap-3 sm:flex-row">
                 <Button type="button" size="lg" variant="outline" onClick={descargarIcs}>
                   <Download aria-hidden />
-                  Añadir a mi calendario
+                  {t.anadirCalendario}
                 </Button>
                 <Button size="lg" className="bg-brand-emerald font-semibold text-background hover:bg-brand-teal" asChild>
-                  <Link href="/">Volver al inicio</Link>
+                  <Link href={ruta("inicio", lang)}>{t.volverInicio}</Link>
                 </Button>
               </div>
               <p className="text-xs text-muted-foreground">
-                ¿Necesitas cambiar la hora? Escríbenos a{" "}
+                {t.cambiarHora}{" "}
                 <a href={contacto.emailHref} className="text-foreground underline underline-offset-4">
                   {contacto.email}
                 </a>
@@ -621,7 +798,7 @@ export default function Reservador({
           {cargando && paso === "hora" ? (
             <p className="mt-4 flex items-center gap-2 text-xs text-muted-foreground" role="status">
               <Loader2 className="size-3.5 animate-spin" aria-hidden />
-              Cargando huecos…
+              {t.cargandoHuecos}
             </p>
           ) : null}
         </section>

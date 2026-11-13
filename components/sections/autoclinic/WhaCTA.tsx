@@ -1,9 +1,35 @@
 import Link from "next/link"
 import { ArrowRightIcon } from "lucide-react"
 import { TiltCtaButton } from "@/components/ui/tilt-cta-button"
-import { rutaReservar } from "@/lib/site"
+import { ruta, type Lang } from "@/lib/i18n/idiomas"
 
-export default function WhaCTA() {
+interface Textos {
+  titulo: [string, string]
+  descripcion: string
+  boton: string
+  nota: string
+}
+
+const textos: Record<Lang, Textos> = {
+  es: {
+    titulo: ["¿Listo para no perder una sola cita ", "mientras duermes?"],
+    descripcion:
+      "Solicita una demo y te mostramos el agente funcionando con tus servicios, tus profesionales y tu agenda real.",
+    boton: "Solicita una demo",
+    nota: "Sin compromiso · 15 minutos · Con tu propia agenda",
+  },
+  en: {
+    titulo: ["Ready to never lose an appointment ", "while you sleep?"],
+    descripcion:
+      "Request a demo and we'll show you the agent working with your services, your professionals and your real schedule.",
+    boton: "Request a demo",
+    nota: "No strings attached · 15 minutes · With your own schedule",
+  },
+}
+
+export default function WhaCTA({ lang = "es" }: { lang?: Lang }) {
+  const t = textos[lang]
+
   return (
     <section id="demo" className="py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-4">
@@ -17,14 +43,12 @@ export default function WhaCTA() {
 
           <div className="relative">
             <h2 className="text-3xl font-semibold tracking-tight text-wha-fg md:text-4xl">
-              ¿Listo para no perder una sola cita{" "}
+              {t.titulo[0]}
               <span className="bg-linear-to-r from-wha via-wha-alt to-wha-teal bg-clip-text text-transparent">
-                mientras duermes?
+                {t.titulo[1]}
               </span>
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-wha-muted">
-              Solicita una demo y te mostramos el agente funcionando con tus servicios, tus profesionales y tu agenda real.
-            </p>
+            <p className="mx-auto mt-4 max-w-xl text-wha-muted">{t.descripcion}</p>
 
             <div className="mt-10 flex justify-center">
               {/* `flat` = modo seguro, como el resto de CTA con fondo en degradado. */}
@@ -35,16 +59,14 @@ export default function WhaCTA() {
                 className="h-11 gap-2 bg-linear-to-r from-wha via-wha-alt to-wha-teal px-8 text-base font-semibold text-white hover:opacity-90 [&_svg]:transition-transform hover:[&_svg]:translate-x-1"
                 asChild
               >
-                <Link href={rutaReservar}>
-                  Solicita una demo
+                <Link href={ruta("reservar", lang)}>
+                  {t.boton}
                   <ArrowRightIcon className="size-4" />
                 </Link>
               </TiltCtaButton>
             </div>
 
-            <p className="mt-4 text-xs text-wha-muted">
-              Sin compromiso · 15 minutos · Con tu propia agenda
-            </p>
+            <p className="mt-4 text-xs text-wha-muted">{t.nota}</p>
           </div>
         </div>
       </div>

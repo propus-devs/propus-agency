@@ -38,7 +38,7 @@ export async function cargarAgenda(args: {
   const fin = despues ? parsearFechaHoraMadrid(despues, "00:00") : null
   if (!inicio || !fin) throw new Error("Rango de fechas no válido")
 
-  const [ajustes, franjas, reservas, bloqueos, cerrados] = await Promise.all([
+  const [ajustes, franjas, reservas, bloqueos, marcados] = await Promise.all([
     obtenerAjustes(),
     listarFranjas(),
     listarReservasEntre(inicio, fin),
@@ -54,7 +54,8 @@ export async function cargarAgenda(args: {
     config: ajustes,
     reservas: reservas.filter((r) => r.estado === "confirmada"),
     bloqueos: bloqueos.map((b) => ({ inicio: b.desde, fin: b.hasta })),
-    cerrados,
+    cerrados: marcados.cerrados,
+    simulados: marcados.simulados,
   })
   return { ajustes, franjas, huecos, reservas, bloqueos }
 }

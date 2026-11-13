@@ -185,12 +185,13 @@ const MS_HORA = 3_600_000
  * Estado de cada hueco teórico de la agenda (por orden de prioridad):
  *  - reservado: se pisa con una reserva confirmada.
  *  - bloqueado: cae en un día o tramo bloqueado.
- *  - cerrado:   cerrado a mano en el calendario del admin.
+ *  - cerrado:   cerrado a mano en el calendario del admin (el cliente no lo ve).
  *  - fuera:     ya pasó, no cumple el aviso mínimo o está más allá de la ventana de días.
+ *  - simulado:  marcado a mano como "ocupado": el cliente lo ve apagado y no lo puede elegir.
  *  - oculto:    se esconde por el porcentaje de visibilidad (ver `calcularAgenda`).
  *  - libre:     el cliente lo ve y lo puede reservar.
  */
-export type Estado = "libre" | "reservado" | "bloqueado" | "cerrado" | "fuera" | "oculto"
+export type Estado = "libre" | "reservado" | "bloqueado" | "cerrado" | "simulado" | "fuera" | "oculto"
 
 export type Hueco = Intervalo & { estado: Estado }
 
@@ -237,8 +238,11 @@ export function calcularAgenda(args: {
   bloqueos: Intervalo[]
   /** Inicio (ms) de los huecos cerrados a mano. */
   cerrados: Set<number>
+  /** Inicio (ms) de los huecos marcados a mano como ocupados (el cliente los ve apagados). */
+  simulados?: Set<number>
 }): Hueco[] {
   const { ahora, desde, hasta, franjas, config, reservas, bloqueos, cerrados } = args
+  const simulados = args.simulados ?? new Set<number>()
   const { duracionMin, margenMin, antelacionHoras, ventanaDias, visibilidadPct, semilla } = config
   if (duracionMin <= 0 || margenMin < 0 || ventanaDias < 0) return []
   const f1 = parsearFecha(desde)
@@ -293,6 +297,8 @@ export function calcularAgenda(args: {
       else if (pisa(ms, finMs, bloqueos)) estado = "bloqueado"
       else if (cerrados.has(ms)) estado = "cerrado"
       else if (ms < primeroMs || clave > ultimoDia) estado = "fuera"
+      // Se ve aunque el porcentaje de visibilidad lo escondiera: es justo lo que se quiere enseñar.
+      else if (simulados.has(ms)) estado = "simulado"
       else if (!visibles.has(ms)) estado = "oculto"
       else estado = "libre"
       resultado.push({ ...intervalo, estado })

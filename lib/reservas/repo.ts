@@ -130,25 +130,43 @@ export async function listarBloqueosEntre(desde: Date, hasta: Date): Promise<Blo
 
 // ── Huecos cerrados a mano ─────────────────────────────────────────────────
 
-/** Inicio (ms) de los huecos cerrados a mano que empiezan en [desde, hasta). */
-export async function listarCerrados(desde: Date, hasta: Date): Promise<Set<number>> {
-  const filas = await consulta<{ inicio: Date }>(
-    "select inicio from huecos_cerrados where inicio >= $1 and inicio < $2",
+/**
+ * Huecos tocados a mano que empiezan en [desde, hasta), como inicio en ms:
+ * los `cerrados` (el cliente no los ve) y los `simulados` (los ve apagados, como ocupados).
+ */
+export async function listarCerrados(
+  desde: Date,
+  hasta: Date
+): Promise<{ cerrados: Set<number>; simulados: Set<number> }> {
+  const filas = await consulta<{ inicio: Date; aparente: boolean }>(
+    "select inicio, aparente from huecos_cerrados where inicio >= $1 and inicio < $2",
     [desde, hasta]
   )
-  return new Set(filas.map((f) => f.inicio.getTime()))
+  return {
+    cerrados: new Set(filas.filter((f) => !f.aparente).map((f) => f.inicio.getTime())),
+    simulados: new Set(filas.filter((f) => f.aparente).map((f) => f.inicio.getTime())),
+  }
 }
 
-/** Cierra el hueco si estaba abierto y lo abre si estaba cerrado. Devuelve true si queda cerrado. */
-export async function alternarCerrado(inicio: Date): Promise<boolean> {
+export type MarcaHueco = "cerrado" | "ocupado"
+
+/**
+ * Marca el hueco con `marca`, o lo deja libre si ya tenía esa misma marca. Si tenía la otra,
+ * la cambia. Devuelve cómo queda: la marca, o null si queda libre.
+ */
+export async function alternarHueco(inicio: Date, marca: MarcaHueco): Promise<MarcaHueco | null> {
+  const aparente = marca === "ocupado"
   return transaccion(async (q) => {
-    const abiertos = await q<{ inicio: Date }>(
-      "delete from huecos_cerrados where inicio = $1 returning inicio",
-      [inicio]
+    const actual = await q<{ aparente: boolean }>("select aparente from huecos_cerrados where inicio = $1", [inicio])
+    if (actual.length > 0 && actual[0].aparente === aparente) {
+      await q("delete from huecos_cerrados where inicio = $1", [inicio])
+      return null
+    }
+    await q(
+      "insert into huecos_cerrados (inicio, aparente) values ($1, $2) on conflict (inicio) do update set aparente = excluded.aparente",
+      [inicio, aparente]
     )
-    if (abiertos.length > 0) return false
-    await q("insert into huecos_cerrados (inicio) values ($1) on conflict do nothing", [inicio])
-    return true
+    return marca
   })
 }
 

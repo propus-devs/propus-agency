@@ -139,7 +139,9 @@ DigitalOcean). La web pública sigue siendo estática; solo `/admin` y la futura
   de cada hueco (`libre`, `reservado`, `bloqueado`, `cerrado` a mano, `oculto` por el % de visibilidad, `fuera`)
   y `cargarAgenda` (`lib/reservas/agenda.ts`) la alimenta desde la base. El calendario del admin enseña todos; la
   web pública debe enseñar SOLO los `libre` y leerlos siempre de aquí, sin copias ni cachés: así lo que se cambia
-  en el admin se ve al instante fuera. El % se aplica por día sobre todos los huecos teóricos del día y con una
+  en el admin se ve al instante fuera. Excepción deliberada: los `simulado` (huecos que el admin marca a mano
+  como «ocupados», tabla `huecos_cerrados` con `aparente = true`) también salen a la web, apagados y sin poder
+  elegirse, como si ya tuvieran reserva; un día solo se ofrece si tiene algún hueco `libre`. El % se aplica por día sobre todos los huecos teóricos del día y con una
   semilla fija, de modo que lo oculto no se mueve al recargar ni cuando alguien reserva.
 - **Ajustes y horario son UN formulario** (`FormularioAgenda`, un solo «Guardar cambios», acción
   `guardarAgendaAccion`). Motivo: tras cada redirect con `?ok=`/`?error=` Next vuelve a montar la página y se

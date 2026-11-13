@@ -12,6 +12,11 @@ export type HuecoPublico = {
   inicio: string
   /** Hora de Madrid ya formateada, "10:30". El navegador no calcula zonas horarias. */
   hora: string
+  /**
+   * true: hueco marcado a mano como ocupado. Se enseña apagado y no se puede elegir. Para el
+   * cliente no se distingue de uno realmente reservado.
+   */
+  ocupado?: true
 }
 
 export type DiaPublico = {

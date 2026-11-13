@@ -39,6 +39,11 @@ const ESTADOS: Record<Estado, { etiqueta: string; clase: string }> = {
     clase:
       "border-dashed border-foreground/30 bg-muted/60 text-muted-foreground line-through hover:bg-muted",
   },
+  simulado: {
+    etiqueta: "Ocupado a ojos del cliente: lo ve apagado y no puede elegirlo (púlsalo para quitarlo)",
+    clase:
+      "border-amber-500/50 bg-amber-500/10 text-amber-700 line-through hover:bg-amber-500/20 dark:text-amber-300",
+  },
   oculto: {
     etiqueta: "Oculto por el porcentaje de huecos que se enseñan",
     clase: "border-dashed border-border bg-transparent text-muted-foreground/70",
@@ -57,27 +62,31 @@ const ESTADOS: Record<Estado, { etiqueta: string; clase: string }> = {
   },
 }
 
-const ORDEN_LEYENDA: Estado[] = ["libre", "cerrado", "oculto", "reservado", "bloqueado", "fuera"]
+const ORDEN_LEYENDA: Estado[] = ["libre", "cerrado", "simulado", "oculto", "reservado", "bloqueado", "fuera"]
+
+/** Qué hace pulsar una hora: cerrarla (el cliente no la ve) o marcarla como ocupada (la ve apagada). */
+type Modo = "cerrar" | "ocupada"
 
 function capitalizar(texto: string): string {
   return texto.charAt(0).toUpperCase() + texto.slice(1)
 }
 
-function enlace(mes: string, dia?: string): string {
-  return `/admin/calendario?mes=${mes}${dia ? `&dia=${dia}` : ""}`
+function enlace(mes: string, dia?: string, modo: Modo = "cerrar"): string {
+  return `/admin/calendario?mes=${mes}${dia ? `&dia=${dia}` : ""}${modo === "ocupada" ? "&modo=ocupada" : ""}`
 }
 
-function ChipHueco({ hueco }: { hueco: Hueco }) {
+function ChipHueco({ hueco, modo }: { hueco: Hueco; modo: Modo }) {
   const hora = formatearHora(hueco.inicio)
   const { etiqueta, clase } = ESTADOS[hueco.estado]
   const base =
     "inline-flex h-9 min-w-16 items-center justify-center rounded-lg border px-3 font-mono text-sm tabular-nums transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
 
-  // Solo se pueden cerrar y abrir los huecos libres y los cerrados.
-  if (hueco.estado === "libre" || hueco.estado === "cerrado") {
+  // Se pueden marcar los huecos libres, los cerrados y los ocupados aparentes.
+  if (hueco.estado === "libre" || hueco.estado === "cerrado" || hueco.estado === "simulado") {
     return (
       <form action={alternarHuecoAccion}>
         <input type="hidden" name="inicio" value={hueco.inicio.toISOString()} />
+        <input type="hidden" name="modo" value={modo} />
         <button type="submit" title={etiqueta} aria-label={`${hora}. ${etiqueta}`} className={cn(base, clase, "cursor-pointer")}>
           {hora}
         </button>
@@ -94,10 +103,11 @@ function ChipHueco({ hueco }: { hueco: Hueco }) {
 export default async function PaginaCalendario({
   searchParams,
 }: {
-  searchParams: Promise<{ mes?: string; dia?: string; ok?: string; error?: string }>
+  searchParams: Promise<{ mes?: string; dia?: string; modo?: string; ok?: string; error?: string }>
 }) {
   await exigirAdmin()
-  const { mes: mesParam, dia: diaParam, ok, error } = await searchParams
+  const { mes: mesParam, dia: diaParam, modo: modoParam, ok, error } = await searchParams
+  const modo: Modo = modoParam === "ocupada" ? "ocupada" : "cerrar"
 
   if (!hayBaseDeDatos()) {
     return (
@@ -161,20 +171,20 @@ export default async function PaginaCalendario({
             </h2>
             <nav aria-label="Cambiar de mes" className="flex items-center gap-1">
               <Link
-                href={enlace(mesDe(hoy))}
+                href={enlace(mesDe(hoy), undefined, modo)}
                 className="rounded-md px-2.5 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
                 Hoy
               </Link>
               <Link
-                href={enlace(anterior)}
+                href={enlace(anterior, undefined, modo)}
                 aria-label="Mes anterior"
                 className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
                 <ChevronLeft className="size-4" aria-hidden />
               </Link>
               <Link
-                href={enlace(siguiente)}
+                href={enlace(siguiente, undefined, modo)}
                 aria-label="Mes siguiente"
                 className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
@@ -205,7 +215,7 @@ export default async function PaginaCalendario({
               return (
                 <Link
                   key={celda.fecha}
-                  href={enlace(mesDe(celda.fecha), celda.fecha)}
+                  href={enlace(mesDe(celda.fecha), celda.fecha, modo)}
                   aria-label={descripcion}
                   aria-current={seleccionado ? "date" : undefined}
                   className={cn(
@@ -276,13 +286,45 @@ export default async function PaginaCalendario({
                 .
               </p>
             ) : (
-              <ul className="flex flex-wrap gap-2" aria-label="Huecos del día">
-                {huecosDelDia.map((h) => (
-                  <li key={h.inicio.getTime()}>
-                    <ChipHueco hueco={h} />
-                  </li>
-                ))}
-              </ul>
+              <>
+                {/* Qué hace pulsar una hora. Se recuerda en la URL, así que sigue igual al cambiar de día. */}
+                <div role="group" aria-label="Qué hace pulsar una hora" className="space-y-2">
+                  <div className="inline-flex rounded-lg border border-border/60 bg-muted/40 p-0.5 text-sm">
+                    {(
+                      [
+                        ["cerrar", "Cerrar hora"],
+                        ["ocupada", "Marcar como ocupada"],
+                      ] as const
+                    ).map(([valor, texto]) => (
+                      <Link
+                        key={valor}
+                        href={enlace(mesDe(dia), dia, valor)}
+                        aria-current={modo === valor ? "true" : undefined}
+                        className={cn(
+                          "rounded-md px-3 py-1.5 transition-colors",
+                          modo === valor
+                            ? "bg-card font-medium text-foreground shadow-sm"
+                            : "text-muted-foreground hover:text-foreground"
+                        )}
+                      >
+                        {texto}
+                      </Link>
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    {modo === "ocupada"
+                      ? "Pulsa una hora para que el cliente la vea apagada, como si ya tuviera reserva. Púlsala otra vez para quitarlo."
+                      : "Pulsa una hora para cerrarla: el cliente ya no la ve. Púlsala otra vez para abrirla."}
+                  </p>
+                </div>
+                <ul className="flex flex-wrap gap-2" aria-label="Huecos del día">
+                  {huecosDelDia.map((h) => (
+                    <li key={h.inicio.getTime()}>
+                      <ChipHueco hueco={h} modo={modo} />
+                    </li>
+                  ))}
+                </ul>
+              </>
             )}
 
             <ul className="grid gap-x-4 gap-y-1.5 border-t border-border/50 pt-3 text-xs text-muted-foreground sm:grid-cols-2">

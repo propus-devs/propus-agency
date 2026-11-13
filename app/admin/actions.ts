@@ -15,7 +15,7 @@ import { cargarAgenda } from "@/lib/reservas/agenda"
 import { mesDe } from "@/lib/reservas/calendario"
 import { claveDiaMadrid } from "@/lib/reservas/huecos"
 import {
-  alternarCerrado,
+  alternarHueco,
   barajarHuecos,
   borrarBloqueo,
   cancelarReserva,
@@ -136,21 +136,27 @@ export async function borrarBloqueoAccion(datos: FormData): Promise<void> {
 
 // ── Calendario ─────────────────────────────────────────────────────────────
 
-/** Cierra a mano un hueco libre, o lo vuelve a abrir si estaba cerrado. */
+/**
+ * Marca a mano un hueco, o lo deja libre si ya tenía esa marca. Según el modo elegido en el
+ * calendario: "cerrar" (el cliente no lo ve) u "ocupada" (lo ve apagado, como si ya estuviera
+ * reservado). Con la otra marca puesta, la cambia.
+ */
 export async function alternarHuecoAccion(datos: FormData): Promise<void> {
   await exigirAdmin()
-  const inicio = leerInstante(lector(datos)("inicio"))
+  const leer = lector(datos)
+  const inicio = leerInstante(leer("inicio"))
   if (!inicio) redirect("/admin/calendario?error=hueco-no-valido")
 
+  const modo = leer("modo") === "ocupada" ? "ocupada" : "cerrar"
   const dia = claveDiaMadrid(inicio)
-  const volver = `/admin/calendario?mes=${mesDe(dia)}&dia=${dia}`
+  const volver = `/admin/calendario?mes=${mesDe(dia)}&dia=${dia}${modo === "ocupada" ? "&modo=ocupada" : ""}`
   let resultado: "hecho" | "no-valido"
   try {
     // Solo se tocan huecos que existen en el horario y no están reservados ni bloqueados.
     const { huecos } = await cargarAgenda({ ahora: new Date(), desde: dia, hasta: dia })
     const hueco = huecos.find((h) => h.inicio.getTime() === inicio.getTime())
     if (hueco && hueco.estado !== "reservado" && hueco.estado !== "bloqueado") {
-      await alternarCerrado(inicio)
+      await alternarHueco(inicio, modo === "ocupada" ? "ocupado" : "cerrado")
       resultado = "hecho"
     } else {
       resultado = "no-valido"

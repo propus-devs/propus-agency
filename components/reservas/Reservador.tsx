@@ -77,6 +77,7 @@ interface Textos {
   diasResaltados: string
   horas: string
   horasDisponibles: string
+  noDisponible: string
   eligeDia: string
   huecosLibres: (n: number, dia: string) => string
   cambiarDiaHora: string
@@ -134,6 +135,7 @@ const textos: Record<Lang, Textos> = {
     diasResaltados: "Los días resaltados tienen huecos libres.",
     horas: "Horas",
     horasDisponibles: "Horas disponibles",
+    noDisponible: "no disponible",
     eligeDia: "Elige un día resaltado para ver sus horas.",
     huecosLibres: (n, dia) => `${n} huecos libres el ${dia}`,
     cambiarDiaHora: "Cambiar día u hora",
@@ -191,6 +193,7 @@ const textos: Record<Lang, Textos> = {
     diasResaltados: "Highlighted days have free slots.",
     horas: "Times",
     horasDisponibles: "Available times",
+    noDisponible: "unavailable",
     eligeDia: "Pick a highlighted day to see its times.",
     huecosLibres: (n, dia) => `${n} free slots on ${dia}`,
     cambiarDiaHora: "Change day or time",
@@ -303,7 +306,7 @@ export default function Reservador({
     if (document.visibilityState !== "visible" || paso === "listo" || !mes) return
     void traerMes(mes, true).then((datos) => {
       if (!datos || !hueco || paso !== "datos") return
-      const sigue = datos.dias.some((d) => d.huecos.some((h) => h.inicio === hueco.inicio))
+      const sigue = datos.dias.some((d) => d.huecos.some((h) => h.inicio === hueco.inicio && !h.ocupado))
       if (!sigue) {
         setAviso(t.huecoNoDisponible)
         setHueco(null)
@@ -587,13 +590,25 @@ export default function Reservador({
                   <ul className="grid max-h-[22rem] grid-cols-3 gap-2 overflow-y-auto pr-1 md:grid-cols-1" aria-label={t.horasDisponibles}>
                     {diaActual.huecos.map((h) => (
                       <li key={h.inicio}>
-                        <button
-                          type="button"
-                          onClick={() => elegirHueco(h)}
-                          className="h-11 w-full rounded-xl border border-primary/40 bg-card/60 font-mono text-sm font-medium tabular-nums text-foreground transition-all outline-none hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
-                        >
-                          {h.hora}
-                        </button>
+                        {h.ocupado ? (
+                          // Apagado y sin acción: se ve como una hora que ya tiene reserva.
+                          <button
+                            type="button"
+                            disabled
+                            aria-label={`${h.hora}, ${t.noDisponible}`}
+                            className="h-11 w-full cursor-not-allowed rounded-xl border border-border/50 bg-muted/40 font-mono text-sm tabular-nums text-muted-foreground/45 line-through"
+                          >
+                            {h.hora}
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => elegirHueco(h)}
+                            className="h-11 w-full rounded-xl border border-primary/40 bg-card/60 font-mono text-sm font-medium tabular-nums text-foreground transition-all outline-none hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+                          >
+                            {h.hora}
+                          </button>
+                        )}
                       </li>
                     ))}
                   </ul>
@@ -601,7 +616,9 @@ export default function Reservador({
                   <p className="text-sm text-muted-foreground">{t.eligeDia}</p>
                 )}
                 <p aria-live="polite" className="sr-only">
-                  {diaActual ? t.huecosLibres(diaActual.huecos.length, nombreDiaLargo(diaActual.fecha, lang)) : ""}
+                  {diaActual
+                    ? t.huecosLibres(diaActual.huecos.filter((h) => !h.ocupado).length, nombreDiaLargo(diaActual.fecha, lang))
+                    : ""}
                 </p>
               </div>
             </div>

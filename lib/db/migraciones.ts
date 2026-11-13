@@ -76,4 +76,14 @@ export const migraciones: Migracion[] = [
       );
     `,
   },
+  {
+    id: "003-huecos-ocupados-aparentes",
+    sql: `
+      -- Huecos que el admin marca a mano como "ocupados": el cliente los ve apagados
+      -- y no los puede elegir, como si ya tuvieran reserva. Comparten tabla con los
+      -- cerrados (que el cliente no ve) y se distinguen por esta columna.
+      alter table huecos_cerrados
+        add column aparente boolean not null default false;
+    `,
+  },
 ]

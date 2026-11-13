@@ -56,15 +56,26 @@ export async function cargarMes(
   const hasta = ultimoDelMes > ultimo ? ultimo : ultimoDelMes
 
   const { huecos } = await cargarAgenda({ ahora, desde, hasta })
-  const porDia = new Map<string, DiaPublico>()
+  // Cada día lleva sus huecos libres y, apagados, los marcados a mano como ocupados (en orden de
+  // hora). Un día solo sale si tiene al menos un hueco libre.
+  const porDia = new Map<string, DiaPublico & { libres: number }>()
   for (const h of huecos) {
-    if (h.estado !== "libre") continue
+    if (h.estado !== "libre" && h.estado !== "simulado") continue
     const fecha = claveDiaMadrid(h.inicio)
-    const dia = porDia.get(fecha) ?? { fecha, huecos: [] }
-    dia.huecos.push({ inicio: h.inicio.toISOString(), hora: formatearHora(h.inicio) })
+    const dia = porDia.get(fecha) ?? { fecha, huecos: [], libres: 0 }
+    const libre = h.estado === "libre"
+    dia.huecos.push({
+      inicio: h.inicio.toISOString(),
+      hora: formatearHora(h.inicio),
+      ...(libre ? {} : { ocupado: true as const }),
+    })
+    if (libre) dia.libres += 1
     porDia.set(fecha, dia)
   }
-  return { ...base, abierta: true, dias: [...porDia.values()] }
+  const dias: DiaPublico[] = [...porDia.values()]
+    .filter((d) => d.libres > 0)
+    .map(({ fecha, huecos: lista }) => ({ fecha, huecos: lista }))
+  return { ...base, abierta: true, dias }
 }
 
 /** Mes con el que abre la página: el primero, desde hoy, que tenga algún hueco libre. */

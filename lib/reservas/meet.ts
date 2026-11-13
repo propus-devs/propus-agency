@@ -63,6 +63,25 @@ export function firmarJwt(cuenta: CuentaServicio, usuario: string, ahoraS: numbe
   return `${cabecera}.${cuerpo}.${base64url(firma)}`
 }
 
+/**
+ * El motivo que da Google cuando rechaza algo (p. ej. «unauthorized_client» o
+ * «accessNotConfigured»), para saber qué arreglar. Son códigos y frases de Google,
+ * sin datos de nadie.
+ */
+async function motivoDeGoogle(respuesta: Response): Promise<string> {
+  try {
+    const j = (await respuesta.json()) as {
+      error?: string | { message?: string; errors?: { reason?: string }[] }
+      error_description?: string
+    }
+    if (typeof j.error === "string") return `${j.error}${j.error_description ? ` — ${j.error_description}` : ""}`
+    const razon = j.error?.errors?.[0]?.reason
+    return [razon, j.error?.message].filter(Boolean).join(" — ")
+  } catch {
+    return ""
+  }
+}
+
 type Reunion = { inicio: Date; fin: Date; nombre: string; descripcion: string }
 
 /**
@@ -81,7 +100,15 @@ export async function crearMeet(
 ): Promise<string | null> {
   const cuenta = leerCuentaServicio(entorno.cuenta)
   const usuario = entorno.usuario?.trim()
-  if (!cuenta || !usuario) return null
+  if (!cuenta || !usuario) {
+    const motivo = !entorno.cuenta
+      ? "falta GOOGLE_CUENTA_SERVICIO"
+      : !cuenta
+        ? "GOOGLE_CUENTA_SERVICIO no es un JSON válido (ni en crudo ni en base64)"
+        : "falta GOOGLE_CALENDAR_USUARIO"
+    console.warn(`[meet] sin configurar, se usa el enlace fijo: ${motivo}`)
+    return null
+  }
 
   try {
     // 1) Token de acceso, haciéndose pasar por el usuario de Workspace.
@@ -93,7 +120,7 @@ export async function crearMeet(
       signal: AbortSignal.timeout(ESPERA_MS),
     })
     if (!rToken.ok) {
-      console.error(`[meet] Google rechazó el token: HTTP ${rToken.status}`)
+      console.error(`[meet] Google rechazó el token: HTTP ${rToken.status} ${await motivoDeGoogle(rToken)}`)
       return null
     }
     const { access_token: token } = (await rToken.json()) as { access_token?: string }
@@ -119,7 +146,7 @@ export async function crearMeet(
       }
     )
     if (!rEvento.ok) {
-      console.error(`[meet] Google Calendar rechazó el evento: HTTP ${rEvento.status}`)
+      console.error(`[meet] Google Calendar rechazó el evento: HTTP ${rEvento.status} ${await motivoDeGoogle(rEvento)}`)
       return null
     }
     const evento = (await rEvento.json()) as {

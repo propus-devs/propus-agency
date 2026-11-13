@@ -1,6 +1,6 @@
-# Alt4ir Agency — Guía para agentes
+# Propus — Guía para agentes
 
-Landing page para **Alt4ir**, agencia de IA, desarrollo de aplicaciones y automatización.
+Web de **Propus**: desarrollo web, software a medida y automatización (propus.es).
 
 ---
 
@@ -131,18 +131,25 @@ DigitalOcean). La web pública sigue siendo estática; solo `/admin` y la futura
 
 ```
 app/
-  layout.tsx          # RootLayout, metadatos globales, fuentes
-  page.tsx            # Landing page principal
-  globals.css         # TailwindCSS v4 + variables del tema + shadcn base
+  layout.tsx, page.tsx, globals.css   # Raíz, portada, TailwindCSS v4 + tema + shadcn base
+  servicios/<nombre>/                 # autoclinic, facturia, ruralprop, diseno-web-a-medida
+  blog/  sobre-nosotros/  legal/      # Contenido
+  reservar/  offline/                 # Reserva pública de llamadas y página sin conexión
+  admin/                              # Panel de reservas (dinámico, protegido con exigirAdmin)
+  api/                                # reservas (huecos y reserva) y cron/purga
 
 components/
-  ui/                 # Componentes shadcn (generados por CLI, no editar manualmente)
-  sections/           # Secciones de la landing (Hero, Services, CTA, etc.)
+  ui/                 # Primitivos (shadcn y piezas propias)
+  sections/           # Secciones de la portada y de cada servicio (una subcarpeta por servicio)
+  layout/ seo/ admin/ reservas/ pwa/
 
 lib/
-  utils.ts            # cn() y utilidades compartidas
+  utils.ts, site.ts, blog.ts, tema-claro.ts, privacidad-estado.ts
+  admin/ db/ http/ reservas/          # Sesión, Postgres, utilidades HTTP, agenda y reservas
 
-public/               # Assets estáticos
+docs/                 # Notas internas (blog, legal)
+scripts/              # Utilidades: hash de contraseña, favicons, descarga de la escena Spline
+public/               # Assets estáticos y service worker
 ```
 
 ---
@@ -161,13 +168,17 @@ public/               # Assets estáticos
 
 ## Contexto del proyecto
 
-**Alt4ir** es una agencia especializada en:
-- Desarrollo de aplicaciones con IA
-- Automatización de procesos de negocio
-- Integración de agentes inteligentes
+**Propus** es una agencia especializada en:
+- Desarrollo web y diseño web a medida
+- Software a medida y automatización de procesos de negocio
+- Agentes inteligentes (la IA es una herramienta más, no el reclamo: no se presenta como «agencia de IA»)
 
-Audiencia objetivo: founders, CTOs y equipos de operaciones que buscan delegar desarrollo e IA.
-Tono de la landing: técnico, moderno, confiable.
+Servicios: AutoClinic (agente de WhatsApp y gestión para clínicas), FacturIA (facturas y movimientos
+financieros), RuralProp (webs con reservas para turismo rural) y diseño web a medida.
+
+Audiencia objetivo: pymes y clínicas (dentales, de estética, podología) que quieren delegar la web, la
+agenda y las tareas repetitivas.
+Tono de la web: claro, cercano y fiable, sin jerga técnica innecesaria.
 
 ---
 

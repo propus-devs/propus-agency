@@ -41,9 +41,6 @@ logs/
 # base de datos local de desarrollo (npm run db:dev)
 /.pglite*/
 
-# vercel
-.vercel
-
 # typescript
 *.tsbuildinfo
 next-env.d.ts

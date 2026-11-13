@@ -1,80 +1,48 @@
-# Propus Agency
+# Propus
 
-Landing page de **Propus**, agencia especializada en desarrollo de aplicaciones con IA, automatización de procesos de negocio e integración de agentes conversacionales inteligentes. Construida con Next.js 16, TailwindCSS 4 y shadcn.
+Web de **Propus** ([propus.es](https://propus.es)): desarrollo web, software a medida y automatización. Incluye las páginas de servicio (AutoClinic, FacturIA, RuralProp y diseño web a medida), el blog, un calendario propio de llamadas de 15 minutos (`/reservar`) y su panel de administración (`/admin`).
 
----
+Este repositorio es **público**: no se sube ningún secreto ni dato real.
 
 ## Stack
 
-- **Next.js 16** — App Router, Server Components
-- **React 19**
-- **TailwindCSS 4** — configuración CSS-first, sin `tailwind.config.js`
-- **shadcn 4** — componentes como paquete npm
+- **Next.js 16** (App Router) y **React 19**
+- **TailwindCSS 4** con configuración CSS-first (sin `tailwind.config.js`)
+- **shadcn 4** y **radix-ui**
 - **TypeScript 5**
-- **Geist** — tipografía
+- **Postgres** (`pg`) para las reservas
+- **pnpm** como gestor de paquetes
 
-## Requisitos
+## Puesta en marcha
 
-- Node.js 20+
-- npm 10+
-
-## Instalación
+Requisitos: Node.js 22 y pnpm (`corepack enable`).
 
 ```bash
-npm install
+pnpm install
+pnpm dev
 ```
 
-## Desarrollo
-
-```bash
-npm run dev
-```
-
-Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+Abre [http://localhost:3000](http://localhost:3000).
 
 ## Comandos
 
 | Comando | Descripción |
 |---|---|
-| `npm run dev` | Servidor de desarrollo con Turbopack |
-| `npm run build` | Build de producción |
-| `npm run start` | Servidor de producción |
-| `npm run lint` | Lint con ESLint |
+| `pnpm dev` | Servidor de desarrollo |
+| `pnpm build` | Build de producción |
+| `pnpm start` | Servidor de producción |
+| `pnpm lint` | Lint con ESLint |
+| `pnpm test` | Pruebas unitarias (`node --test`) |
+| `pnpm db:dev` | Postgres embebido para desarrollo (puerto 5433) |
+| `pnpm admin:password` | Genera `ADMIN_PASSWORD_HASH` y `AUTH_SECRET` |
+| `pnpm spline:pull` | Descarga la escena de Spline del hero a `public/spline/` |
 
-## Agregar componentes UI
+Las variables de entorno están documentadas en [.env.example](.env.example).
 
-Este proyecto usa shadcn v4 (modelo de paquete). Para añadir un componente:
+## Despliegue
 
-```bash
-npx shadcn add <componente>
-```
+Imagen Docker ([Dockerfile](Dockerfile)) desplegada en Easypanel. La web pública es estática; solo `/admin` y `/api` son dinámicas.
 
-Los componentes se generan en `components/ui/`.
+## Más información
 
-## Estructura del proyecto
-
-```
-app/
-  layout.tsx        # Layout raíz, metadatos, fuentes
-  page.tsx          # Landing page
-  globals.css       # Tema global (TailwindCSS v4 + shadcn)
-
-components/
-  ui/               # Componentes shadcn (CLI)
-  sections/         # Secciones de la landing (Hero, Services, CTA…)
-
-lib/
-  utils.ts          # Utilidades (cn, etc.)
-
-public/             # Assets estáticos
-```
-
-## Deploy
-
-El proyecto está listo para desplegarse en [Vercel](https://vercel.com). Conecta el repositorio y despliega con un clic.
-
-Para otros proveedores, genera el build estático o de servidor con `npm run build`.
-
----
-
-**Alt4ir** · Agencia de IA y Desarrollo · [alt4ir.com](https://alt4ir.com)
+Las reglas de código, el tema claro y el diseño del calendario están en [AGENTS.md](AGENTS.md).

@@ -1,6 +1,6 @@
 import "server-only"
 import { consulta, transaccion } from "@/lib/db"
-import type { ConfigAgenda, DiaSemana, Franja, Intervalo } from "./huecos"
+import type { ConfigAgenda, DiaSemana, Franja } from "./huecos"
 
 /** Datos personales de las reservas: días que se conservan tras la llamada. */
 export const DIAS_DE_CONSERVACION = 30
@@ -189,16 +189,6 @@ export async function cancelarReserva(id: string): Promise<boolean> {
     [id]
   )
   return filas.length > 0
-}
-
-/** Lo que impide reservar entre dos instantes: reservas confirmadas y bloqueos. */
-export async function intervalosOcupados(desde: Date, hasta: Date): Promise<Intervalo[]> {
-  return consulta<Intervalo>(
-    `select inicio, fin from reservas where estado = 'confirmada' and fin > $1 and inicio < $2
-     union all
-     select desde as inicio, hasta as fin from bloqueos where hasta > $1 and desde < $2`,
-    [desde, hasta]
-  )
 }
 
 // ── Borrado automático ─────────────────────────────────────────────────────

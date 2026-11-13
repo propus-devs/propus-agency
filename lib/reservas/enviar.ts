@@ -1,6 +1,7 @@
 import "server-only"
 import { claveDiaMadrid } from "./huecos"
 import { construirCorreos, type Correo, type IdiomaCorreo } from "./correo"
+import { crearMeet } from "./meet"
 import { contact, siteUrl } from "@/lib/site"
 
 /**
@@ -10,7 +11,9 @@ import { contact, siteUrl } from "@/lib/site"
  *  - RESEND_API_KEY: sin ella no se envía nada (la reserva funciona igual).
  *  - EMAIL_REMITENTE: "Propus <team@propus.es>" por defecto; el dominio tiene que estar verificado en Resend.
  *  - EMAIL_AVISOS: a dónde va el aviso de cada reserva; por defecto, el correo de contacto.
- *  - ENLACE_VIDEOLLAMADA: enlace https de la sala de Meet. Sin él, el correo dice que se contactará a la hora acordada.
+ *  - GOOGLE_CUENTA_SERVICIO y GOOGLE_CALENDAR_USUARIO: Meet único por reserva (ver meet.ts).
+ *  - ENLACE_VIDEOLLAMADA: enlace https de una sala fija de Meet, de reserva si lo anterior no está o falla.
+ *    Sin ninguno, el correo dice que se contactará a la hora acordada.
  *
  * Nunca lanza: un fallo de correo no puede estropear una reserva ya guardada. Los
  * registros no llevan datos de la persona, solo el resultado.
@@ -72,11 +75,23 @@ export async function enviarCorreosReserva(reserva: Reserva): Promise<void> {
   const ahora = new Date()
   const dia = claveDiaMadrid(reserva.inicio)
 
+  const urlAdmin = `${siteUrl}/admin/calendario?mes=${dia.slice(0, 7)}&dia=${dia}`
+  // Meet único para esta reserva (Google Calendar); si no está configurado o falla, el enlace fijo.
+  const enlaceVideollamada =
+    (await crearMeet({
+      inicio: reserva.inicio,
+      fin: reserva.fin,
+      nombre: reserva.nombre,
+      descripcion: `Reserva hecha en propus.es. Calendario del admin: ${urlAdmin}`,
+    })) ||
+    process.env.ENLACE_VIDEOLLAMADA ||
+    null
+
   const { cliente, aviso } = construirCorreos({
     ...reserva,
-    enlaceVideollamada: process.env.ENLACE_VIDEOLLAMADA || null,
+    enlaceVideollamada,
     contactoEmail: contact.email,
-    urlAdmin: `${siteUrl}/admin/calendario?mes=${dia.slice(0, 7)}&dia=${dia}`,
+    urlAdmin,
     ahora,
     uid: `${crypto.randomUUID()}@propus.es`,
   })

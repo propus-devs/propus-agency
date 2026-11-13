@@ -309,7 +309,9 @@ export default function PrivacidadPage() {
           guardan en nuestra base de datos, los ve únicamente el equipo de
           Propus y se usan para atender tu reserva y nada más. Al reservar te
           enviamos un correo de confirmación, y otro de aviso al equipo, a
-          través de Resend, Inc., que envía esos correos por cuenta de Propus.
+          través de Resend, Inc., que envía esos correos por cuenta de Propus. La
+          videollamada se crea con Google Meet: queda un evento con tu nombre en
+          el calendario de Propus (Google Workspace).
           Se eliminan 30 días después de la fecha de la llamada. Para evitar reservas
           automáticas o abusivas, el formulario lleva un campo oculto y el
           servidor limita el número de reservas por hora.

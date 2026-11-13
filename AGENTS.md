@@ -140,6 +140,12 @@ DigitalOcean). La web pública sigue siendo estática; solo `/admin` y la futura
   aviso al equipo, con Resend (`lib/reservas/enviar.ts`; textos puros en `correo.ts`). Un fallo de correo nunca
   estropea la reserva. Variables: `RESEND_API_KEY`, `EMAIL_REMITENTE`, `EMAIL_AVISOS`, `ENLACE_VIDEOLLAMADA`
   (ver `.env.example`). Resend figura como encargado en la política de privacidad.
+  **Meet único** (`lib/reservas/meet.ts`): con `GOOGLE_CUENTA_SERVICIO` + `GOOGLE_CALENDAR_USUARIO` cada reserva
+  crea un evento con videollamada en el calendario de Propus y su enlace va en el correo; sin ellas, o si
+  Google falla, se usa `ENLACE_VIDEOLLAMADA`. Alta en Google: (1) proyecto en Google Cloud con la API de Google
+  Calendar activada; (2) cuenta de servicio y clave JSON; (3) en admin.google.com → Seguridad → Controles de
+  API → Delegación en todo el dominio, añadir el ID de cliente de la cuenta con el alcance
+  `https://www.googleapis.com/auth/calendar.events`. El evento solo lleva el nombre; no se invita a nadie.
 - **Una sola fuente de verdad para la agenda**: `calcularAgenda` (`lib/reservas/huecos.ts`, pura) da el estado
   de cada hueco (`libre`, `reservado`, `bloqueado`, `cerrado` a mano, `oculto` por el % de visibilidad, `fuera`)
   y `cargarAgenda` (`lib/reservas/agenda.ts`) la alimenta desde la base. El calendario del admin enseña todos; la

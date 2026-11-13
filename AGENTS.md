@@ -135,6 +135,11 @@ DigitalOcean). La web pública sigue siendo estática; solo `/admin` y la futura
   se añade otra al final.
 - **Service worker** (`public/sw.js`): no cachea `/admin` ni `/api` (llevan datos de clientes). Subir `VERSION`
   si cambia la lógica de caché.
+- **Correos de reserva**: al reservar, `app/api/reservas/route.ts` envía (dentro de `after()`, sin frenar la
+  respuesta) la confirmación al cliente —en el idioma de su web, con el `.ics` adjunto y el enlace de Meet— y un
+  aviso al equipo, con Resend (`lib/reservas/enviar.ts`; textos puros en `correo.ts`). Un fallo de correo nunca
+  estropea la reserva. Variables: `RESEND_API_KEY`, `EMAIL_REMITENTE`, `EMAIL_AVISOS`, `ENLACE_VIDEOLLAMADA`
+  (ver `.env.example`). Resend figura como encargado en la política de privacidad.
 - **Una sola fuente de verdad para la agenda**: `calcularAgenda` (`lib/reservas/huecos.ts`, pura) da el estado
   de cada hueco (`libre`, `reservado`, `bloqueado`, `cerrado` a mano, `oculto` por el % de visibilidad, `fuera`)
   y `cargarAgenda` (`lib/reservas/agenda.ts`) la alimenta desde la base. El calendario del admin enseña todos; la

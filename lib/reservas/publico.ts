@@ -106,7 +106,19 @@ const error = (
  */
 export async function reservar(
   cuerpo: unknown,
-  ajustes: { ahora: Date; secreto: string | null }
+  ajustes: {
+    ahora: Date
+    secreto: string | null
+    /** Se llama cuando la reserva ya está guardada (aquí se envían los correos). Un fallo no la estropea. */
+    alCrear?: (reserva: {
+      inicio: Date
+      fin: Date
+      nombre: string
+      email: string
+      telefono: string | null
+      mensaje: string | null
+    }) => void
+  }
 ): Promise<Resultado> {
   const { ahora, secreto } = ajustes
   if (!secreto) {
@@ -169,6 +181,19 @@ export async function reservar(
       return error(409, "hueco-ocupado", "Ese hueco se acaba de ocupar. Elige otra hora.", "inicio")
     }
     throw e
+  }
+
+  try {
+    ajustes.alCrear?.({
+      inicio: hueco.inicio,
+      fin: hueco.fin,
+      nombre: d.nombre,
+      email: d.email,
+      telefono: d.telefono,
+      mensaje: d.mensaje,
+    })
+  } catch (e) {
+    console.error("[reservas] fallo al preparar los correos de la reserva:", e instanceof Error ? e.name : "error")
   }
 
   return { estado: 201, cuerpo: { ok: true, inicio: hueco.inicio.toISOString(), fin: hueco.fin.toISOString() } }

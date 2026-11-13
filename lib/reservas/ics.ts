@@ -38,6 +38,8 @@ export function crearIcs(args: {
   descripcion: string
   uid: string
   ahora: Date
+  /** Dónde es: p. ej. el enlace de la videollamada. */
+  lugar?: string
 }): string {
   const lineas = [
     "BEGIN:VCALENDAR",
@@ -52,6 +54,7 @@ export function crearIcs(args: {
     `DTEND:${formatoUtc(args.fin)}`,
     `SUMMARY:${escapar(args.resumen)}`,
     `DESCRIPTION:${escapar(args.descripcion)}`,
+    ...(args.lugar ? [`LOCATION:${escapar(args.lugar)}`] : []),
     "END:VEVENT",
     "END:VCALENDAR",
   ]

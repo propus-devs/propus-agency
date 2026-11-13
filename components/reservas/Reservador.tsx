@@ -346,7 +346,7 @@ export default function Reservador({
       const respuesta = await fetch("/api/reservas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, inicio: hueco.inicio, ticket }),
+        body: JSON.stringify({ ...form, inicio: hueco.inicio, ticket, idioma: lang }),
       })
       const datos = (await respuesta.json()) as RespuestaReserva
       if (datos.ok) {

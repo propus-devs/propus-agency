@@ -5,6 +5,7 @@ import { origenValido } from "@/lib/http/origen"
 import { crearLimitador } from "@/lib/reservas/limite"
 import type { RespuestaReserva } from "@/lib/reservas/publico-tipos"
 import { reservar, secretoDeFormularios } from "@/lib/reservas/publico"
+import { enviarCorreosReserva } from "@/lib/reservas/enviar"
 import { purgarSiToca } from "@/lib/reservas/repo"
 import { siteUrl } from "@/lib/site"
 
@@ -63,9 +64,12 @@ export async function POST(request: Request) {
   }
 
   try {
+    // Idioma de la web en la que se reservó: decide el idioma del correo al cliente.
+    const idioma = (cuerpo as { idioma?: unknown } | null)?.idioma === "en" ? "en" : "es"
     const { estado, cuerpo: respuesta } = await reservar(cuerpo, {
       ahora: new Date(),
       secreto: secretoDeFormularios(),
+      alCrear: (reserva) => after(() => enviarCorreosReserva({ ...reserva, idioma })),
     })
     after(() => purgarSiToca())
     return responder(respuesta, estado)

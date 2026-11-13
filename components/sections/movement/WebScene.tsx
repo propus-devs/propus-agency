@@ -2,7 +2,28 @@ import type { ReactNode } from "react"
 import Image from "next/image"
 import { MousePointer2Icon } from "lucide-react"
 import { cn } from "@/lib/utils"
+import type { Lang } from "@/lib/i18n/idiomas"
 import { Live } from "./Live"
+
+const TEXTOS: Record<
+  Lang,
+  { titulo: string; subtitulo: string; dominio: string; h1: [string, string]; boton: string }
+> = {
+  es: {
+    titulo: "Diseño web a medida",
+    subtitulo: "Sin plantillas, hechas para tu marca",
+    dominio: "tunegocio.es",
+    h1: ["Tu marca", "en movimiento."],
+    boton: "Empezar",
+  },
+  en: {
+    titulo: "Custom web design",
+    subtitulo: "No templates, made for your brand",
+    dominio: "yourbusiness.com",
+    h1: ["Your brand", "in motion."],
+    boton: "Get started",
+  },
+}
 
 /**
  * Cada pieza del hero lleva un recuadro de "plano" (línea discontinua) que se
@@ -27,13 +48,15 @@ function Pieza({ className, children }: { className?: string; children: ReactNod
  * "Movement: escenas en vivo" en globals.css): sin animar (prefers-reduced-motion)
  * queda el hero ya terminado.
  */
-export function WebScene({ className }: { className?: string }) {
+export function WebScene({ className, lang = "es" }: { className?: string; lang?: Lang }) {
+  const t = TEXTOS[lang]
+
   return (
     <Live className={className}>
       <div className="mv-card vidrio rounded-2xl border p-4 backdrop-blur-sm">
         <div className="leading-tight">
-          <p className="text-sm font-semibold text-foreground">Diseño web a medida</p>
-          <p className="text-xs text-muted-foreground">Sin plantillas, hechas para tu marca</p>
+          <p className="text-sm font-semibold text-foreground">{t.titulo}</p>
+          <p className="text-xs text-muted-foreground">{t.subtitulo}</p>
         </div>
 
         <div className="mt-3 overflow-hidden rounded-lg border border-border bg-white/70">
@@ -43,7 +66,7 @@ export function WebScene({ className }: { className?: string }) {
             <span className="size-1.5 rounded-full bg-foreground/20" />
             <span className="size-1.5 rounded-full bg-foreground/20" />
             <span className="ml-2 flex-1 truncate rounded bg-foreground/[0.07] px-2 py-0.5 text-[9px] text-muted-foreground">
-              tunegocio.es
+              {t.dominio}
             </span>
           </div>
 
@@ -64,9 +87,9 @@ export function WebScene({ className }: { className?: string }) {
                 <div className="flex flex-col gap-1.5">
                   <Pieza>
                     <p className="mv-w-h1 text-[13px] font-semibold leading-[1.1] tracking-tight">
-                      <span className="block text-foreground">Tu marca</span>
+                      <span className="block text-foreground">{t.h1[0]}</span>
                       <span className="block bg-linear-to-r from-brand-teal to-brand-green bg-clip-text text-transparent">
-                        en movimiento.
+                        {t.h1[1]}
                       </span>
                     </p>
                   </Pieza>
@@ -78,7 +101,7 @@ export function WebScene({ className }: { className?: string }) {
                   </Pieza>
                   <Pieza className="w-fit">
                     <span className="mv-w-cta inline-flex h-5 items-center rounded-full bg-brand-emerald px-2.5 text-[9px] font-semibold text-background">
-                      Empezar
+                      {t.boton}
                     </span>
                   </Pieza>
                 </div>

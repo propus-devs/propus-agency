@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import Link from 'next/link';
 import { Mail, Phone } from 'lucide-react';
 import { contact } from '@/lib/site';
+import { ruta, type Lang } from '@/lib/i18n/idiomas';
 
 interface FooterLink {
   label: string;
@@ -19,44 +20,110 @@ interface FooterSection {
   links: FooterLink[];
 }
 
-const footerLinks: FooterSection[] = [
-  {
-    // Los 4 servicios, en el mismo orden que el menú (AutoClinic primero).
-    label: 'Servicios',
-    links: [
-      { href: '/servicios/autoclinic', label: 'AutoClinic' },
-      { href: '/servicios/ruralprop', label: 'RuralProp' },
-      { href: '/servicios/diseno-web-a-medida', label: 'Diseño web a medida' },
-      { href: '/servicios/facturia', label: 'FacturIA' },
-    ],
-  },
-  {
-    label: 'Empresa',
-    links: [
-      { href: '/sobre-nosotros', label: 'Sobre nosotros' },
-      { href: '/blog', label: 'Blog' },
-      { href: '/sobre-nosotros#equipo', label: 'Equipo' },
-    ],
-  },
-  {
-    label: 'Legal',
-    links: [
-      { href: '/legal/privacidad', label: 'Privacidad' },
-      { href: '/legal/terminos', label: 'Términos' },
-      { href: '/legal/cookies', label: 'Cookies' },
-      { href: '/legal/eliminacion-de-datos', label: 'Eliminación de datos' },
-    ],
-  },
-  {
-    label: 'Redes sociales',
-    links: [
-      { href: 'https://www.instagram.com/propus_nation?igsh=MWVibThwY2Y5YWFpbw==', label: 'Instagram', external: true },
-      { href: 'https://www.facebook.com/propusnation/?locale=es_ES', label: 'Facebook', external: true },
-    ],
-  },
-];
+interface TextosFooter {
+  descripcion: string;
+  direccion: string;
+  copyright: (anio: number) => string;
+  secciones: FooterSection[];
+}
 
-export default function Footer() {
+const INSTAGRAM = 'https://www.instagram.com/propus_nation?igsh=MWVibThwY2Y5YWFpbw==';
+const FACEBOOK = 'https://www.facebook.com/propusnation/?locale=es_ES';
+
+// En inglés, el blog y las páginas legales siguen en español: la etiqueta lo dice.
+const textos: Record<Lang, TextosFooter> = {
+  es: {
+    descripcion:
+      'Automatizamos procesos y desarrollamos aplicaciones con IA para que tu negocio escale más rápido.',
+    direccion:
+      'Iberium Group LLC · 1209 Mountain Road PL NE STE R, Albuquerque, New Mexico 87110, EE. UU.',
+    copyright: (anio) =>
+      `© ${anio} Propus, una marca de Iberium Group LLC. Todos los derechos reservados.`,
+    secciones: [
+      {
+        // Los 4 servicios, en el mismo orden que el menú (AutoClinic primero).
+        label: 'Servicios',
+        links: [
+          { href: ruta('autoclinic', 'es'), label: 'AutoClinic' },
+          { href: ruta('ruralprop', 'es'), label: 'RuralProp' },
+          { href: ruta('disenoWeb', 'es'), label: 'Diseño web a medida' },
+          { href: ruta('facturia', 'es'), label: 'FacturIA' },
+        ],
+      },
+      {
+        label: 'Empresa',
+        links: [
+          { href: ruta('sobreNosotros', 'es'), label: 'Sobre nosotros' },
+          { href: '/blog', label: 'Blog' },
+          { href: `${ruta('sobreNosotros', 'es')}#equipo`, label: 'Equipo' },
+        ],
+      },
+      {
+        label: 'Legal',
+        links: [
+          { href: '/legal/privacidad', label: 'Privacidad' },
+          { href: '/legal/terminos', label: 'Términos' },
+          { href: '/legal/cookies', label: 'Cookies' },
+          { href: '/legal/eliminacion-de-datos', label: 'Eliminación de datos' },
+        ],
+      },
+      {
+        label: 'Redes sociales',
+        links: [
+          { href: INSTAGRAM, label: 'Instagram', external: true },
+          { href: FACEBOOK, label: 'Facebook', external: true },
+        ],
+      },
+    ],
+  },
+  en: {
+    descripcion:
+      'We automate processes and build AI-powered applications so your business can scale faster.',
+    direccion:
+      'Iberium Group LLC · 1209 Mountain Road PL NE STE R, Albuquerque, New Mexico 87110, USA.',
+    copyright: (anio) =>
+      `© ${anio} Propus, a brand of Iberium Group LLC. All rights reserved.`,
+    secciones: [
+      {
+        label: 'Services',
+        links: [
+          { href: ruta('autoclinic', 'en'), label: 'AutoClinic' },
+          { href: ruta('ruralprop', 'en'), label: 'RuralProp' },
+          { href: ruta('disenoWeb', 'en'), label: 'Custom web design' },
+          { href: ruta('facturia', 'en'), label: 'FacturIA' },
+        ],
+      },
+      {
+        label: 'Company',
+        links: [
+          { href: ruta('sobreNosotros', 'en'), label: 'About us' },
+          { href: '/blog', label: 'Blog (in Spanish)' },
+          { href: `${ruta('sobreNosotros', 'en')}#equipo`, label: 'Team' },
+        ],
+      },
+      {
+        label: 'Legal (in Spanish)',
+        links: [
+          { href: '/legal/privacidad', label: 'Privacy' },
+          { href: '/legal/terminos', label: 'Terms' },
+          { href: '/legal/cookies', label: 'Cookies' },
+          { href: '/legal/eliminacion-de-datos', label: 'Data deletion' },
+        ],
+      },
+      {
+        label: 'Social media',
+        links: [
+          { href: INSTAGRAM, label: 'Instagram', external: true },
+          { href: FACEBOOK, label: 'Facebook', external: true },
+        ],
+      },
+    ],
+  },
+};
+
+export default function Footer({ lang = 'es' }: { lang?: Lang }) {
+  const t = textos[lang];
+
   return (
     <footer className="isla-oscura relative w-full flex flex-col items-center justify-center border-t border-border bg-black px-6 py-12 lg:py-16">
       <div className="bg-foreground/20 absolute top-0 right-1/2 left-1/2 h-px w-1/3 -translate-x-1/2 -translate-y-1/2 rounded-full blur" />
@@ -64,11 +131,11 @@ export default function Footer() {
       <div className="grid w-full max-w-6xl mx-auto gap-8 xl:grid-cols-3 xl:gap-8">
         {/* Brand */}
         <AnimatedContainer className="space-y-4">
-          <Link href="/" className="font-bold text-xl tracking-tight w-fit block">
+          <Link href={ruta('inicio', lang)} className="font-bold text-xl tracking-tight w-fit block">
             <span className="font-heading font-semibold bg-linear-to-r from-brand-sky via-brand-teal to-brand-green bg-clip-text text-transparent">PROPUS</span>
           </Link>
           <p className="text-sm text-muted-foreground max-w-xs leading-relaxed">
-            Automatizamos procesos y desarrollamos aplicaciones con IA para que tu negocio escale más rápido.
+            {t.descripcion}
           </p>
           <address className="flex not-italic flex-col items-start gap-2 text-sm">
             <a
@@ -88,16 +155,16 @@ export default function Footer() {
           </address>
 
           <p className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} Propus, una marca de Iberium Group LLC. Todos los derechos reservados.
+            {t.copyright(new Date().getFullYear())}
           </p>
           <p className="text-muted-foreground/80 text-xs leading-relaxed">
-            Iberium Group LLC · 1209 Mountain Road PL NE STE R, Albuquerque, New Mexico 87110, EE. UU.
+            {t.direccion}
           </p>
         </AnimatedContainer>
 
         {/* Link columns */}
         <div className="mt-10 grid grid-cols-2 gap-8 md:grid-cols-4 xl:col-span-2 xl:mt-0">
-          {footerLinks.map((section, index) => (
+          {t.secciones.map((section, index) => (
             <AnimatedContainer key={section.label} delay={0.1 + index * 0.1}>
               <div className="mb-10 md:mb-0">
                 <h3 className="text-xs font-semibold uppercase tracking-wider">{section.label}</h3>

@@ -4,22 +4,42 @@ import { useEffect, useState, useSyncExternalStore } from "react"
 import { BotIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useInView } from "@/lib/use-in-view"
+import type { Lang } from "@/lib/i18n/idiomas"
 
 type Mensaje = { from: "user" | "bot"; text: string }
 
 // Conversación de AutoClinic, el producto prioritario: una cita agendada sola.
-const GUION: Mensaje[] = [
-  { from: "user", text: "Hola, ¿tenéis hueco el jueves por la tarde?" },
-  {
-    from: "bot",
-    text: "¡Hola! Sí: el jueves tengo libre a las 17:00 y a las 18:30. ¿Cuál te viene mejor?",
-  },
-  { from: "user", text: "A las 17:00, gracias" },
-  {
-    from: "bot",
-    text: "Perfecto, cita confirmada: jueves a las 17:00. El miércoles te escribo para recordártelo.",
-  },
-]
+const GUIONES: Record<Lang, Mensaje[]> = {
+  es: [
+    { from: "user", text: "Hola, ¿tenéis hueco el jueves por la tarde?" },
+    {
+      from: "bot",
+      text: "¡Hola! Sí: el jueves tengo libre a las 17:00 y a las 18:30. ¿Cuál te viene mejor?",
+    },
+    { from: "user", text: "A las 17:00, gracias" },
+    {
+      from: "bot",
+      text: "Perfecto, cita confirmada: jueves a las 17:00. El miércoles te escribo para recordártelo.",
+    },
+  ],
+  en: [
+    { from: "user", text: "Hi, do you have any free slots on Thursday afternoon?" },
+    {
+      from: "bot",
+      text: "Hi! Yes: on Thursday I have 5:00 pm and 6:30 pm free. Which works better for you?",
+    },
+    { from: "user", text: "5:00 pm, thanks" },
+    {
+      from: "bot",
+      text: "Perfect, appointment confirmed: Thursday at 5:00 pm. I'll message you on Wednesday to remind you.",
+    },
+  ],
+}
+
+const ESTADOS: Record<Lang, { escribiendo: string; enLinea: string }> = {
+  es: { escribiendo: "escribiendo…", enLinea: "Agente de citas · en línea" },
+  en: { escribiendo: "typing…", enLinea: "Appointment agent · online" },
+}
 
 const SIN_MOVIMIENTO = "(prefers-reduced-motion: reduce)"
 
@@ -66,7 +86,9 @@ function PuntosEscribiendo() {
  * puntuación). Solo corre mientras está en pantalla; con
  * prefers-reduced-motion se muestra la conversación entera, sin animar.
  */
-export function ChatScene({ className }: { className?: string }) {
+export function ChatScene({ className, lang = "es" }: { className?: string; lang?: Lang }) {
+  const GUION = GUIONES[lang]
+  const estados = ESTADOS[lang]
   const [ref, inView] = useInView<HTMLDivElement>()
   const sinMovimiento = useSyncExternalStore(suscribirse, reducido, reducidoServidor)
   const [estado, setEstado] = useState<{ mensajes: Mensaje[]; pensando: boolean }>({
@@ -130,7 +152,7 @@ export function ChatScene({ className }: { className?: string }) {
     return () => {
       cancelado = true
     }
-  }, [inView, sinMovimiento])
+  }, [inView, sinMovimiento, GUION])
 
   const visible = sinMovimiento ? { mensajes: GUION, pensando: false } : estado
   const ultimo = visible.mensajes.length - 1
@@ -157,7 +179,7 @@ export function ChatScene({ className }: { className?: string }) {
         <div className="leading-tight">
           <p className="text-sm font-semibold text-foreground">AutoClinic</p>
           <p className="text-xs text-muted-foreground">
-            {visible.pensando || escribiendoUltimo ? "escribiendo…" : "Agente de citas · en línea"}
+            {visible.pensando || escribiendoUltimo ? estados.escribiendo : estados.enLinea}
           </p>
         </div>
       </div>

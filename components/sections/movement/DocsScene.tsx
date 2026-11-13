@@ -1,14 +1,26 @@
 import type { CSSProperties } from "react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
+import type { Lang } from "@/lib/i18n/idiomas"
 import { Live } from "./Live"
+
+const TEXTOS: Record<Lang, { subtitulo: string; carpetas: readonly [string, string, string] }> = {
+  es: {
+    subtitulo: "Gestión documental automática",
+    carpetas: ["Facturas", "Gastos", "Informes"],
+  },
+  en: {
+    subtitulo: "Automated document management",
+    carpetas: ["Invoices", "Expenses", "Reports"],
+  },
+}
 
 // tx: desplazamiento horizontal de la carpeta respecto al centro (ancho de
 // carpeta 4rem + hueco 0.75rem = 4.75rem).
 const CARPETAS = [
-  { i: 0, nombre: "Facturas", tx: "-4.75rem", rot: "-6deg", tipo: "PDF", color: "bg-sky-400" },
-  { i: 1, nombre: "Gastos", tx: "0rem", rot: "3deg", tipo: "JPG", color: "bg-emerald-400" },
-  { i: 2, nombre: "Informes", tx: "4.75rem", rot: "7deg", tipo: "CSV", color: "bg-violet-400" },
+  { i: 0, tx: "-4.75rem", rot: "-6deg", tipo: "PDF", color: "bg-sky-400" },
+  { i: 1, tx: "0rem", rot: "3deg", tipo: "JPG", color: "bg-emerald-400" },
+  { i: 2, tx: "4.75rem", rot: "7deg", tipo: "CSV", color: "bg-violet-400" },
 ] as const
 
 /**
@@ -16,7 +28,13 @@ const CARPETAS = [
  * medio: así, al caer, el documento queda tapado por la solapa y parece que
  * entra dentro de la carpeta.
  */
-function FilaCarpetas({ capa }: { capa: "fondo" | "frente" }) {
+function FilaCarpetas({
+  capa,
+  nombres,
+}: {
+  capa: "fondo" | "frente"
+  nombres: readonly string[]
+}) {
   return (
     <div
       className={cn(
@@ -26,7 +44,7 @@ function FilaCarpetas({ capa }: { capa: "fondo" | "frente" }) {
     >
       {CARPETAS.map((c) => (
         <div
-          key={c.nombre}
+          key={c.i}
           className="relative h-12 w-16 [perspective:200px]"
           style={{ "--i": c.i } as CSSProperties}
         >
@@ -38,7 +56,7 @@ function FilaCarpetas({ capa }: { capa: "fondo" | "frente" }) {
           ) : (
             <>
               <span className="mv-lid absolute inset-x-0 bottom-0 grid h-9 origin-bottom place-items-center rounded-md border border-brand-emerald/50 bg-brand-emerald/30 text-[9px] font-medium text-foreground">
-                {c.nombre}
+                {nombres[c.i]}
               </span>
               <span className="mv-check absolute -right-1 top-1 grid size-4 place-items-center rounded-full bg-brand-emerald text-[9px] font-bold text-background">
                 ✓
@@ -56,17 +74,19 @@ function FilaCarpetas({ capa }: { capa: "fondo" | "frente" }) {
  * carpeta, ya clasificados. Todo con CSS 3D; sin animar (prefers-reduced-motion)
  * quedan las carpetas con su marca de hecho.
  */
-export function DocsScene({ className }: { className?: string }) {
+export function DocsScene({ className, lang = "es" }: { className?: string; lang?: Lang }) {
+  const t = TEXTOS[lang]
+
   return (
     <Live className={className}>
       <div className="mv-card vidrio rounded-2xl border p-4 backdrop-blur-sm">
         <div className="leading-tight">
           <p className="text-sm font-semibold text-foreground">FacturIA</p>
-          <p className="text-xs text-muted-foreground">Gestión documental automática</p>
+          <p className="text-xs text-muted-foreground">{t.subtitulo}</p>
         </div>
 
         <div className="relative mx-auto mt-3 h-44 w-60">
-          <FilaCarpetas capa="fondo" />
+          <FilaCarpetas capa="fondo" nombres={t.carpetas} />
 
           {CARPETAS.map((c) => (
             <div
@@ -89,7 +109,7 @@ export function DocsScene({ className }: { className?: string }) {
             </div>
           </div>
 
-          <FilaCarpetas capa="frente" />
+          <FilaCarpetas capa="frente" nombres={t.carpetas} />
         </div>
       </div>
     </Live>

@@ -5,6 +5,37 @@ import { ChatScene } from "@/components/sections/movement/ChatScene"
 import { CalendarScene } from "@/components/sections/movement/CalendarScene"
 import { WebScene } from "@/components/sections/movement/WebScene"
 import { DocsScene } from "@/components/sections/movement/DocsScene"
+import { ruta, type Lang } from "@/lib/i18n/idiomas"
+
+interface Textos {
+  pastilla: string
+  titulo: [string, string]
+  /** Orden fijo: primero las citas (AutoClinic), después facturas (FacturIA) y
+   *  webs. Sin cifras ni comparaciones con la competencia: lo que se afirma es
+   *  lo que hace el producto. */
+  subtitulo: string
+  boton: string
+  nota: string
+}
+
+const textos: Record<Lang, Textos> = {
+  es: {
+    pastilla: "El momento es ahora",
+    titulo: ["No es magia.", "Es simplemente trabajar mejor."],
+    subtitulo:
+      "Citas que se confirman solas. Facturas que se procesan solas. Webs que reciben reservas mientras duermes. Tú te quedas con lo que de verdad requiere una persona.",
+    boton: "Descubrir mis opciones",
+    nota: "Sin compromiso · Consultoría gratuita",
+  },
+  en: {
+    pastilla: "The time is now",
+    titulo: ["It's not magic.", "It's simply working better."],
+    subtitulo:
+      "Appointments that confirm themselves. Invoices that process themselves. Websites that take bookings while you sleep. You keep the work that truly needs a person.",
+    boton: "Discover my options",
+    nota: "No strings attached · Free consultation",
+  },
+}
 
 /**
  * El texto va en el centro y las cuatro escenas animadas lo rodean en
@@ -13,7 +44,9 @@ import { DocsScene } from "@/components/sections/movement/DocsScene"
  * medida abajo a la derecha. Por debajo de xl se apilan tras el texto (2 por
  * fila en md). Orden de lectura = prioridad: AutoClinic primero.
  */
-export default function Movement() {
+export default function Movement({ lang = "es" }: { lang?: Lang }) {
+  const t = textos[lang]
+
   return (
     <section className="py-24 md:py-36">
       <div className="mx-auto grid max-w-[88rem] grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_40rem_minmax(0,1fr)] xl:gap-10">
@@ -24,24 +57,19 @@ export default function Movement() {
           {/* Pill */}
           <span className="rainbow-border inline-flex items-center gap-2 rounded-full bg-black px-4 py-1.5 text-xs font-semibold text-white">
             <TrendingUpIcon className="size-3.5" />
-            El momento es ahora
+            {t.pastilla}
           </span>
 
           {/* Título: un solo h2 con dos líneas, no dos h2 seguidos */}
           <h2 className="text-4xl md:text-6xl font-semibold tracking-tight leading-tight">
-            <span className="block text-foreground">No es magia.</span>
+            <span className="block text-foreground">{t.titulo[0]}</span>
             <span className="mt-1 block bg-linear-to-r from-brand-teal to-brand-green bg-clip-text text-transparent">
-              Es simplemente trabajar mejor.
+              {t.titulo[1]}
             </span>
           </h2>
 
-          {/* Subtítulo. Orden fijo: primero las citas (AutoClinic), después
-              facturas (FacturIA) y webs. Sin cifras ni comparaciones con la
-              competencia: lo que se afirma es lo que hace el producto. */}
           <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl text-balance">
-            Citas que se confirman solas. Facturas que se procesan solas. Webs
-            que reciben reservas mientras duermes. Tú te quedas con lo que de
-            verdad requiere una persona.
+            {t.subtitulo}
           </p>
 
           {/* CTA */}
@@ -52,20 +80,20 @@ export default function Movement() {
               asChild
             >
               {/* Lleva a la sección con los cuatro servicios */}
-              <Link href="/#servicios">
-                Descubrir mis opciones
+              <Link href={`${ruta("inicio", lang)}#servicios`}>
+                {t.boton}
                 <ArrowRightIcon className="size-4" />
               </Link>
             </TiltCtaButton>
-            <span className="text-xs text-muted-foreground">Sin compromiso · Consultoría gratuita</span>
+            <span className="text-xs text-muted-foreground">{t.nota}</span>
           </div>
         </div>
 
         {/* Escenas en vivo (decorativas) */}
-        <ChatScene className="mx-auto w-full max-w-sm xl:col-start-1 xl:row-start-1 xl:max-w-none" />
-        <CalendarScene className="mx-auto w-full max-w-sm xl:col-start-3 xl:row-start-1 xl:max-w-none" />
-        <WebScene className="mx-auto w-full max-w-sm xl:col-start-3 xl:row-start-2 xl:max-w-none" />
-        <DocsScene className="mx-auto w-full max-w-sm xl:col-start-1 xl:row-start-2 xl:max-w-none" />
+        <ChatScene lang={lang} className="mx-auto w-full max-w-sm xl:col-start-1 xl:row-start-1 xl:max-w-none" />
+        <CalendarScene lang={lang} className="mx-auto w-full max-w-sm xl:col-start-3 xl:row-start-1 xl:max-w-none" />
+        <WebScene lang={lang} className="mx-auto w-full max-w-sm xl:col-start-3 xl:row-start-2 xl:max-w-none" />
+        <DocsScene lang={lang} className="mx-auto w-full max-w-sm xl:col-start-1 xl:row-start-2 xl:max-w-none" />
       </div>
     </section>
   )

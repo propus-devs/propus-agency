@@ -3,6 +3,25 @@
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
 import { introEstado, marcarEscena } from "@/lib/intro-loader"
+import type { Lang } from "@/lib/i18n/idiomas"
+
+const TEXTOS: Record<
+  Lang,
+  { cargandoPropus: string; preparando: string; cargandoLogo: string; listo: string }
+> = {
+  es: {
+    cargandoPropus: "Cargando Propus",
+    preparando: "Preparando",
+    cargandoLogo: "Cargando el logo 3D",
+    listo: "Listo",
+  },
+  en: {
+    cargandoPropus: "Loading Propus",
+    preparando: "Getting ready",
+    cargandoLogo: "Loading the 3D logo",
+    listo: "Ready",
+  },
+}
 
 // La pantalla no baja de MIN_MS para que el anillo se vea completarse incluso
 // con todo en caché (sin esto parpadearía). MAX_MS es la red de seguridad: si
@@ -79,7 +98,8 @@ function bloquearScroll() {
  * renderizar React en cada frame. Estilos en globals.css (bloque "Pantalla de
  * carga").
  */
-export function IntroLoader() {
+export function IntroLoader({ lang = "es" }: { lang?: Lang }) {
+  const t = TEXTOS[lang]
   // Al volver a la portada por navegación del cliente la escena ya cargó en
   // esta sesión: no se muestra. En una carga normal siempre empieza activa,
   // igual que en el servidor (no hay desajuste de hidratación).
@@ -122,7 +142,7 @@ export function IntroLoader() {
         estadoEl.textContent = texto
         ultimoTexto = texto
         // En "Listo" los puntos de espera se ocultan.
-        raiz?.toggleAttribute("data-listo", texto === "Listo")
+        raiz?.toggleAttribute("data-listo", texto === t.listo)
       }
     }
 
@@ -131,7 +151,7 @@ export function IntroLoader() {
       cerrado = true
       cancelAnimationFrame(raf)
       pintar(100)
-      escribirEstado("Listo")
+      escribirEstado(t.listo)
       soltar()
       pausa = window.setTimeout(() => setFase("saliendo"), PAUSA_FINAL_MS)
     }
@@ -153,7 +173,7 @@ export function IntroLoader() {
       const tope = (escena ? 80 : 30) * dt
       valor += Math.max(Math.min((techo - valor) * (1 - Math.exp(-ritmo * dt)), tope), 0)
       pintar(valor)
-      escribirEstado(escena ? "Listo" : motor ? "Cargando el logo 3D" : "Preparando")
+      escribirEstado(escena ? t.listo : motor ? t.cargandoLogo : t.preparando)
 
       if (escena && valor >= 99 && ahora - inicio >= MIN_MS) {
         // Dos frames de margen para que el primer pintado del 3D no coincida
@@ -175,7 +195,7 @@ export function IntroLoader() {
       window.clearTimeout(pausa)
       soltar()
     }
-  }, [fase])
+  }, [fase, t])
 
   useEffect(() => {
     if (fase !== "saliendo") return
@@ -187,7 +207,7 @@ export function IntroLoader() {
 
   return (
     <div ref={raizRef} className="intro-loader" data-fase={fase} role="status">
-      <span className="sr-only">Cargando Propus</span>
+      <span className="sr-only">{t.cargandoPropus}</span>
 
       <div className="malla-grano" aria-hidden />
 
@@ -224,7 +244,7 @@ export function IntroLoader() {
 
         <p className="intro-marca">Propus</p>
         <p className="intro-estado">
-          <span ref={estadoRef}>Preparando</span>
+          <span ref={estadoRef}>{t.preparando}</span>
           <span className="intro-puntos">
             <i />
             <i />

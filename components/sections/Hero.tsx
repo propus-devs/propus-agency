@@ -2,6 +2,7 @@ import Link from "next/link"
 import { ArrowRightIcon, ArrowUpRightIcon } from "lucide-react"
 import { SplineScene } from "@/components/ui/spline-scene"
 import { TiltCtaButton } from "@/components/ui/tilt-cta-button"
+import { ruta, type Lang } from "@/lib/i18n/idiomas"
 
 // Producción sirve siempre la copia auto-hospedada: evita la conexión a un
 // tercer dominio y permite precargarla en paralelo al runtime. En desarrollo,
@@ -11,30 +12,50 @@ const splineSceneLogo =
   (process.env.NODE_ENV === "development" && process.env.NEXT_PUBLIC_SPLINE_SCENE) ||
   "/spline/logo-v3.splinecode"
 
-// Cada servicio con lo suyo: no mezclar lo de AutoClinic (agenda,
-// recordatorios) con lo de las webs de turismo rural (reservas, SEO, panel).
-const servicios = [
-  {
-    href: "/servicios/autoclinic",
-    name: "AutoClinic",
-    detail: "Agenda, recordatorios automáticos y CRM para clínicas de podología",
-  },
-  {
-    // RuralProp es el nombre de las webs con reservas para turismo rural. El
-    // diseño web a medida es un servicio aparte (no todo es RuralProp).
-    href: "/servicios/ruralprop",
-    name: "RuralProp",
-    detail: "Web con reservas online, SEO y panel de gestión para turismo rural",
-  },
-  {
-    href: "/servicios/facturia",
-    name: "FacturIA",
-    detail: "Gestión documental automática",
-  },
-] as const
+interface Textos {
+  /** Línea del H1, tras «Propus ·» */
+  h1: string
+  desliza: string
+  titulo: [string, string]
+  subtitulo: string
+  listaServicios: string
+  verFunciona: string
+  hablaConNosotros: string
+  /** Cada servicio con lo suyo: no mezclar lo de AutoClinic (agenda,
+   *  recordatorios) con lo de las webs de turismo rural (reservas, SEO, panel). */
+  autoclinic: string
+  ruralprop: string
+  facturia: string
+}
 
-const subtitulo =
-  "Software de gestión interna para podólogos y webs con pasarela de reservas, SEO y panel de administración propio."
+const textos: Record<Lang, Textos> = {
+  es: {
+    h1: "Desarrollo de software e integraciones inteligentes",
+    desliza: "Desliza",
+    titulo: ["Tu negocio,", "en orden."],
+    subtitulo:
+      "Software de gestión interna para podólogos y webs con pasarela de reservas, SEO y panel de administración propio.",
+    listaServicios: "Nuestros servicios",
+    verFunciona: "Ver cómo funciona",
+    hablaConNosotros: "Habla con nosotros",
+    autoclinic: "Agenda, recordatorios automáticos y CRM para clínicas de podología",
+    ruralprop: "Web con reservas online, SEO y panel de gestión para turismo rural",
+    facturia: "Gestión documental automática",
+  },
+  en: {
+    h1: "Software development and smart integrations",
+    desliza: "Scroll",
+    titulo: ["Your business,", "in order."],
+    subtitulo:
+      "Internal management software for podiatrists, and websites with a booking system, SEO and their own admin panel.",
+    listaServicios: "Our services",
+    verFunciona: "See how it works",
+    hablaConNosotros: "Talk to us",
+    autoclinic: "Scheduling, automatic reminders and CRM for podiatry clinics",
+    ruralprop: "Website with online booking, SEO and a management panel for rural tourism",
+    facturia: "Automated document management",
+  },
+}
 
 /**
  * Hero con scroll coreografiado. Al entrar solo están el logo 3D, una línea
@@ -45,7 +66,18 @@ const subtitulo =
  * animaciones ligadas al scroll (animation-timeline). Sin soporte o con
  * prefers-reduced-motion, las mismas piezas se apilan en estático.
  */
-export default function Hero() {
+export default function Hero({ lang = "es" }: { lang?: Lang }) {
+  const t = textos[lang]
+  const inicio = ruta("inicio", lang)
+
+  const servicios = [
+    { href: ruta("autoclinic", lang), name: "AutoClinic", detail: t.autoclinic },
+    // RuralProp es el nombre de las webs con reservas para turismo rural. El
+    // diseño web a medida es un servicio aparte (no todo es RuralProp).
+    { href: ruta("ruralprop", lang), name: "RuralProp", detail: t.ruralprop },
+    { href: ruta("facturia", lang), name: "FacturIA", detail: t.facturia },
+  ]
+
   return (
     <section className="escena">
       <div className="escena-stage">
@@ -57,12 +89,12 @@ export default function Hero() {
           <h1 className="font-sans text-sm tracking-wide text-muted-foreground md:text-base">
             <span className="font-heading font-medium text-foreground">Propus</span>
             <span aria-hidden className="mx-2 text-muted-foreground/50">·</span>
-            Desarrollo de software e integraciones inteligentes
+            {t.h1}
           </h1>
 
           <div aria-hidden className="escena-cue mt-8 flex-col items-center gap-3">
             <span className="text-[0.65rem] uppercase tracking-[0.35em] text-muted-foreground/70">
-              Desliza
+              {t.desliza}
             </span>
             <span className="relative h-12 w-px overflow-hidden bg-border">
               <span className="absolute inset-x-0 top-0 h-1/3 bg-brand-emerald motion-safe:animate-cue" />
@@ -75,17 +107,17 @@ export default function Hero() {
               Tamaños y espacios en svh: la frase vive en una pantalla fija y
               tiene que caber entera también en portátiles bajos y móviles. */}
           <h2 className="text-[length:min(7svh,11vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.02em] text-foreground">
-            <span className="escena-paso-1 block">Tu negocio,</span>
-            <span className="escena-paso-2 block">en orden.</span>
+            <span className="escena-paso-1 block">{t.titulo[0]}</span>
+            <span className="escena-paso-2 block">{t.titulo[1]}</span>
           </h2>
 
           <p className="escena-paso-3 mt-[max(0.75rem,2.2svh)] max-w-xl text-[0.95rem] leading-relaxed text-muted-foreground text-balance md:text-lg">
-            {subtitulo}
+            {t.subtitulo}
           </p>
 
           {/* En móvil solo el nombre: el detalle no cabe en la pantalla fija. */}
           <ul
-            aria-label="Nuestros servicios"
+            aria-label={t.listaServicios}
             className="escena-paso-4 mt-[max(1rem,3svh)] w-full max-w-2xl border-t border-border text-left"
           >
             {servicios.map(({ href, name, detail }) => (
@@ -110,16 +142,16 @@ export default function Hero() {
               className="h-11 gap-2 bg-brand-emerald px-5 font-semibold text-background hover:bg-brand-teal sm:px-6"
               asChild
             >
-              <Link href="/#proceso">
-                Ver cómo funciona
+              <Link href={`${inicio}#proceso`}>
+                {t.verFunciona}
                 <ArrowRightIcon className="size-4" />
               </Link>
             </TiltCtaButton>
             <Link
-              href="/#contacto"
+              href={`${inicio}#contacto`}
               className="text-sm font-medium text-foreground/80 underline-offset-4 transition-colors hover:text-foreground hover:underline"
             >
-              Habla con nosotros
+              {t.hablaConNosotros}
             </Link>
           </div>
         </div>

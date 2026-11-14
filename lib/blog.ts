@@ -23,6 +23,262 @@ export const DESCRIPCION_BLOG =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "seo-local-casa-rural-pirineo-aragones",
+    title: "SEO para casas rurales del Pirineo: Valle de Tena, Jaca y Ordesa",
+    description:
+      "Cómo hacer que tu casa rural aparezca cuando buscan Valle de Tena, Jaca u Ordesa-Monte Perdido: páginas por zona, ficha de Google, reseñas y datos estructurados.",
+    date: "2026-11-14",
+    readingTime: "6 min de lectura",
+    tags: ["Turismo rural", "SEO local", "Pirineo", "RuralProp"],
+    image: "/img/blog/seo-local-casa-rural-pirineo-aragones.jpg",
+    content: `
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Quien reserva una casa en el Pirineo casi nunca empieza buscando tu nombre. Empieza buscando un sitio —Valle de Tena, Jaca, Ordesa— o un plan —esquiar, hacer una ruta, recorrer un tramo del Camino de Santiago— y de ahí salta a los alojamientos. Si tu web sólo habla de tu casa y no de la zona, Google no tiene motivos para enseñarla en esas búsquedas, y los portales se llevan esa visita. Esta guía explica, sin tecnicismos, qué hace falta para aparecer cuando alguien busca tu zona y qué parte puedes hacer tú mismo.
+      </p>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Cómo buscan los viajeros que vienen al Pirineo</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Hay tres formas de buscar, y conviene tener respuesta para las tres:
+      </p>
+      <ul class="list-disc pl-6 space-y-2 text-muted-foreground mb-4">
+        <li><strong class="text-foreground font-medium">Por destino:</strong> "casa rural Valle de Tena", "alojamiento en Jaca", "dónde dormir cerca de Ordesa".</li>
+        <li><strong class="text-foreground font-medium">Por plan:</strong> "casa rural cerca de las pistas", "alojamiento para hacer el Camino de Santiago", "casa rural con chimenea en invierno".</li>
+        <li><strong class="text-foreground font-medium">Por duda práctica:</strong> "se puede subir en coche a la Pradera de Ordesa", "hay cobertura en el valle", "admiten perros".</li>
+      </ul>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Son ejemplos de cómo suele buscar la gente, no cifras de búsquedas. Para saber cuánto se busca cada cosa, el planificador de palabras clave de Google Ads es gratuito; y si tu web ya existe, Search Console te enseña por qué búsquedas aparece.
+      </p>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Una página para cada alojamiento y otra para cada zona</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        El error más habitual es meterlo todo en una sola página: la casa, el entorno y los precios. Google, y también el viajero, prefieren páginas que respondan a una sola pregunta. Lo ideal es esto:
+      </p>
+      <ul class="list-disc pl-6 space-y-2 text-muted-foreground mb-4">
+        <li><strong class="text-foreground font-medium">Una página por alojamiento,</strong> con fotos, capacidad, servicios, normas y precios.</li>
+        <li><strong class="text-foreground font-medium">Una página por zona o plan</strong> en el que quieras aparecer: "Dormir cerca de Ordesa", "Alojamiento en el Valle de Tena en invierno", "Alojarte en Jaca: la ciudad y el Camino".</li>
+      </ul>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Lo que hace valiosas esas páginas es lo que sólo sabes tú: cuánto se tarda de verdad desde tu casa hasta las pistas o hasta Torla, dónde se aparca, qué hacer si nieva, qué ruta es buena con niños, dónde comer. Es información que un portal no tiene y que agradece quien está decidiendo dónde reservar.
+      </p>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Un ejemplo de duda real: en las fechas de más afluencia, el acceso al valle de Ordesa desde Torla se hace en autobús lanzadera y no en coche particular. Contarlo con claridad en tu web te diferencia de la ficha de un portal. Eso sí, las fechas y los horarios cambian cada año: enlaza a la información oficial del parque o del ayuntamiento en lugar de copiar un calendario que quedará viejo.
+      </p>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">La ficha de Google de tu alojamiento</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Cuando alguien busca "casa rural Jaca", Google suele enseñar un mapa con fichas de negocios. Esa ficha (el Perfil de empresa de Google) es gratuita y es la parte del escaparate que más se descuida. Cuídala así:
+      </p>
+      <ul class="list-disc pl-6 space-y-2 text-muted-foreground mb-4">
+        <li>Mismo nombre, dirección y teléfono que en tu web. Si no coinciden, Google duda de cuál es el correcto.</li>
+        <li>Fotos reales de cada estación: el Pirineo con nieve y en verano son dos destinos distintos.</li>
+        <li>Que el botón de web lleve a tu página de reservas directas, no a un portal.</li>
+        <li>Responder a todas las reseñas, también a las malas, con educación.</li>
+      </ul>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Datos que entienden los buscadores (y los de IA)</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Hay dos cosas que ayudan a que un buscador entienda tu alojamiento sin tener que adivinar:
+      </p>
+      <ul class="list-disc pl-6 space-y-2 text-muted-foreground mb-4">
+        <li><strong class="text-foreground font-medium">Datos estructurados:</strong> una forma de decirle a Google, en un formato que entiende, qué es tu alojamiento, dónde está, cuánto cuesta y qué opiniones tiene. Se añade en el código de la web y el viajero no lo ve.</li>
+        <li><strong class="text-foreground font-medium">Preguntas frecuentes reales, con respuestas cortas:</strong> "¿hay que llevar cadenas en invierno?", "¿cuántos minutos hay hasta las pistas?", "¿hay cobertura?", "¿admiten perros?". Son además el tipo de texto que mejor aprovechan los buscadores con IA para responder a un viajero.</li>
+      </ul>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Reseñas: pídelas tú</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Las opiniones pesan mucho en la decisión del viajero y en tu ficha de Google. Pídelas tú, con un mensaje personal al terminar la estancia y un enlace directo para dejarlas. Google no permite ofrecer descuentos ni regalos a cambio de una reseña, así que no lo hagas. Si automatizas el mensaje posterior a la salida, queda hecho para todos los huéspedes; lo explicamos en
+        <a href="/blog/portal-reservas-turismo-rural-astro" class="text-foreground underline underline-offset-4 hover:text-brand-teal">cómo funciona por dentro un portal de reservas propio</a>.
+      </p>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Rápida en el móvil, aunque haya poca cobertura</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Buena parte de tus visitas llegarán desde el móvil, a veces con poca cobertura en pleno valle. Una web ligera que carga rápido se lee mejor, convierte más y además la valora Google. Importa especialmente en turismo rural, donde el viajero suele comparar varios alojamientos a la vez.
+      </p>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Qué esperar (y qué no)</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        El posicionamiento no es inmediato. Con una web nueva, lo normal es empezar a ver resultados en meses y no en semanas, y depende de lo disputada que esté cada búsqueda: "casa rural Pirineo" es mucho más difícil que "casa rural cerca de Torla con chimenea". Por eso conviene empezar por búsquedas concretas de tu zona y dejar los cimientos puestos antes de la temporada alta.
+      </p>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Y de poco sirve que te encuentren si después el viajero tiene que irse a un portal para reservar: la visita tiene que poder terminar en una reserva directa. Si además tienes que cumplir con el registro de viajeros, mira
+        <a href="/blog/registro-viajeros-ses-hospedajes-casa-rural" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra guía de SES Hospedajes</a>.
+      </p>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Cómo lo resolvemos en RuralProp</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        RuralProp es nuestra web con reservas directas para alojamientos rurales. Para lo que cuenta esta guía incluye SEO y AEO: páginas rápidas, datos estructurados de alojamiento, preguntas frecuentes y un blog con redactor asistido por IA. Y, junto a eso, calendario centralizado, reservas con avisos automáticos, pasarela de pago o aprobación manual y registro de viajeros para SES Hospedajes. Puedes ver todo lo que incluye en
+        <a href="/servicios/ruralprop" class="text-foreground underline underline-offset-4 hover:text-brand-teal">la página de RuralProp</a>.
+      </p>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Si prefieres hacerlo por tu cuenta, esta guía te sirve igual. Y si quieres que revisemos cómo te encuentran hoy, cuéntanos tu caso en una
+        <a href="/reservar" class="text-foreground underline underline-offset-4 hover:text-brand-teal">llamada de 15 minutos</a>, sin compromiso.
+      </p>
+    `,
+  },
+  {
+    slug: "software-gestion-clinica-podologia",
+    title: "Software de gestión para clínica de podología: checklist",
+    description:
+      "Los siete puntos que debe cubrir un software de gestión para una clínica de podología: agenda por tratamiento, seguimiento de revisiones, ficha del paciente y recordatorios.",
+    date: "2026-11-14",
+    readingTime: "6 min de lectura",
+    tags: ["Clínicas de podología", "CRM", "Gestión", "AutoClinic"],
+    image: "/img/blog/software-gestion-clinica-podologia.jpg",
+    content: `
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Elegir un software de gestión para una clínica de podología no es lo mismo que elegirlo para una clínica dental. La podología trabaja por cita, con visitas cortas y muchos pacientes que vuelven cada pocas semanas, así que saber cuándo le toca volver a cada paciente pesa tanto como cuadrar la agenda de hoy. Este checklist sirve para evaluar cualquier programa, incluido el nuestro. Si buscas el equivalente para odontología, lo tienes en
+        <a href="/blog/software-gestion-clinica-dental" class="text-foreground underline underline-offset-4 hover:text-brand-teal">qué debe tener un software de gestión para clínica dental</a>.
+      </p>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">1. Agenda por tratamiento, con su duración real</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Una quiropodia, una primera valoración, un estudio biomecánico y la revisión de unas plantillas no ocupan el mismo tiempo. Si el programa sólo permite citas de duración fija, la agenda se descuadra o se llena de huecos sueltos. Comprueba que puedes asociar cada tratamiento a su duración y, si hay varios profesionales, a quién lo realiza.
+      </p>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">2. Seguimiento de lo que se repite</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Es lo que más distingue a la podología. Una quiropodia vuelve cada pocas semanas; el tratamiento de una onicomicosis o de una verruga plantar necesita varias sesiones; un estudio biomecánico deriva en revisiones de las plantillas. El software debería permitirte indicar cuándo toca la siguiente visita y avisar al paciente, o proponerle cita, sin que nadie tenga que acordarse ni apuntarlo en un cuaderno. Pregunta cómo se configura esto y quién lo configura.
+      </p>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">3. Ficha del paciente, y quién toca qué</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Cada paciente debería tener una ficha única, con sus datos de contacto y su historial de citas, accesible a todo el equipo. Hay dos matices que conviene aclarar antes de contratar:
+      </p>
+      <ul class="list-disc pl-6 space-y-2 text-muted-foreground mb-4">
+        <li><strong class="text-foreground font-medium">Trazabilidad:</strong> que cada cita guarde en qué estado está y quién la cambió y cuándo. Cuando hay una duda del tipo "yo había cancelado", es lo que la resuelve.</li>
+        <li><strong class="text-foreground font-medium">Historia clínica:</strong> un CRM de agenda no es lo mismo que un programa de historia clínica con exploraciones e informes. Pregunta qué cubre cada herramienta y cómo conviven con lo que ya usas.</li>
+      </ul>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Y como son datos de salud, que el RGPD trata como categoría especial, pide el contrato de encargado del tratamiento y pregunta dónde se alojan los datos y quién puede verlos.
+      </p>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">4. Recordatorios y confirmación</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Los recordatorios por WhatsApp son una de las medidas que más reducen las ausencias; en nuestro artículo sobre
+        <a href="/blog/reducir-no-shows-clinica-recordatorios" class="text-foreground underline underline-offset-4 hover:text-brand-teal">cómo reducir las ausencias con recordatorios automáticos</a>
+        explicamos el porqué. Una pauta que funciona es un aviso 24 horas antes y un segundo aviso 3 horas antes, que sólo llegue a quien no ha confirmado, para no saturar a los demás. Comprueba que el programa lo permite y que el paciente puede confirmar o cancelar respondiendo al mensaje.
+      </p>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">5. Huecos de última hora</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Cada cancelación tardía es un hueco que no se factura. Un buen sistema mantiene una lista de pacientes en espera y, cuando se libera un hueco, se lo ofrece en lugar de dejarlo vacío. Pregunta si ese proceso es automático o si alguien de recepción tiene que ir llamando.
+      </p>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">6. Base de conocimiento con las preguntas de tu sector</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Los pacientes de podología preguntan cosas muy concretas: cuánto cuesta la quiropodia, qué cuidados hay después, si hay que ir con las uñas sin pintar, cuánto tarda en estar lista una plantilla a medida. Si el programa, o el agente que lo acompaña, tiene que contestar, debe poder hacerlo con tus respuestas y no con textos genéricos.
+      </p>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">7. Panel con visión del día y origen de cada cita</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Al empezar el día necesitas ver las citas de hoy, las pendientes de confirmar y las cancelaciones recientes sin abrir cinco pantallas. Y conviene saber de dónde viene cada cita —el teléfono, la web, un agente de WhatsApp—, porque eso te dice por qué canal te llegan los pacientes.
+      </p>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Tres preguntas antes de contratar</h2>
+      <ul class="list-disc pl-6 space-y-2 text-muted-foreground mb-4">
+        <li><strong class="text-foreground font-medium">¿Cómo entran mis pacientes y citas actuales?</strong> Desde el cuaderno, un Excel o tu programa anterior, y cuánto tiempo de la clínica exige.</li>
+        <li><strong class="text-foreground font-medium">¿Puedo probarlo antes de que hable con pacientes reales?</strong> Si hay un agente conversacional, tienes que poder revisarlo y aprobarlo antes.</li>
+        <li><strong class="text-foreground font-medium">¿Qué pasa si quiero irme?</strong> Que puedas llevarte tus datos.</li>
+      </ul>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Cómo lo hemos resuelto en AutoClinic</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        AutoClinic es un CRM de agenda, pacientes y servicios con un agente de WhatsApp, y cubre los siete puntos: agenda por tratamiento con su duración, propuesta de la siguiente cita en los tratamientos de seguimiento, ficha del paciente con su historial de citas, cada cita con su estado y con quién la cambió y cuándo, recordatorios a las 24 y a las 3 horas (el segundo sólo a quien no ha confirmado), lista de espera para huecos de última hora, base de conocimiento propia y un panel que indica si cada cita la trajo el agente, el panel o la web.
+      </p>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Está en fase beta con una clínica de podología y se configura a medida. Si necesitas historia clínica con exploraciones e informes, cuéntanos qué usas hoy y vemos cómo encaja. Trabajamos en remoto, así que tu clínica puede estar en Zaragoza, en Huesca o en cualquier otro punto de España.
+      </p>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Puedes ver cómo se adapta a la podología en
+        <a href="/blog/recepcionista-virtual-clinica-podologia" class="text-foreground underline underline-offset-4 hover:text-brand-teal">AutoClinic para clínicas de podología</a>,
+        conocer
+        <a href="/servicios/autoclinic" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
+        o agendar una
+        <a href="/reservar" class="text-foreground underline underline-offset-4 hover:text-brand-teal">llamada de 15 minutos</a>
+        para revisar tu caso.
+      </p>
+    `,
+  },
+  {
+    slug: "registro-viajeros-ses-hospedajes-casa-rural",
+    title: "Registro de viajeros en tu casa rural: guía de SES Hospedajes",
+    description:
+      "Qué exige el registro de viajeros (Real Decreto 933/2021), qué datos recoger, en qué plazo comunicarlos y cómo simplificarlo si tienes una casa rural o un alojamiento pequeño.",
+    date: "2026-11-14",
+    readingTime: "6 min de lectura",
+    tags: ["Turismo rural", "SES Hospedajes", "Normativa", "RuralProp"],
+    image: "/img/blog/registro-viajeros-ses-hospedajes-casa-rural.jpg",
+    content: `
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Si alquilas una casa rural, un apartamento o una cabaña a viajeros, tienes que registrar a tus huéspedes y comunicar sus datos a las autoridades. Muchos propietarios lo conocen como "el SES" y casi todos coinciden en lo mismo: es una tarea pesada, con plazos cortos y multas serias. Esta guía resume lo esencial, enlaza a las fuentes oficiales y explica cómo lo simplificamos en RuralProp. No es asesoramiento jurídico: para tu caso concreto, consulta con tu gestor o con el Ministerio del Interior. Revisamos las fuentes el 14 de noviembre de 2026; la normativa y los formularios pueden cambiar.
+      </p>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Qué es SES Hospedajes y a quién afecta</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        SES.Hospedajes es la plataforma del Ministerio del Interior donde se registran y comunican los datos de los viajeros que se alojan. Nace del
+        <a href="https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-17461" target="_blank" rel="noopener noreferrer" class="text-foreground underline underline-offset-4 hover:text-brand-teal">Real Decreto 933/2021, de 26 de octubre</a>,
+        que regula el registro documental y la información que deben facilitar quienes ejercen actividades de hospedaje y de alquiler de vehículos. Según el
+        <a href="https://www.interior.gob.es/opencms/es/servicios-al-ciudadano/hospedajes-y-alquiler-de-vehiculos/" target="_blank" rel="noopener noreferrer" class="text-foreground underline underline-offset-4 hover:text-brand-teal">Ministerio del Interior</a>,
+        el registro es obligatorio para todos los tipos de establecimiento de hospedaje del territorio español. Si tu alojamiento está en una comunidad con policía autonómica propia, confirma qué canal te corresponde.
+      </p>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Qué tienes que hacer</h2>
+      <ul class="list-disc pl-6 space-y-2 text-muted-foreground mb-4">
+        <li><strong class="text-foreground font-medium">Dar de alta tu alojamiento</strong> en la plataforma antes de empezar la actividad.</li>
+        <li><strong class="text-foreground font-medium">Recoger los datos de cada viajero,</strong> no sólo del que reserva: nombre y apellidos, sexo, nacionalidad, fecha de nacimiento, tipo y número de documento, domicilio habitual, teléfono y correo electrónico. Los menores de 14 años se registran a través del adulto que los acompaña.</li>
+        <li><strong class="text-foreground font-medium">Recoger los datos de la reserva:</strong> fecha y hora de entrada y de salida, y la forma de pago.</li>
+        <li><strong class="text-foreground font-medium">Comunicarlo en un máximo de 24 horas.</strong> El artículo 6.3 habla de hacerlo "de manera inmediata, y en todo caso en un plazo no superior a 24 horas", y el plazo cuenta desde dos momentos: al hacer (o anular) la reserva y al empezar el servicio, es decir, cuando llegan los viajeros. En la práctica son dos comunicaciones: la de la reserva y la de la entrada.</li>
+        <li><strong class="text-foreground font-medium">Conservar los datos tres años</strong> desde que termina el servicio (artículo 5.3).</li>
+      </ul>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Qué pasa si no se cumple</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Según el artículo 8, no tener los registros o no hacer las comunicaciones obligatorias es una infracción grave; las irregularidades al rellenarlos y las comunicaciones fuera de plazo son leves. Las cuantías las fija la
+        <a href="https://www.boe.es/buscar/act.php?id=BOE-A-2015-3442" target="_blank" rel="noopener noreferrer" class="text-foreground underline underline-offset-4 hover:text-brand-teal">Ley Orgánica 4/2015 de protección de la seguridad ciudadana</a>:
+        de 601 a 30.000 euros las graves y hasta 600 euros las leves.
+      </p>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Dónde suele atascarse un propietario</h2>
+      <ul class="list-disc pl-6 space-y-2 text-muted-foreground mb-4">
+        <li><strong class="text-foreground font-medium">El viajero llega cuando tú no estás</strong> (caja de llaves, check-in autónomo). Si no tienes sus datos antes, no puedes comunicarlos a tiempo: lo práctico es pedírselos antes de la llegada.</li>
+        <li><strong class="text-foreground font-medium">Los grupos:</strong> hay que registrar a cada viajero, no sólo a quien paga la reserva.</li>
+        <li><strong class="text-foreground font-medium">Las reservas que llegan por portales:</strong> el registro es igual de obligatorio, así que los datos de esos huéspedes también hay que pedírselos.</li>
+        <li><strong class="text-foreground font-medium">Los errores al teclear:</strong> una irregularidad ya es una infracción leve, así que conviene validar los datos al introducirlos.</li>
+      </ul>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Cómo lo simplificamos en RuralProp</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        En RuralProp, el huésped rellena sus datos desde un enlace personal de check-in. Tú revisas y apruebas cada ficha en tu panel, y la web genera el fichero oficial ya validado, que subes al portal de SES Hospedajes. Hoy no enviamos los datos automáticamente al Ministerio: el último paso lo das tú, así que lo que se comunica pasa siempre por tus ojos. Y no tienes que ir recordando qué datos le faltan a cada huésped.
+      </p>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        Tienes más detalle en las
+        <a href="/servicios/ruralprop#faq-ruralprop" class="text-foreground underline underline-offset-4 hover:text-brand-teal">preguntas frecuentes de RuralProp</a>.
+      </p>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Checklist rápido</h2>
+      <ul class="list-disc pl-6 space-y-2 text-muted-foreground mb-4">
+        <li>¿Mi alojamiento está dado de alta en la plataforma?</li>
+        <li>¿Pido los datos de todos los viajeros antes de que lleguen?</li>
+        <li>¿Reviso que estén completos y bien escritos antes de enviarlos?</li>
+        <li>¿Comunico la reserva y la entrada dentro de las 24 horas?</li>
+        <li>¿Guardo los datos tres años desde la salida?</li>
+        <li>¿Sé dónde se guardan los datos de mis huéspedes y quién puede verlos?</li>
+      </ul>
+
+      <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Siguiente paso</h2>
+      <p class="text-muted-foreground leading-relaxed mb-4">
+        El registro de viajeros es una pieza más de tener las reservas bajo control. Para el resto, lee
+        <a href="/blog/portal-reservas-turismo-rural-astro" class="text-foreground underline underline-offset-4 hover:text-brand-teal">cómo funciona por dentro un portal de reservas propio</a>
+        y
+        <a href="/blog/seo-local-casa-rural-pirineo-aragones" class="text-foreground underline underline-offset-4 hover:text-brand-teal">cómo aparecer en Google con tu casa rural del Pirineo</a>.
+        Si quieres ver cómo encajaría en tu alojamiento, conoce
+        <a href="/servicios/ruralprop" class="text-foreground underline underline-offset-4 hover:text-brand-teal">RuralProp</a>
+        o agenda una
+        <a href="/reservar" class="text-foreground underline underline-offset-4 hover:text-brand-teal">llamada de 15 minutos</a>.
+      </p>
+    `,
+  },
+  {
     slug: "automatizacion-ia-empresas-albacete",
     title: "Cómo la automatización con IA puede transformar tu empresa en Albacete",
     description:
@@ -330,7 +586,8 @@ export const blogPosts: BlogPost[] = [
       <p class="text-muted-foreground leading-relaxed mb-4">
         El CRM de AutoClinic cubre los seis puntos de este checklist y está diseñado para clínicas que trabajan por cita, incluidas las dentales. Puedes ver el detalle en
         <a href="/servicios/autoclinic" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
-        o agendar una llamada para revisar tu caso concreto.
+        o agendar una llamada para revisar tu caso concreto. Si tu clínica es de podología, el checklist adaptado a tu sector está en
+        <a href="/blog/software-gestion-clinica-podologia" class="text-foreground underline underline-offset-4 hover:text-brand-teal">software de gestión para clínica de podología</a>.
       </p>
     `,
   },
@@ -473,7 +730,9 @@ export const blogPosts: BlogPost[] = [
 
       <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Siguiente paso</h2>
       <p class="text-muted-foreground leading-relaxed mb-4">
-        Si diriges una clínica de podología y quieres ver cómo encajaría AutoClinic en tu agenda, puedes conocer
+        Si diriges una clínica de podología y estás comparando programas, tienes el
+        <a href="/blog/software-gestion-clinica-podologia" class="text-foreground underline underline-offset-4 hover:text-brand-teal">checklist de software de gestión para clínica de podología</a>.
+        Y si quieres ver cómo encajaría AutoClinic en tu agenda, puedes conocer
         <a href="/servicios/autoclinic" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra solución de agente y CRM para clínicas</a>
         o agendar una llamada de 15 minutos para revisar tu caso concreto sin compromiso.
       </p>
@@ -600,7 +859,10 @@ export const blogPosts: BlogPost[] = [
         <a href="/servicios/diseno-web-a-medida" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestro portfolio de diseño web</a>.
       </p>
       <p class="text-muted-foreground leading-relaxed mb-4">
-        Si gestionas un alojamiento rural y estás en el punto de "las reservas me las lleva el teléfono", es probable que el sistema que necesitas sea más sencillo de lo que imaginas. Cuéntanos tu caso y lo vemos.
+        Si gestionas un alojamiento rural y estás en el punto de "las reservas me las lleva el teléfono", es probable que el sistema que necesitas sea más sencillo de lo que imaginas. Cuéntanos tu caso y lo vemos. Si además quieres que te encuentren por destino, lee
+        <a href="/blog/seo-local-casa-rural-pirineo-aragones" class="text-foreground underline underline-offset-4 hover:text-brand-teal">cómo aparecer en Google con tu casa rural del Pirineo</a>,
+        y si te preocupa el papeleo de los huéspedes, mira
+        <a href="/blog/registro-viajeros-ses-hospedajes-casa-rural" class="text-foreground underline underline-offset-4 hover:text-brand-teal">nuestra guía del registro de viajeros</a>.
       </p>
     `,
   },

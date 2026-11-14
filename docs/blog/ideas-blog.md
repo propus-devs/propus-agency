@@ -20,7 +20,7 @@ principal y donde hoy solo hay dos artículos.
 |---|---|---|---|---|
 | 1 | Cuánto cuesta a una clínica de podología cada hueco sin cubrir | `coste-hueco-libre-clinica-podologia` | Cálculo económico con números concretos del sector | Comercial |
 | 2 | Quiropodia, estudio biomecánico y revisión: cómo configurar una agenda por tipo de tratamiento | `agenda-por-tratamiento-podologia` | Operativo: duraciones reales y encaje en agenda | Informativa |
-| 3 | Software de gestión para clínica de podología: checklist de requisitos | `software-gestion-clinica-podologia` | Gemelo del artículo dental, adaptado al nicho principal | Comercial |
+| 3 | Software de gestión para clínica de podología: checklist de requisitos | `software-gestion-clinica-podologia` | Gemelo del artículo dental, adaptado al nicho principal | Comercial · **publicado 2026-11-14** |
 | 4 | Cómo captar pacientes de podología con SEO local | `seo-local-clinica-podologia` | «Podólogo cerca de mí»: ficha de Google y contenido | Informativa |
 | 5 | Recordatorios en tratamientos recurrentes: el caso de las revisiones cada 6 semanas | `recordatorios-tratamientos-recurrentes-podologia` | La recurrencia como ventaja frente a otros sectores | Informativa |
 | 6 | Qué preguntan de verdad los pacientes de podología por WhatsApp | `preguntas-frecuentes-pacientes-podologia` | Datos reales de la base de conocimiento del agente | Informativa |
@@ -50,7 +50,7 @@ principal y donde hoy solo hay dos artículos.
 |---|---|---|---|---|
 | 17 | Cuánto se lleva un portal de reservas y cuándo compensa tener el tuyo | `comisiones-portales-vs-reservas-propias` | Comparativa económica honesta | Comercial |
 | 18 | Cómo evitar la doble reserva cuando vendes en varios canales | `evitar-doble-reserva-multicanal` | Sincronización de calendarios | Informativa |
-| 19 | SEO local para casas rurales: cómo aparecer al buscar tu zona | `seo-local-casa-rural` | Búsquedas de destino | Informativa |
+| 19 | SEO local para casas rurales: cómo aparecer al buscar tu zona | `seo-local-casa-rural` | Búsquedas de destino | Informativa · **publicado 2026-11-14** como `seo-local-casa-rural-pirineo-aragones` (Valle de Tena, Jaca, Ordesa-Monte Perdido) |
 | 20 | Fotografía y estructura: qué hace que una casa rural se reserve | `fotos-estructura-web-casa-rural` | Conversión visual | Informativa |
 | 21 | Automatizar la comunicación con el huésped: antes, durante y después | `automatizar-comunicacion-huesped` | Confirmación, llegada y reseña | Comercial |
 | 22 | Cómo conseguir reseñas sin perseguir a los huéspedes | `conseguir-resenas-turismo-rural` | El activo que mueve reservas | Informativa |
@@ -97,6 +97,11 @@ principal y donde hoy solo hay dos artículos.
 ---
 
 ## Notas de uso
+
+- **2026-11-14:** además de las ideas 3 y 19 se publicó
+  `registro-viajeros-ses-hospedajes-casa-rural`, que no estaba en esta cola. Las
+  portadas de estas tres entradas usan el estilo claro de
+  [`portadas-prompts-tema-claro.md`](./portadas-prompts-tema-claro.md).
 
 - **La idea 10 tiene condición de publicación:** requiere un año de datos
   reales de la clínica en beta. No escribirla antes de tenerlos.

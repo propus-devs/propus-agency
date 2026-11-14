@@ -12,10 +12,10 @@ const BASE_URL = siteUrl
 // Si una página nueva no tiene fecha aquí, ponle la del día en que se publica.
 const MODIFICADO = {
   home: "2026-11-09",
-  autoclinic: "2026-11-10", // /servicios/autoclinic (antes /proyectos/agente-whatsapp; sin calculadora)
+  autoclinic: "2026-11-14", // /servicios/autoclinic: precio, bandeja de chats y enfoque solo a podología
   ruralprop: "2026-11-10", // /servicios/ruralprop (nueva)
   disenoWeb: "2026-11-10", // /servicios/diseno-web-a-medida (antes /proyectos/web-design)
-  facturia: "2026-07-30", // /servicios/facturia (antes /proyectos/facturia)
+  facturia: "2026-11-14", // /servicios/facturia: sección de precio nueva
   sobreNosotros: "2026-11-09",
   reservar: "2026-11-12", // /reservar (nueva; sustituye a la agenda de Google)
   blog: "2026-11-09",
@@ -35,24 +35,27 @@ function conPareja(
   clave: PaginaClave,
   modificadoEs: string,
   frecuencia: Entrada["changeFrequency"],
-  prioridad: number
+  prioridad: number,
+  // Por defecto, la fecha de publicación del inglés. Las dos versiones de una
+  // página compartida cambian a la vez, así que se pasa la misma fecha.
+  modificadoEn: string = MODIFICADO.ingles
 ): Entrada[] {
   const es = `${BASE_URL}${RUTAS[clave].es === "/" ? "" : RUTAS[clave].es}`
   const en = `${BASE_URL}${RUTAS[clave].en}`
   const alternates = { languages: { es, en, "x-default": es } }
   return [
     { url: es, lastModified: modificadoEs, changeFrequency: frecuencia, priority: prioridad, alternates },
-    { url: en, lastModified: MODIFICADO.ingles, changeFrequency: frecuencia, priority: prioridad, alternates },
+    { url: en, lastModified: modificadoEn, changeFrequency: frecuencia, priority: prioridad, alternates },
   ]
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     ...conPareja("inicio", MODIFICADO.home, "weekly", 1),
-    ...conPareja("autoclinic", MODIFICADO.autoclinic, "monthly", 0.9),
+    ...conPareja("autoclinic", MODIFICADO.autoclinic, "monthly", 0.9, MODIFICADO.autoclinic),
     ...conPareja("ruralprop", MODIFICADO.ruralprop, "monthly", 0.9),
     ...conPareja("disenoWeb", MODIFICADO.disenoWeb, "monthly", 0.8),
-    ...conPareja("facturia", MODIFICADO.facturia, "monthly", 0.7),
+    ...conPareja("facturia", MODIFICADO.facturia, "monthly", 0.7, MODIFICADO.facturia),
     ...conPareja("reservar", MODIFICADO.reservar, "monthly", 0.8),
     ...conPareja("sobreNosotros", MODIFICADO.sobreNosotros, "monthly", 0.6),
     {

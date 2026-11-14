@@ -65,7 +65,7 @@ const textos: Record<Lang, Textos> = {
         title: "Recordatorios automáticos",
         points: [
           "Aviso 24 horas antes para que el paciente no olvide su cita.",
-          "Segundo recordatorio 3 horas antes como confirmación final.",
+          "El paciente confirma o cancela desde el propio recordatorio.",
           "Reduce drásticamente las ausencias y los huecos vacíos.",
         ],
       },
@@ -121,7 +121,7 @@ const textos: Record<Lang, Textos> = {
         title: "Automatic reminders",
         points: [
           "A notice 24 hours before so the patient doesn't forget their appointment.",
-          "A second reminder 3 hours before as a final confirmation.",
+          "The patient confirms or cancels straight from the reminder.",
           "Drastically reduces no-shows and empty slots.",
         ],
       },

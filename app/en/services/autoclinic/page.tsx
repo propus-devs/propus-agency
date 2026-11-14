@@ -3,17 +3,17 @@ import AutoclinicPage from "@/components/pages/AutoclinicPage"
 import { alternas, ruta } from "@/lib/i18n/idiomas"
 
 export const metadata: Metadata = {
-  title: "Virtual receptionist for clinics | AutoClinic",
+  title: "Podiatry clinic software with a WhatsApp agent | AutoClinic",
   description:
-    "An AI agent on WhatsApp that books, cancels and sends reminders — 24/7, in your patient's language. For podiatry and dental clinics, vets, beauty clinics and more.",
+    "Management, podiatry clinical records and an AI agent on WhatsApp that books, cancels and reminds appointments 24/7, with the chat inbox inside the software. From €99 a month. Built for podiatrists only.",
   alternates: {
     canonical: ruta("autoclinic", "en"),
     languages: alternas("autoclinic"),
   },
   openGraph: {
-    title: "WhatsApp receptionist agent — Propus",
+    title: "AutoClinic — Podiatry software with a WhatsApp agent",
     description:
-      "Your practice never loses an appointment. Scheduling, reminders and cancellations over WhatsApp.",
+      "Your podiatry practice never loses an appointment. Management, clinical records and WhatsApp in one program.",
     type: "website",
     locale: "en_US",
   },

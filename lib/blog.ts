@@ -156,7 +156,7 @@ export const blogPosts: BlogPost[] = [
       <p class="text-muted-foreground leading-relaxed mb-4">
         Los recordatorios por WhatsApp son una de las medidas que más reducen las ausencias; en nuestro artículo sobre
         <a href="/blog/reducir-no-shows-clinica-recordatorios" class="text-foreground underline underline-offset-4 hover:text-brand-teal">cómo reducir las ausencias con recordatorios automáticos</a>
-        explicamos el porqué. Una pauta que funciona es un aviso 24 horas antes y un segundo aviso 3 horas antes, que sólo llegue a quien no ha confirmado, para no saturar a los demás. Comprueba que el programa lo permite y que el paciente puede confirmar o cancelar respondiendo al mensaje.
+        explicamos el porqué. Una pauta que funciona es un aviso 24 horas antes de la cita, con margen para que el paciente la cambie o la cancele si no puede venir. Comprueba que el programa lo permite y que el paciente puede confirmar o cancelar desde el propio mensaje.
       </p>
 
       <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">5. Huecos de última hora</h2>
@@ -183,7 +183,7 @@ export const blogPosts: BlogPost[] = [
 
       <h2 class="text-xl md:text-2xl font-semibold mt-10 mb-4 text-foreground">Cómo lo hemos resuelto en AutoClinic</h2>
       <p class="text-muted-foreground leading-relaxed mb-4">
-        AutoClinic es un CRM de agenda, pacientes y servicios con un agente de WhatsApp, y cubre los siete puntos: agenda por tratamiento con su duración, propuesta de la siguiente cita en los tratamientos de seguimiento, ficha del paciente con su historial de citas, cada cita con su estado y con quién la cambió y cuándo, recordatorios a las 24 y a las 3 horas (el segundo sólo a quien no ha confirmado), lista de espera para huecos de última hora, base de conocimiento propia y un panel que indica si cada cita la trajo el agente, el panel o la web.
+        AutoClinic es un CRM de agenda, pacientes y servicios con un agente de WhatsApp, y cubre los siete puntos: agenda por tratamiento con su duración, propuesta de la siguiente cita en los tratamientos de seguimiento, ficha del paciente con su historial de citas, cada cita con su estado y con quién la cambió y cuándo, recordatorio automático 24 horas antes de la cita, lista de espera para huecos de última hora, base de conocimiento propia y un panel que indica si cada cita la trajo el agente, el panel o la web.
       </p>
       <p class="text-muted-foreground leading-relaxed mb-4">
         Está en fase beta con una clínica de podología y se configura a medida. Si necesitas historia clínica con exploraciones e informes, cuéntanos qué usas hoy y vemos cómo encaja. Trabajamos en remoto, así que tu clínica puede estar en Zaragoza, en Huesca o en cualquier otro punto de España.

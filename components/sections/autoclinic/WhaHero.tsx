@@ -23,34 +23,34 @@ interface Textos {
 
 const textos: Record<Lang, Textos> = {
   es: {
-    pastilla: "Agente recepcionista · WhatsApp",
-    titulo: ["Tu consulta nunca ", "pierde una cita."],
+    pastilla: "Gestión y agente de WhatsApp · Podología",
+    titulo: ["Tu consulta de podología ", "nunca pierde una cita."],
     descripcion:
-      "Un agente de IA en WhatsApp que responde, agenda, recuerda y rellena huecos —las 24 horas, en el idioma de tu paciente— sin que tu equipo mueva un dedo.",
+      "El programa de gestión de tu clínica y un agente de IA en WhatsApp, en el mismo sitio: responde, agenda, recuerda y rellena huecos las 24 horas, y lo escribe en la agenda y en la historia clínica. Hecho sólo para podólogos.",
     demo: "Solicita una demo",
     funcionalidades: "Ver funcionalidades",
     enLinea: "En línea",
     asistente: "Asistente IA",
     respuesta: "Responde en menos de 5 segundos",
     actividad: [
-      { text: "Cita confirmada · Marta R.", time: "hace 2 min" },
-      { text: "Recordatorio enviado · 3h antes", time: "hace 5 min" },
+      { text: "Quiropodia confirmada · Marta R.", time: "hace 2 min" },
+      { text: "Recordatorio enviado · 24h antes", time: "hace 5 min" },
       { text: "Hueco de 11h rellenado", time: "hace 9 min" },
     ],
   },
   en: {
-    pastilla: "Receptionist agent · WhatsApp",
-    titulo: ["Your clinic never ", "loses an appointment."],
+    pastilla: "Management and WhatsApp agent · Podiatry",
+    titulo: ["Your podiatry practice ", "never loses an appointment."],
     descripcion:
-      "An AI agent on WhatsApp that answers, books, reminds and fills gaps — 24 hours a day, in your patient's language — without your team lifting a finger.",
+      "Your clinic's management software and an AI agent on WhatsApp, in the same place: it answers, books, reminds and fills gaps 24 hours a day, and writes it into the schedule and the clinical record. Built for podiatrists only.",
     demo: "Request a demo",
     funcionalidades: "See features",
     enLinea: "Online",
     asistente: "AI assistant",
     respuesta: "Replies in under 5 seconds",
     actividad: [
-      { text: "Appointment confirmed · Marta R.", time: "2 min ago" },
-      { text: "Reminder sent · 3h before", time: "5 min ago" },
+      { text: "Chiropody confirmed · Marta R.", time: "2 min ago" },
+      { text: "Reminder sent · 24h before", time: "5 min ago" },
       { text: "11:00 slot filled", time: "9 min ago" },
     ],
   },

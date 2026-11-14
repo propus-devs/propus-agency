@@ -1,6 +1,6 @@
 import Link from "next/link"
 import type { LucideIcon } from "lucide-react"
-import { HeartPulseIcon, FootprintsIcon, ActivityIcon, StethoscopeIcon, StarIcon } from "lucide-react"
+import { HeartPulseIcon, FootprintsIcon, ActivityIcon, BabyIcon, StarIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import type { Lang } from "@/lib/i18n/idiomas"
@@ -28,14 +28,14 @@ interface Textos {
 }
 
 /** La guía del blog que más posiciona; el blog solo existe en español. */
-const RUTA_GUIA = "/blog/recepcionista-virtual-clinica-dental"
+const RUTA_GUIA = "/blog/recepcionista-virtual-clinica-podologia"
 
 // Los iconos y si es destacado van aparte: no dependen del idioma.
 const sectorBase: { icon: LucideIcon; featured: boolean }[] = [
   { icon: FootprintsIcon, featured: true },
   { icon: HeartPulseIcon, featured: true },
   { icon: ActivityIcon, featured: false },
-  { icon: StethoscopeIcon, featured: false },
+  { icon: BabyIcon, featured: false },
 ]
 
 // Las cuatro métricas son comprobables en el producto. Nada de porcentajes de
@@ -46,8 +46,8 @@ const textos: Record<Lang, Textos> = {
     metricas: [
       { value: "24/7", label: "Disponibilidad del agente" },
       {
-        value: "24 h + 3 h",
-        label: "Dos recordatorios, y el segundo solo a quien no ha confirmado",
+        value: "24 h",
+        label: "Recordatorio automático por WhatsApp antes de cada cita",
       },
       {
         value: "6 estados",
@@ -59,34 +59,35 @@ const textos: Record<Lang, Textos> = {
       },
     ],
     etiqueta: "Para quién es",
-    titulo: ["Cualquier consulta que ", "trabaje por cita"],
-    subtitulo: "Si tu negocio gestiona agenda, el agente puede encargarse de ella.",
+    titulo: ["Para clínicas de ", "podología. Y punto"],
+    subtitulo:
+      "No intentamos servir a cualquier consulta con agenda: el producto está construido sobre los tratamientos, los tiempos y la historia clínica de un podólogo.",
     guia: {
       texto: "¿Quieres ver cómo funciona por dentro?",
-      enlace: "Lee la guía completa del recepcionista virtual para clínicas",
+      enlace: "Lee la guía completa del recepcionista virtual para clínicas de podología",
     },
     sectores: [
       {
-        title: "Clínicas de podología",
+        title: "Quiropodia y uña encarnada",
         description:
-          "Nuestro caso de uso principal, ya en fase beta con una clínica de podología en Albacete y configurado a medida: quiropodias, estudios biomecánicos y tratamientos recurrentes con recordatorios que mantienen alta la asistencia.",
-        badge: "Nicho principal",
+          "El día a día de la consulta: tratamientos recurrentes, pacientes que vuelven cada pocas semanas y recordatorios que mantienen alta la asistencia. El agente conoce la duración real de cada tratamiento, así que no encaja una quiropodia en el hueco de una revisión.",
+        badge: "El volumen del día a día",
       },
       {
-        title: "Clínicas dentales",
+        title: "Pie diabético y pacientes de riesgo",
         description:
-          "Nuestro segundo nicho. Agenda de higienistas, ortodoncistas y cirujanos bajo un solo agente, con información detallada de cada profesional y tratamiento.",
-        badge: "Segundo nicho",
+          "La anamnesis genera sola las alertas de diabetes, anticoagulación o alergia a anestésicos, y la lesión se sigue en milímetros con foto en cada visita. Es donde la historia clínica deja de ser papeleo y pasa a ser la herramienta.",
+        badge: "Donde más se nota",
       },
       {
-        title: "Fisioterapia y rehabilitación",
+        title: "Biomecánica y plantillas a medida",
         description:
-          "Control de sesiones, seguimiento de tratamientos y recordatorios que garantizan una alta tasa de asistencia.",
+          "Estudios de la pisada y soportes plantares: citas largas, con tiempos distintos y entregas posteriores. La duración del servicio puede ser variable y la agenda reserva el máximo, que es lo único que evita que dos citas se pisen.",
       },
       {
-        title: "Medicina y especialidades",
+        title: "Podología infantil y deportiva",
         description:
-          "Triaje básico, información de especialistas y gestión de agenda para consultas privadas de cualquier disciplina.",
+          "Agendas con más movimiento, familias que escriben a cualquier hora y temporada deportiva con picos. El agente atiende de noche y en fin de semana, cuando es justo cuando escriben.",
       },
     ],
   },
@@ -94,8 +95,8 @@ const textos: Record<Lang, Textos> = {
     metricas: [
       { value: "24/7", label: "Agent availability" },
       {
-        value: "24 h + 3 h",
-        label: "Two reminders, and the second only to those who haven't confirmed",
+        value: "24 h",
+        label: "Automatic WhatsApp reminder before every appointment",
       },
       {
         value: "6 statuses",
@@ -107,34 +108,35 @@ const textos: Record<Lang, Textos> = {
       },
     ],
     etiqueta: "Who it's for",
-    titulo: ["Any practice that ", "works by appointment"],
-    subtitulo: "If your business manages a schedule, the agent can take care of it.",
+    titulo: ["For podiatry clinics. ", "Full stop"],
+    subtitulo:
+      "We don't try to serve every practice with a schedule: the product is built around a podiatrist's treatments, timings and clinical records.",
     guia: {
       texto: "Want to see how it works under the hood?",
-      enlace: "Read the full virtual receptionist guide (in Spanish)",
+      enlace: "Read the full virtual receptionist guide for podiatry clinics (in Spanish)",
     },
     sectores: [
       {
-        title: "Podiatry clinics",
+        title: "Chiropody and ingrown nails",
         description:
-          "Our main use case, already in beta with a podiatry clinic in Albacete and configured to measure: chiropody, biomechanical studies and recurring treatments, with reminders that keep attendance high.",
-        badge: "Main niche",
+          "The day-to-day of the practice: recurring treatments, patients who come back every few weeks and reminders that keep attendance high. The agent knows how long each treatment really takes, so it won't fit a chiropody session into a check-up's slot.",
+        badge: "The daily volume",
       },
       {
-        title: "Dental clinics",
+        title: "Diabetic foot and at-risk patients",
         description:
-          "Our second niche. The schedules of hygienists, orthodontists and surgeons under a single agent, with detailed information on each professional and treatment.",
-        badge: "Second niche",
+          "The anamnesis generates alerts for diabetes, anticoagulation or anaesthetic allergy on its own, and the lesion is tracked in millimetres with a photo at every visit. This is where the clinical record stops being paperwork and becomes the tool.",
+        badge: "Where it shows most",
       },
       {
-        title: "Physiotherapy and rehabilitation",
+        title: "Biomechanics and custom insoles",
         description:
-          "Session tracking, treatment follow-up and reminders that ensure a high attendance rate.",
+          "Gait studies and plantar supports: long appointments, with different timings and later deliveries. A service's duration can be variable and the schedule books the maximum, which is the only thing that stops two appointments overlapping.",
       },
       {
-        title: "Medicine and specialties",
+        title: "Paediatric and sports podiatry",
         description:
-          "Basic triage, specialist information and schedule management for private practices of any discipline.",
+          "Busier schedules, families writing at any hour and a sports season with peaks. The agent answers at night and at the weekend, which is exactly when they write.",
       },
     ],
   },
@@ -151,7 +153,7 @@ export default function WhaUseCases({ lang = "es" }: { lang?: Lang }) {
         <div className="mb-20 grid grid-cols-2 gap-6 rounded-2xl border border-wha-teal/20 bg-wha-teal/5 px-6 py-10 sm:grid-cols-4">
           {t.metricas.map((m) => (
             <div key={m.label} className="flex flex-col items-center gap-1.5 text-center">
-              {/* Las cifras no parten: "24 h + 3 h" tiene que leerse de una pieza */}
+              {/* Las cifras no parten: "24 h" o "6 estados" tienen que leerse de una pieza */}
               <span className="text-2xl font-bold whitespace-nowrap text-wha-teal md:text-3xl">{m.value}</span>
               <span className="max-w-[180px] text-xs leading-snug text-balance text-wha-muted">{m.label}</span>
             </div>

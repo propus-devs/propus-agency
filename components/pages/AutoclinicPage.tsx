@@ -6,22 +6,24 @@ import WhaProblem from "@/components/sections/autoclinic/WhaProblem"
 import WhaFeatures from "@/components/sections/autoclinic/WhaFeatures"
 import WhaGallery from "@/components/sections/autoclinic/WhaGallery"
 import WhaUseCases from "@/components/sections/autoclinic/WhaUseCases"
+import WhaBandeja from "@/components/sections/autoclinic/WhaBandeja"
+import WhaPricing from "@/components/sections/autoclinic/WhaPricing"
 import WhaCTA from "@/components/sections/autoclinic/WhaCTA"
 import ServiceSchema from "@/components/seo/ServiceSchema"
 import type { Lang } from "@/lib/i18n/idiomas"
 
 const SCHEMA: Record<Lang, { name: string; description: string; serviceType: string }> = {
   es: {
-    name: "Agente recepcionista de WhatsApp con IA",
+    name: "Software de gestión para clínicas de podología con agente de WhatsApp",
     description:
-      "Agente de inteligencia artificial en WhatsApp que agenda, cancela y recuerda citas, 24/7, para clínicas de podología, dentales, de estética y otros negocios de salud.",
-    serviceType: "Automatización de atención al cliente con IA",
+      "Programa de gestión para clínicas de podología: historia clínica de podología, agenda, facturación y un agente de inteligencia artificial en WhatsApp que agenda, cancela y recuerda citas 24/7, con bandeja de chats dentro del propio programa.",
+    serviceType: "Software de gestión para clínicas de podología",
   },
   en: {
-    name: "AI WhatsApp receptionist agent",
+    name: "Podiatry clinic management software with a WhatsApp agent",
     description:
-      "Artificial intelligence agent on WhatsApp that books, cancels and reminds appointments, 24/7, for podiatry, dental and beauty clinics and other healthcare businesses.",
-    serviceType: "AI customer service automation",
+      "Management software for podiatry clinics: podiatry clinical records, scheduling, invoicing and an artificial intelligence agent on WhatsApp that books, cancels and reminds appointments 24/7, with a chat inbox inside the software itself.",
+    serviceType: "Podiatry clinic management software",
   },
 }
 
@@ -44,10 +46,13 @@ export default function AutoclinicPage({ lang }: { lang: Lang }) {
         <WhaFeatures lang={lang} />
         <WhaGallery lang={lang} />
         <WhaUseCases lang={lang} />
-        {/* WhaRoiCalculator (la calculadora de rentabilidad) está fuera de la
-            página hasta que estén fijados los precios finales de los planes. El
-            componente y lib/autoclinic-pricing.ts se conservan para volver a
-            ponerla. */}
+        {/* La bandeja y el nicho van antes del precio: justifican la cuota. */}
+        <WhaBandeja lang={lang} />
+        <WhaPricing lang={lang} />
+        {/* WhaRoiCalculator (la calculadora de rentabilidad) sigue fuera de la
+            página: ya lee los precios definitivos de lib/autoclinic-pricing.ts,
+            pero sus textos son sólo españoles y esta página es bilingüe. Para
+            volver a ponerla hay que darle una prop `lang`. */}
         <WhaCTA lang={lang} />
       </main>
       <Footer lang={lang} />

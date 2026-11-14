@@ -9,6 +9,7 @@ import FacturiaFlow from "@/components/sections/facturia/FacturiaFlow"
 import FacturiaTrust from "@/components/sections/facturia/FacturiaTrust"
 import FacturiaIntegrations from "@/components/sections/facturia/FacturiaIntegrations"
 import FacturiaUseCases from "@/components/sections/facturia/FacturiaUseCases"
+import FacturiaPricing from "@/components/sections/facturia/FacturiaPricing"
 import FacturiaCTA from "@/components/sections/facturia/FacturiaCTA"
 import ServiceSchema from "@/components/seo/ServiceSchema"
 import type { Lang } from "@/lib/i18n/idiomas"
@@ -44,6 +45,7 @@ export default function FacturiaPage({ lang }: { lang: Lang }) {
         <FacturiaIntegrations lang={lang} />
         <FacturiaTrust lang={lang} />
         <FacturiaUseCases lang={lang} />
+        <FacturiaPricing lang={lang} />
         <FacturiaCTA lang={lang} />
       </main>
       <Footer lang={lang} />

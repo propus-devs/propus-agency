@@ -7,11 +7,35 @@
  * lleva) los introduce quien la usa, nunca este archivo.
  */
 
-/** Cuota mensual de la primera consulta, un profesional. */
-export const CUOTA_CONSULTA = 99
+/* ── Precio ───────────────────────────────────────────────────────────────
+   Decidido el 2026-11-14: «99 € la consulta, 45 € cada profesional más».
+   Sustituye al esquema por topes de citas, que calibraba los topes muy por
+   debajo del uso real de una clínica. Importes sin IVA.
+
+   Dos cosas que NO se publican, por decisión de planes-auto-clinic/PRICING.md:
+   el alta (palanca de negociación) y el prepago anual (última palanca de
+   cierre). Por eso ALTA vive aquí pero no aparece en la página. */
+
+/** Cuota mensual de la consulta de un profesional. */
+export const CUOTA_BASE = 99
 /** Lo que suma cada profesional a partir del segundo. */
-export const CUOTA_PROFESIONAL_EXTRA = 49
-/** Alta y puesta en marcha, pago único. */
+export const CUOTA_PROFESIONAL = 45
+/**
+ * Hasta cuántos profesionales se publica la tarifa. A partir del siguiente va
+ * por presupuesto: es donde el margen baja del 60 % y donde más soporte
+ * consume la clínica, así que pasa por una llamada y no por una tabla.
+ */
+export const PROFESIONALES_PUBLICADOS = 4
+
+/**
+ * Tope de uso justo: conversaciones del agente por profesional y mes.
+ * Una clínica con mucho movimiento se queda sobre las 150-200, así que está
+ * puesto a unas tres veces el uso real. Se publica porque es un argumento de
+ * venta frente a quien incluye 1.000 respuestas para toda la clínica.
+ */
+export const TOPE_CONVERSACIONES = 500
+
+/** Alta y puesta en marcha, pago único. No se publica en la web. */
 export const ALTA = 300
 
 export const MIN_PROFESIONALES = 1
@@ -20,13 +44,30 @@ export const MAX_PROFESIONALES = 20
 /** Semanas por mes (52 / 12), para pasar de horas semanales a mensuales. */
 export const SEMANAS_POR_MES = 4.33
 
-/** Cuota mensual según el número de profesionales. */
+/** Cuota mensual: la base más cada profesional a partir del segundo. */
 export function cuotaMensual(profesionales: number): number {
   const n = Math.min(
     MAX_PROFESIONALES,
     Math.max(MIN_PROFESIONALES, Math.round(profesionales))
   )
-  return CUOTA_CONSULTA + CUOTA_PROFESIONAL_EXTRA * (n - 1)
+  return CUOTA_BASE + CUOTA_PROFESIONAL * (n - 1)
+}
+
+/** Conversaciones del agente incluidas al mes con ese número de profesionales. */
+export function conversacionesIncluidas(profesionales: number): number {
+  const n = Math.min(
+    MAX_PROFESIONALES,
+    Math.max(MIN_PROFESIONALES, Math.round(profesionales))
+  )
+  return TOPE_CONVERSACIONES * n
+}
+
+/** Los tramos que se publican en la página: de 1 a PROFESIONALES_PUBLICADOS. */
+export function tramosPublicados(): { profesionales: number; cuota: number }[] {
+  return Array.from({ length: PROFESIONALES_PUBLICADOS }, (_, i) => ({
+    profesionales: i + 1,
+    cuota: cuotaMensual(i + 1),
+  }))
 }
 
 /**

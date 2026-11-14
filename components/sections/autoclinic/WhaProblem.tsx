@@ -17,7 +17,8 @@ interface Textos {
 const textos: Record<Lang, Textos> = {
   es: {
     titulo: ["Citas que se pierden antes de ", "llegar al calendario"],
-    subtitulo: "La disponibilidad de tu clínica tiene horario. La de tus pacientes potenciales, no.",
+    subtitulo:
+      "La disponibilidad de tu consulta de podología tiene horario. La de tus pacientes, no.",
     problemas: [
       {
         title: "Escriben a las 21h y no hay nadie",
@@ -29,7 +30,7 @@ const textos: Record<Lang, Textos> = {
       },
       {
         title: "Las mismas preguntas, una y otra vez",
-        body: "¿Cuánto cuesta una limpieza? ¿Quién lleva ortodoncia? Tu equipo dedica minutos a responder dudas básicas que deberían resolverse solas.",
+        body: "¿Cuánto cuesta una quiropodia? ¿Hacéis estudio de la pisada? ¿Hay que venir con las uñas sin pintar? Tu equipo dedica minutos a responder dudas básicas que deberían resolverse solas.",
       },
       {
         title: "Respuestas lentas que generan desconfianza",
@@ -39,7 +40,7 @@ const textos: Record<Lang, Textos> = {
   },
   en: {
     titulo: ["Appointments that get lost before ", "reaching the calendar"],
-    subtitulo: "Your clinic's availability has opening hours. Your potential patients' doesn't.",
+    subtitulo: "Your podiatry practice's availability has opening hours. Your patients' doesn't.",
     problemas: [
       {
         title: "They write at 9 pm and nobody is there",
@@ -51,7 +52,7 @@ const textos: Record<Lang, Textos> = {
       },
       {
         title: "The same questions, over and over",
-        body: "How much does a cleaning cost? Who handles orthodontics? Your team spends minutes answering basic questions that should answer themselves.",
+        body: "How much is a chiropody session? Do you do gait studies? Should I come with no nail polish on? Your team spends minutes answering basic questions that should answer themselves.",
       },
       {
         title: "Slow replies that breed distrust",

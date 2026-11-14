@@ -3,7 +3,7 @@ import AutoclinicPage from "@/components/pages/AutoclinicPage"
 import { alternas, ruta } from "@/lib/i18n/idiomas"
 
 export const metadata: Metadata = {
-  title: "Agente recepcionista WhatsApp | Gestión de citas con IA",
+  title: "Recepcionista virtual para clínicas | AutoClinic",
   description:
     "Un agente de IA en WhatsApp que agenda, cancela y envía recordatorios — 24/7, en el idioma de tu paciente. Para clínicas de podología y dentales, veterinarias, estética y más.",
   alternates: {

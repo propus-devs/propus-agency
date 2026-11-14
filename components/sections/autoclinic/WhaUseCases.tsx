@@ -1,3 +1,4 @@
+import Link from "next/link"
 import type { LucideIcon } from "lucide-react"
 import { HeartPulseIcon, FootprintsIcon, ActivityIcon, StethoscopeIcon, StarIcon } from "lucide-react"
 
@@ -22,7 +23,12 @@ interface Textos {
   titulo: [string, string]
   subtitulo: string
   sectores: [Sector, Sector, Sector, Sector]
+  /** Enlace discreto a la guía del blog (que solo existe en español). */
+  guia: { texto: string; enlace: string }
 }
+
+/** La guía del blog que más posiciona; el blog solo existe en español. */
+const RUTA_GUIA = "/blog/recepcionista-virtual-clinica-dental"
 
 // Los iconos y si es destacado van aparte: no dependen del idioma.
 const sectorBase: { icon: LucideIcon; featured: boolean }[] = [
@@ -55,6 +61,10 @@ const textos: Record<Lang, Textos> = {
     etiqueta: "Para quién es",
     titulo: ["Cualquier consulta que ", "trabaje por cita"],
     subtitulo: "Si tu negocio gestiona agenda, el agente puede encargarse de ella.",
+    guia: {
+      texto: "¿Quieres ver cómo funciona por dentro?",
+      enlace: "Lee la guía completa del recepcionista virtual para clínicas",
+    },
     sectores: [
       {
         title: "Clínicas de podología",
@@ -99,6 +109,10 @@ const textos: Record<Lang, Textos> = {
     etiqueta: "Who it's for",
     titulo: ["Any practice that ", "works by appointment"],
     subtitulo: "If your business manages a schedule, the agent can take care of it.",
+    guia: {
+      texto: "Want to see how it works under the hood?",
+      enlace: "Read the full virtual receptionist guide (in Spanish)",
+    },
     sectores: [
       {
         title: "Podiatry clinics",
@@ -197,6 +211,17 @@ export default function WhaUseCases({ lang = "es" }: { lang?: Lang }) {
             )
           })}
         </div>
+
+        {/* Enlace discreto a la guía: refuerza el enlazado interno hacia el artículo que más posiciona */}
+        <p className="mt-10 text-center text-sm text-wha-muted">
+          {t.guia.texto}{" "}
+          <Link
+            href={RUTA_GUIA}
+            className="font-medium text-wha-teal underline underline-offset-4 transition-colors hover:text-wha"
+          >
+            {t.guia.enlace}
+          </Link>
+        </p>
       </div>
     </section>
   )

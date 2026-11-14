@@ -3,7 +3,7 @@ import AutoclinicPage from "@/components/pages/AutoclinicPage"
 import { alternas, ruta } from "@/lib/i18n/idiomas"
 
 export const metadata: Metadata = {
-  title: "WhatsApp receptionist agent | AI appointment management",
+  title: "Virtual receptionist for clinics | AutoClinic",
   description:
     "An AI agent on WhatsApp that books, cancels and sends reminders — 24/7, in your patient's language. For podiatry and dental clinics, vets, beauty clinics and more.",
   alternates: {

@@ -6,6 +6,8 @@ interface Tramo {
   name: string
   detail: string
   price: string
+  /** Palabra pequeña delante del precio ("desde"): el tramo no tiene techo. */
+  prefijo?: string
 }
 
 interface Textos {
@@ -20,7 +22,9 @@ interface Textos {
   cierre: string
 }
 
-// Precios dados por el usuario el 2026-11-10. El alta va sin IVA; en la cuota
+// Precios dados por el usuario el 2026-11-10; el 2026-11-14 fijó el de 1
+// alojamiento en 775 € (antes 750–800 €) y el de más de 5 en «desde 925 €»
+// (antes 900–950 €). El alta va sin IVA; en la cuota
 // mensual NO se menciona el IVA (indicación expresa del usuario). La cuota
 // depende de los servicios contratados. No inventar condiciones nuevas aquí.
 const textos: Record<Lang, Textos> = {
@@ -34,13 +38,18 @@ const textos: Record<Lang, Textos> = {
       </>
     ),
     tramos: [
-      { name: "1 alojamiento", detail: "Una casa, apartamento o cabaña", price: "750–800 €" },
+      { name: "1 alojamiento", detail: "Una casa, apartamento o cabaña", price: "775 €" },
       {
         name: "De 2 a 5 alojamientos",
         detail: "Varias casas o cabañas en la misma web",
         price: "850 €",
       },
-      { name: "Más de 5 alojamientos", detail: "Complejos y conjuntos grandes", price: "900–950 €" },
+      {
+        name: "Más de 5 alojamientos",
+        detail: "Complejos y conjuntos grandes",
+        price: "925 €",
+        prefijo: "desde",
+      },
     ],
     altaPagoUnico: "Alta, pago único",
     ivaNoIncluido: "IVA no incluido",
@@ -51,7 +60,7 @@ const textos: Record<Lang, Textos> = {
     ),
     cuotaDepende: "El importe depende de los servicios que contrates.",
     cierre:
-      "El importe exacto dentro de cada rango lo cerramos contigo en una llamada, según tu caso.",
+      "En el tramo de más de 5 alojamientos, el importe final lo cerramos contigo en una llamada, según tu caso.",
   },
   en: {
     etiqueta: "Pricing",
@@ -63,7 +72,7 @@ const textos: Record<Lang, Textos> = {
       </>
     ),
     tramos: [
-      { name: "1 accommodation", detail: "One house, apartment or cabin", price: "€750–800" },
+      { name: "1 accommodation", detail: "One house, apartment or cabin", price: "€775" },
       {
         name: "2 to 5 accommodations",
         detail: "Several houses or cabins on the same website",
@@ -72,7 +81,8 @@ const textos: Record<Lang, Textos> = {
       {
         name: "More than 5 accommodations",
         detail: "Complexes and large groups",
-        price: "€900–950",
+        price: "€925",
+        prefijo: "from",
       },
     ],
     altaPagoUnico: "Setup fee, one-time payment",
@@ -84,7 +94,7 @@ const textos: Record<Lang, Textos> = {
     ),
     cuotaDepende: "The amount depends on the services you choose.",
     cierre:
-      "We settle the exact amount within each range with you on a call, based on your case.",
+      "For more than 5 accommodations, we settle the final amount with you on a call, based on your case.",
   },
 }
 
@@ -107,6 +117,11 @@ export default function RuralPropPricing({ lang = "es" }: { lang?: Lang }) {
               <h3 className="font-display-serif text-2xl font-normal text-rural-fg">{tier.name}</h3>
               <p className="text-sm text-rural-muted">{tier.detail}</p>
               <p className="mt-5 font-display-serif text-5xl font-normal tracking-tight text-rural-honey">
+                {tier.prefijo && (
+                  <span className="mr-2 align-middle font-sans text-base tracking-normal text-rural-muted">
+                    {tier.prefijo}
+                  </span>
+                )}
                 {tier.price}
               </p>
               <p className="mt-2 text-xs uppercase tracking-widest text-rural-muted">

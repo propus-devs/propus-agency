@@ -5,7 +5,7 @@ import { alternas, ruta } from "@/lib/i18n/idiomas"
 export const metadata: Metadata = {
   title: "RuralProp: web con reservas directas para alojamientos rurales",
   description:
-    "Web con reservas directas para casas rurales y cabañas: calendario centralizado, pago online, registro de viajeros SES Hospedajes y SEO. Alta desde 750 € + cuota mensual.",
+    "Web con reservas directas para casas rurales y cabañas: calendario centralizado, pago online, registro de viajeros SES Hospedajes y SEO. Alta desde 775 € + cuota mensual.",
   alternates: {
     canonical: ruta("ruralprop", "es"),
     languages: alternas("ruralprop"),

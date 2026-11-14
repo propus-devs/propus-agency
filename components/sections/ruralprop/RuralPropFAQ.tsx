@@ -40,7 +40,7 @@ const textos: Record<Lang, Textos> = {
       {
         question: "¿Cuánto cuesta?",
         answer:
-          "El alta, que se paga una sola vez y no incluye IVA, cuesta entre 750 y 800 € para un alojamiento, 850 € de 2 a 5 alojamientos y entre 900 y 950 € para más de 5. La cuota mensual va de 10 a 20 € al mes según los servicios que contrates.",
+          "El alta, que se paga una sola vez y no incluye IVA, cuesta 775 € para un alojamiento, 850 € de 2 a 5 alojamientos y desde 925 € para más de 5. La cuota mensual va de 10 a 20 € al mes según los servicios que contrates.",
       },
       {
         question: "¿Se conecta con Booking y Airbnb?",
@@ -86,7 +86,7 @@ const textos: Record<Lang, Textos> = {
       {
         question: "How much does it cost?",
         answer:
-          "The setup fee, paid once and not including VAT, costs between €750 and €800 for one accommodation, €850 for 2 to 5 accommodations and between €900 and €950 for more than 5. The monthly fee runs from €10 to €20 a month depending on the services you choose.",
+          "The setup fee, paid once and not including VAT, costs €775 for one accommodation, €850 for 2 to 5 accommodations and from €925 for more than 5. The monthly fee runs from €10 to €20 a month depending on the services you choose.",
       },
       {
         question: "Does it connect with Booking and Airbnb?",

@@ -5,7 +5,7 @@ import { alternas, ruta } from "@/lib/i18n/idiomas"
 export const metadata: Metadata = {
   title: "RuralProp: website with direct bookings for rural accommodations",
   description:
-    "A website with direct bookings for country houses and cabins: centralized calendar, online payment, SES Hospedajes guest registration and SEO. Setup from €750 + monthly fee.",
+    "A website with direct bookings for country houses and cabins: centralized calendar, online payment, SES Hospedajes guest registration and SEO. Setup from €775 + monthly fee.",
   alternates: {
     canonical: ruta("ruralprop", "en"),
     languages: alternas("ruralprop"),

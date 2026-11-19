@@ -70,9 +70,9 @@ function FilaCarpetas({
 }
 
 /**
- * El logo de Propus gira como una moneda y "escupe" documentos que caen a su
- * carpeta, ya clasificados. Todo con CSS 3D; sin animar (prefers-reduced-motion)
- * quedan las carpetas con su marca de hecho.
+ * Documentos que van cayendo, ya clasificados, en su carpeta. Todo con CSS 3D;
+ * sin animar (prefers-reduced-motion) quedan las carpetas con su marca de hecho.
+ * El logo de FacturIA va junto al nombre, como el de AutoClinic en el chat.
  */
 export function DocsScene({ className, lang = "es" }: { className?: string; lang?: Lang }) {
   const t = TEXTOS[lang]
@@ -80,20 +80,32 @@ export function DocsScene({ className, lang = "es" }: { className?: string; lang
   return (
     <Live className={className}>
       <div className="mv-card vidrio rounded-2xl border p-4 backdrop-blur-sm">
-        <div className="leading-tight">
-          <p className="text-sm font-semibold text-foreground">FacturIA</p>
-          <p className="text-xs text-muted-foreground">{t.subtitulo}</p>
+        <div className="flex items-center gap-2.5">
+          {/* El logo trae su propio fondo azul noche: llena el círculo. */}
+          <span className="size-9 shrink-0 overflow-hidden rounded-full ring-1 ring-brand-emerald/20">
+            <Image
+              src="/img/facturia/logo-icono.png"
+              alt=""
+              width={72}
+              height={72}
+              className="size-full object-cover"
+            />
+          </span>
+          <div className="leading-tight">
+            <p className="text-sm font-semibold text-foreground">FacturIA</p>
+            <p className="text-xs text-muted-foreground">{t.subtitulo}</p>
+          </div>
         </div>
 
-        <div className="relative mx-auto mt-3 h-44 w-60">
+        <div className="relative mx-auto mt-3 h-36 w-60">
           <FilaCarpetas capa="fondo" nombres={t.carpetas} />
 
           {CARPETAS.map((c) => (
             <div
               key={c.tipo}
-              className="mv-doc absolute left-1/2 top-7 z-10 -ml-[1.125rem] grid h-11 w-9 content-start gap-1 rounded-[4px] bg-slate-100 p-1 shadow-md ring-1 ring-slate-900/10"
+              className="mv-doc absolute left-1/2 top-1 z-10 -ml-[1.125rem] grid h-11 w-9 content-start gap-1 rounded-[4px] bg-slate-100 p-1 shadow-md ring-1 ring-slate-900/10"
               style={
-                { "--i": c.i, "--tx": c.tx, "--ty": "6.5rem", "--rot": c.rot } as CSSProperties
+                { "--i": c.i, "--tx": c.tx, "--ty": "6rem", "--rot": c.rot } as CSSProperties
               }
             >
               <span className={cn("h-1.5 w-full rounded-sm", c.color)} />
@@ -102,12 +114,6 @@ export function DocsScene({ className, lang = "es" }: { className?: string; lang
               <span className="text-[7px] font-bold leading-none text-slate-500">{c.tipo}</span>
             </div>
           ))}
-
-          <div className="absolute left-1/2 top-0 z-20 -ml-[1.375rem] [perspective:300px]">
-            <div className="mv-coin grid size-11 place-items-center rounded-full border border-brand-emerald/40 bg-brand-emerald/15 shadow-[0_0_24px_-4px] shadow-brand-emerald/60">
-              <Image src="/favicons/noBGpropus1024.png" alt="" width={28} height={28} />
-            </div>
-          </div>
 
           <FilaCarpetas capa="frente" nombres={t.carpetas} />
         </div>

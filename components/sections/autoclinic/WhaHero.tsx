@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowRightIcon, MessageCircleIcon, CalendarCheckIcon, BellRingIcon, ZapIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { TiltCtaButton } from "@/components/ui/tilt-cta-button"
@@ -138,8 +139,16 @@ function AgentCard({ t }: { t: Textos }) {
         </div>
 
         {/* Avatar */}
-        <div className="mx-auto mb-6 flex size-20 items-center justify-center rounded-2xl bg-linear-to-br from-wha via-wha-alt to-wha-teal shadow-lg shadow-wha/30">
-          <MessageCircleIcon className="size-10 text-white" />
+        {/* El logo está pensado para fondo claro: va sobre una baldosa blanca. */}
+        <div className="mx-auto mb-6 flex size-20 items-center justify-center rounded-2xl bg-white shadow-lg shadow-wha/30">
+          <Image
+            src="/img/autoclinic/logo-icono.png"
+            alt=""
+            width={96}
+            height={96}
+            priority
+            className="size-14 object-contain"
+          />
         </div>
         <h3 className="text-center text-lg font-semibold text-wha-fg">{t.asistente}</h3>
         <p className="mt-1 text-center text-xs text-wha-muted">{t.respuesta}</p>

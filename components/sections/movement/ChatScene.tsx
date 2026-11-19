@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, useSyncExternalStore } from "react"
-import { BotIcon } from "lucide-react"
+import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { useInView } from "@/lib/use-in-view"
 import type { Lang } from "@/lib/i18n/idiomas"
@@ -173,8 +173,14 @@ export function ChatScene({ className, lang = "es" }: { className?: string; lang
       )}
     >
       <div className="flex items-center gap-2.5">
-        <span className="grid size-9 place-items-center rounded-full bg-brand-emerald/15 text-brand-emerald">
-          <BotIcon className="size-5" />
+        <span className="grid size-9 place-items-center rounded-full bg-white/80 ring-1 ring-brand-emerald/20">
+          <Image
+            src="/img/autoclinic/logo-icono.png"
+            alt=""
+            width={64}
+            height={64}
+            className="size-6 object-contain"
+          />
         </span>
         <div className="leading-tight">
           <p className="text-sm font-semibold text-foreground">AutoClinic</p>

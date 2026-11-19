@@ -1,27 +1,25 @@
 import Link from "next/link"
-import {
-  ArrowUpRightIcon,
-  CalendarClockIcon,
-  FileTextIcon,
-  LayoutTemplateIcon,
-  TreePineIcon,
-} from "lucide-react"
+import Image from "next/image"
+import { ArrowUpRightIcon, LayoutTemplateIcon, TreePineIcon } from "lucide-react"
 import { ruta, type Lang, type PaginaClave } from "@/lib/i18n/idiomas"
 
 // Cada servicio con su color de marca (el mismo que usa su página). Las clases
 // van escritas enteras para que Tailwind las detecte. Lo que no es texto va
 // aquí; los textos, por idioma, más abajo.
+// `visual` es lo que lleva la baldosa de la tarjeta: el logo del servicio
+// (AutoClinic, FacturIA) o, si aún no tiene, un icono.
 const servicios = [
   {
     clave: "autoclinic",
-    icon: CalendarClockIcon,
-    icono: "bg-brand-spring/12 text-brand-spring",
+    // El logo es de trazo claro sobre fondo blanco: baldosa blanca.
+    visual: { tipo: "logo", src: "/img/autoclinic/logo-icono.png", clase: "size-8" },
+    icono: "bg-white/80 ring-1 ring-brand-spring/20",
     tarjeta: "hover:border-brand-spring/40 hover:shadow-brand-spring/15",
     enlace: "group-hover:text-brand-spring",
   },
   {
     clave: "ruralprop",
-    icon: TreePineIcon,
+    visual: { tipo: "icono", icon: TreePineIcon },
     // La miel de la página de RuralProp no se lee sobre fondo claro: aquí va
     // su versión profunda (ámbar 700).
     icono: "bg-amber-600/15 text-amber-700",
@@ -30,15 +28,16 @@ const servicios = [
   },
   {
     clave: "disenoWeb",
-    icon: LayoutTemplateIcon,
+    visual: { tipo: "icono", icon: LayoutTemplateIcon },
     icono: "bg-brand-sky/12 text-brand-sky",
     tarjeta: "hover:border-brand-sky/40 hover:shadow-brand-sky/15",
     enlace: "group-hover:text-brand-sky",
   },
   {
     clave: "facturia",
-    icon: FileTextIcon,
-    icono: "bg-facturia/15 text-facturia-dark",
+    // El logo trae su propio fondo azul noche: llena la baldosa entera.
+    visual: { tipo: "logo", src: "/img/facturia/logo-icono.png", clase: "size-full" },
+    icono: "overflow-hidden bg-facturia-dark/90",
     tarjeta: "hover:border-facturia-dark/40 hover:shadow-facturia-dark/15",
     enlace: "group-hover:text-facturia-dark",
   },
@@ -141,6 +140,7 @@ export default function Services({ lang = "es" }: { lang?: Lang }) {
         <ul className="grid gap-6 md:grid-cols-2">
           {servicios.map((servicio) => {
             const item = t.items[servicio.clave]
+            const { visual } = servicio
             return (
               <li key={servicio.clave}>
                 <Link
@@ -151,7 +151,17 @@ export default function Services({ lang = "es" }: { lang?: Lang }) {
                     <span
                       className={`flex size-12 shrink-0 items-center justify-center rounded-xl ${servicio.icono}`}
                     >
-                      <servicio.icon className="size-6" />
+                      {visual.tipo === "logo" ? (
+                        <Image
+                          src={visual.src}
+                          alt=""
+                          width={96}
+                          height={96}
+                          className={`${visual.clase} object-contain`}
+                        />
+                      ) : (
+                        <visual.icon className="size-6" />
+                      )}
                     </span>
                     <div>
                       <h3 className="text-xl font-semibold leading-tight">{item.name}</h3>

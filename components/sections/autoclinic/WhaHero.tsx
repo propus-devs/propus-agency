@@ -127,7 +127,9 @@ export default function WhaHero({ lang = "es" }: { lang?: Lang }) {
 function AgentCard({ t }: { t: Textos }) {
   return (
     <div className="relative w-full max-w-sm">
-      <div className="relative rounded-3xl border border-white/10 bg-wha-card p-8 shadow-2xl shadow-black/60">
+      {/* Cristal oscuro: deja ver el fondo de colores. Al pasar el ratón sube un
+          poco, se aclara y el borde y el resplandor cogen el rosa de la marca. */}
+      <div className="group relative rounded-3xl border border-white/15 bg-wha-card/55 p-8 shadow-xl shadow-black/30 backdrop-blur-md transition-[background-color,border-color,transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:border-wha/40 hover:bg-wha-card/70 hover:shadow-2xl hover:shadow-wha/25 motion-reduce:hover:translate-y-0">
 
         {/* Dot online */}
         <div className="absolute right-6 top-6 flex items-center gap-1.5">
@@ -140,7 +142,7 @@ function AgentCard({ t }: { t: Textos }) {
 
         {/* Avatar */}
         {/* El logo está pensado para fondo claro: va sobre una baldosa blanca. */}
-        <div className="mx-auto mb-6 flex size-20 items-center justify-center rounded-2xl bg-white shadow-lg shadow-wha/30">
+        <div className="mx-auto mb-6 flex size-20 items-center justify-center rounded-2xl bg-white shadow-lg shadow-wha/30 transition-transform duration-300 ease-out group-hover:scale-105 group-hover:-rotate-3 motion-reduce:transform-none">
           <Image
             src="/img/autoclinic/logo-icono.png"
             alt=""
@@ -158,7 +160,7 @@ function AgentCard({ t }: { t: Textos }) {
           {t.actividad.map((item, i) => {
             const Icon = iconosActividad[i].icon
             return (
-              <div key={i} className="flex items-center gap-3 rounded-xl bg-white/5 px-3.5 py-2.5">
+              <div key={i} className="flex items-center gap-3 rounded-xl bg-white/8 px-3.5 py-2.5 transition-colors duration-200 hover:bg-white/14">
                 <Icon className={`size-4 shrink-0 ${iconosActividad[i].color}`} />
                 <span className="flex-1 text-xs text-wha-fg">{item.text}</span>
                 <span className="text-[10px] text-wha-muted">{item.time}</span>
